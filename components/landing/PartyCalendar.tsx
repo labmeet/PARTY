@@ -148,6 +148,7 @@ export function PartyCalendar() {
                 <InfoRow label="DATE" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE} (금)`} />
                 <InfoRow label="TIME" value="18:00" />
                 <InfoRow label="VENUE" value="KAIST W8 1층" />
+                <InfoRow label="FEE" value="₩35,000" />
               </dl>
 
               <div className="relative mt-6">
