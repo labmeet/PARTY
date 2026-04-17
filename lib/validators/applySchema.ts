@@ -14,7 +14,13 @@ export const applySchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^01\d-?\d{3,4}-?\d{4}$/, "올바른 전화번호 형식이 아닙니다 (예: 010-1234-5678)"),
+    .transform((v) => v.replace(/\D/g, ""))
+    .refine((v) => /^01\d{8,9}$/.test(v), "올바른 전화번호 형식이 아닙니다 (예: 010-1234-5678)")
+    .transform((v) =>
+      v.length === 10
+        ? `${v.slice(0, 3)}-${v.slice(3, 6)}-${v.slice(6)}`
+        : `${v.slice(0, 3)}-${v.slice(3, 7)}-${v.slice(7)}`,
+    ),
   gender: genderEnum,
   mbti: z
     .string()
@@ -26,6 +32,7 @@ export const applySchema = z.object({
     .min(10, "이상형을 10자 이상 작성해주세요")
     .max(500, "500자 이내로 작성해주세요"),
   email: z.string().trim().email("올바른 이메일 형식이 아닙니다"),
+  agree_privacy: z.literal(true, { message: "개인정보 처리방침에 동의해주세요" }),
 });
 
 export type ApplyFormValues = z.input<typeof applySchema>;

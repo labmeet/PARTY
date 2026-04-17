@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -35,6 +36,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       mbti: "",
       ideal_type: "",
       email: "",
+      agree_privacy: false as unknown as true,
     },
   });
 
@@ -157,6 +159,29 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           </div>
         )}
 
+        <label className="mb-4 flex cursor-pointer items-start gap-3 rounded-2xl border border-border bg-bg-elevated/40 px-4 py-3.5 text-left text-[13px] leading-relaxed text-fg-muted transition-colors hover:border-border-strong">
+          <input
+            type="checkbox"
+            className="mt-[3px] h-4 w-4 shrink-0 accent-[#B6E9CC]"
+            aria-invalid={!!errors.agree_privacy}
+            {...register("agree_privacy")}
+          />
+          <span>
+            <Link
+              href="/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fg underline underline-offset-4 hover:text-primary"
+            >
+              개인정보 처리방침
+            </Link>
+            을 읽었으며, 수집·이용에 동의합니다.
+          </span>
+        </label>
+        {errors.agree_privacy?.message && (
+          <p className="error-text mb-3 text-center">{errors.agree_privacy.message}</p>
+        )}
+
         <button
           type="submit"
           disabled={pending}
@@ -164,10 +189,6 @@ export function ApplyForm({ gender }: { gender: Gender }) {
         >
           {pending ? "제출 중…" : "신청서 제출하기"}
         </button>
-
-        <p className="mt-3 text-center text-[11px] text-fg-subtle">
-          제출 시 개인정보 처리방침에 동의하는 것으로 간주됩니다.
-        </p>
       </div>
     </motion.form>
   );
