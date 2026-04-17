@@ -34,9 +34,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-pretendard)", "Pretendard", "system-ui", "sans-serif"],
-        serif: ["var(--font-noto-serif)", "Noto Serif KR", "serif"],
-        display: ["var(--font-playfair)", "Playfair Display", "serif"],
+        sans: ["var(--font-inter)", "Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
+        serif: ["var(--font-inter)", "Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
+        display: ["var(--font-inter)", "Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
       },
       fontSize: {
         "display-xl": ["clamp(3rem, 8vw, 5rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
