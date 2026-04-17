@@ -20,12 +20,12 @@ export function IntroCard() {
           About the project
         </p>
         <h2 className="font-serif text-[22px] font-bold leading-snug text-fg sm:text-[26px]">
-          랩미 프로젝트란?
+          랩미가 뭔가요?
         </h2>
         <p className="mt-4 text-[14px] leading-[1.75] text-fg-muted sm:text-[15px]">
           KAIST 내 석박사 재학·졸업생 대상 오프라인 파티와
-          소개팅 앱을 만들고 있는 팀입니다. 팀원 전원 카이스트생.
-          사실, <span className="text-fg font-semibold">저희도 여기서 만나려고</span> 만드는 프로젝트입니다.
+          소개팅 앱을 지칭해요. 팀원 전원 카이스트생.
+          사실, <span className="text-fg font-semibold">저희도 여기서 만나려고</span> 만드는 프로젝트에요.
         </p>
 
         <dl className="mt-6 grid grid-cols-1 gap-y-2.5 border-t border-border pt-5 sm:grid-cols-[110px_1fr] sm:gap-x-5">
