@@ -189,12 +189,12 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           <Field
             label="만나고 싶지 않은 사람 (선택)"
             error={errors.deal_breaker?.message}
-            caption="500자 이내로 자유롭게 적어주세요."
+            caption="특정 이름을 적어도 괜찮아요. 500자 이내."
           >
             <textarea
               rows={4}
               className="input-base resize-none leading-relaxed"
-              placeholder="예) 흡연자, 너무 내성적인 분, 연락이 불규칙한 분…"
+              placeholder="예) 흡연자, 너무 내성적인 분, 연락이 불규칙한 분, 홍길동…"
               aria-invalid={!!errors.deal_breaker}
               {...register("deal_breaker")}
             />
