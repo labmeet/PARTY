@@ -5,12 +5,12 @@ import { ReassuranceSection } from "@/components/landing/ReassuranceSection";
 import { QuoteCard } from "@/components/landing/QuoteCard";
 import { PartyCalendar } from "@/components/landing/PartyCalendar";
 import { Footer } from "@/components/landing/Footer";
-import { ScrollSmoke } from "@/components/landing/ScrollSmoke";
+import { FloatingAssets } from "@/components/landing/FloatingAssets";
 
 export default function Home() {
   return (
     <>
-      <ScrollSmoke />
+      <FloatingAssets />
       <main className="relative z-10 min-h-screen">
         <Hero />
         <IntroCard />
