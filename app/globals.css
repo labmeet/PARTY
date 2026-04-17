@@ -88,6 +88,10 @@ body {
     color: rgb(var(--bg-base));
   }
 
+  h1, h2, h3, h4, p, li, span, blockquote {
+    word-break: keep-all;
+  }
+
   h1, h2, h3, h4 {
     font-family: var(--font-noto-serif), 'Noto Sans KR', sans-serif;
     font-weight: 700;

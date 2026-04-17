@@ -1,4 +1,5 @@
 import { Hero } from "@/components/landing/Hero";
+import { IntroCard } from "@/components/landing/IntroCard";
 import { AboutSection } from "@/components/landing/AboutSection";
 import { ReassuranceSection } from "@/components/landing/ReassuranceSection";
 import { QuoteCard } from "@/components/landing/QuoteCard";
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <IntroCard />
       <div className="container-page">
         <div className="divider-fade" />
       </div>
@@ -17,8 +19,8 @@ export default function Home() {
         <div className="divider-fade" />
       </div>
       <ReassuranceSection />
-      <QuoteCard />
       <PartyCalendar />
+      <QuoteCard />
       <Footer />
     </main>
   );

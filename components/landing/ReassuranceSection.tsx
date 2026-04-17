@@ -26,28 +26,35 @@ export function ReassuranceSection() {
         <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
           Safe Points
         </p>
-        <h2 className="font-serif text-display-md text-fg">
-          걱정되는 거, <br className="sm:hidden" />이미 다 해결해뒀습니다
+        <h2 className="font-serif text-[22px] font-bold leading-[1.35] text-fg sm:text-[28px]">
+          걱정되는 거? 저희도 대학원생입니다.
+          <br />
+          알고 있습니다.
         </h2>
+        <p className="mx-auto mt-4 max-w-sm text-[14px] leading-relaxed text-fg-muted">
+          이번 금요일,
+          <br className="sm:hidden" />
+          {" "}둘만 만나는 자리 만들어드립니다.
+        </p>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {POINTS.map((p) => (
           <article
             key={p.title}
-            className="card flex gap-5 transition-transform duration-200 hover:-translate-y-0.5"
+            className="card flex items-start gap-4 transition-transform duration-200 hover:-translate-y-0.5 sm:gap-5"
           >
             <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-pop/10 text-[1.75rem] leading-none"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pop/10 text-[1.6rem] leading-none"
               aria-hidden="true"
             >
               {p.emoji}
             </span>
-            <div className="flex-1">
-              <h3 className="font-serif text-lg font-semibold text-fg">
+            <div className="flex-1 min-w-0">
+              <h3 className="font-serif text-[16px] font-bold text-fg sm:text-[17px]">
                 {p.title}
               </h3>
-              <p className="mt-1.5 text-[14px] leading-relaxed text-fg-muted">
+              <p className="mt-1.5 text-[13.5px] leading-[1.7] text-fg-muted sm:text-[14px]">
                 {p.body}
               </p>
             </div>

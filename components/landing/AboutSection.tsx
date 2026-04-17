@@ -26,25 +26,32 @@ export function AboutSection() {
         <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
           About LabMeet
         </p>
-        <h2 className="font-serif text-display-md text-fg">
-          솔직하게 말하면 <br className="sm:hidden" />이런 자리입니다
+        <h2 className="font-serif text-[26px] font-bold leading-tight text-fg sm:text-[34px]">
+          솔직하게 말하면
+          <br />
+          이런 자리입니다
         </h2>
       </div>
 
-      <div className="space-y-3">
-        {BULLETS.map((b) => (
-          <article key={b.k} className="card flex gap-5">
-            <span className="font-display text-2xl leading-none text-primary/90">
-              {b.k}
-            </span>
-            <div className="flex-1">
-              <h3 className="font-serif text-lg font-semibold text-fg">
-                {b.title}
-              </h3>
-              <p className="mt-1.5 text-[14px] leading-relaxed text-fg-muted">
-                {b.body}
-              </p>
+      <div className="space-y-4">
+        {BULLETS.map((b, i) => (
+          <article key={b.k} className="card relative">
+            <span
+              className="absolute left-0 top-6 h-8 w-0.5 rounded-r bg-primary"
+              aria-hidden="true"
+            />
+            <div className="mb-2 flex items-center gap-2">
+              <span className="font-display text-[11px] font-semibold tracking-[0.2em] text-primary">
+                Q{i + 1}
+              </span>
+              <span className="h-px w-4 bg-border-strong" aria-hidden="true" />
             </div>
+            <h3 className="font-serif text-[18px] font-bold text-fg sm:text-[19px]">
+              {b.title}
+            </h3>
+            <p className="mt-2 text-[14px] leading-[1.75] text-fg-muted sm:text-[14.5px]">
+              {b.body}
+            </p>
           </article>
         ))}
       </div>

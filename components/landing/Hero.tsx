@@ -15,22 +15,22 @@ export function Hero() {
         <h1 className="font-display text-display-xl text-fg">
           Lab<span className="text-primary">Meet</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-lg font-serif text-[26px] font-bold leading-snug tracking-tight text-fg sm:text-[30px]">
+        <p className="mx-auto mt-4 max-w-md font-serif text-[22px] font-bold leading-[1.4] tracking-tight text-fg sm:text-[28px] sm:leading-snug">
           p-value는 나오는데,
-          <br className="sm:hidden" />{" "}
+          <br />
           <span className="text-pop">썸 value</span>는 왜 안 나올까
         </p>
 
-        <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-fg-muted">
+        <p className="mx-auto mt-6 max-w-md text-[14px] leading-relaxed text-fg-muted sm:text-[15px]">
           KAIST 석박사·졸업자 전용 오프라인 파티.
           <br className="hidden sm:block" />
           학번 대신 연구 주제, 스펙 대신 케미로.
         </p>
 
-        <div className="mx-auto mt-10 flex max-w-xs items-center justify-center gap-3 text-xs text-fg-subtle">
-          <span className="h-px w-10 bg-border-strong" />
+        <div className="mx-auto mt-10 flex max-w-xs items-center justify-center gap-3 text-[11px] text-fg-subtle">
+          <span className="h-px w-8 bg-border-strong" />
           <span className="tracking-[0.3em]">SINCE · KAIST</span>
-          <span className="h-px w-10 bg-border-strong" />
+          <span className="h-px w-8 bg-border-strong" />
         </div>
       </div>
     </section>

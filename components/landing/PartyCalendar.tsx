@@ -13,7 +13,8 @@ const FIRST_DAY = 5;
 const TOTAL_DAYS = 31;
 
 export function PartyCalendar() {
-  const [open, setOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [applyOpen, setApplyOpen] = useState(false);
 
   const cells: (number | null)[] = [
     ...Array(FIRST_DAY).fill(null),
@@ -27,22 +28,21 @@ export function PartyCalendar() {
         <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
           Party Date
         </p>
-        <h2 className="font-serif text-display-md text-fg">
+        <h2 className="font-serif text-[26px] font-bold leading-tight text-fg sm:text-[34px]">
           {YEAR}년 {MONTH}월 파티
         </h2>
-        <p className="mt-2 text-[14px] text-fg-muted">
-          파티 날짜를 클릭하세요
+        <p className="mt-2 text-[13px] text-fg-muted sm:text-[14px]">
+          날짜를 클릭해보세요
         </p>
       </div>
 
       <div className="card overflow-hidden p-0">
-        {/* 요일 헤더 */}
         <div className="grid grid-cols-7 border-b border-border">
           {DAYS.map((d, i) => (
             <div
               key={d}
-              className={`py-3 text-center text-[12px] font-semibold tracking-widest ${
-                i === 0 ? "text-red-400" : i === 6 ? "text-blue-400" : "text-fg-subtle"
+              className={`py-3 text-center text-[11px] font-semibold tracking-widest sm:text-[12px] ${
+                i === 0 ? "text-[#E57373]" : i === 6 ? "text-[#6BA6C7]" : "text-fg-subtle"
               }`}
             >
               {d}
@@ -50,7 +50,6 @@ export function PartyCalendar() {
           ))}
         </div>
 
-        {/* 날짜 그리드 */}
         <div className="grid grid-cols-7">
           {cells.map((day, idx) => {
             const isParty = day === PARTY_DATE;
@@ -58,11 +57,20 @@ export function PartyCalendar() {
             const isSat = idx % 7 === 6;
 
             return (
-              <div
+              <button
                 key={idx}
-                onClick={() => isParty && setOpen((v) => !v)}
-                className={`relative flex min-h-[60px] sm:min-h-[72px] flex-col items-center justify-start pt-2.5 border-b border-r border-border transition-all
-                  ${isParty ? "cursor-pointer bg-primary/10 hover:bg-primary/20" : ""}
+                type="button"
+                onClick={() => {
+                  if (!isParty) return;
+                  setInfoOpen((v) => !v);
+                  if (infoOpen) setApplyOpen(false);
+                }}
+                disabled={!isParty}
+                aria-label={
+                  isParty ? `${YEAR}년 ${MONTH}월 ${day}일 파티 정보` : undefined
+                }
+                className={`relative flex min-h-[56px] flex-col items-center justify-start pt-2.5 border-b border-r border-border transition-all sm:min-h-[72px]
+                  ${isParty ? "cursor-pointer bg-primary/10 hover:bg-primary/20" : "cursor-default"}
                   ${idx % 7 === 6 ? "border-r-0" : ""}
                   ${Math.floor(idx / 7) === 5 ? "border-b-0" : ""}
                 `}
@@ -70,89 +78,139 @@ export function PartyCalendar() {
                 {day && (
                   <>
                     <span
-                      className={`text-[13px] sm:text-[15px] font-medium leading-none
+                      className={`text-[12px] font-medium leading-none sm:text-[15px]
                         ${isParty
-                          ? "flex h-7 w-7 items-center justify-center rounded-full bg-primary font-bold text-bg-base"
-                          : isSun ? "text-red-400"
-                          : isSat ? "text-blue-400"
+                          ? "flex h-7 w-7 items-center justify-center rounded-full bg-primary font-bold text-bg-card shadow-glow"
+                          : isSun ? "text-[#E57373]"
+                          : isSat ? "text-[#6BA6C7]"
                           : "text-fg"}
                       `}
                     >
                       {day}
                     </span>
                     {isParty && (
-                      <div className="mt-1.5 flex flex-col items-center gap-0.5">
-                        <span className="text-[10px] font-bold text-primary leading-none">PARTY</span>
-                        <span className="text-[9px] text-primary/70 leading-none">
-                          {open ? "닫기 ↑" : "신청하기 ↓"}
-                        </span>
-                      </div>
+                      <span className="mt-1.5 text-[9px] font-bold tracking-wider text-primary leading-none sm:text-[10px]">
+                        PARTY
+                      </span>
                     )}
                   </>
                 )}
-                {isParty && (
-                  <div className="pointer-events-none absolute inset-0 shadow-[inset_0_0_20px_rgba(80,230,160,0.15)]" />
-                )}
-              </div>
+              </button>
             );
           })}
         </div>
       </div>
 
-      {/* 날짜 안내 */}
       <div className="mt-4 flex items-center justify-center gap-2">
-        <span className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+        <span className="h-2 w-2 rounded-full bg-pop animate-pulse" />
         <p className="text-[13px] text-fg-muted">
-          <span className="font-semibold text-primary">{YEAR}년 {MONTH}월 {PARTY_DATE}일 (금)</span>에 파티가 열립니다
+          <span className="font-semibold text-fg">{YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE}</span>{" "}
+          금요일에 열립니다
         </p>
       </div>
 
-      {/* 신청 토글 */}
-      <AnimatePresence>
-        {open && (
+      <AnimatePresence initial={false}>
+        {infoOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            key="info"
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="mt-5"
           >
-            <div className="card relative overflow-hidden">
+            <article className="relative overflow-hidden rounded-[28px] border border-border bg-bg-card px-7 py-9 shadow-card sm:px-10 sm:py-11">
               <div
-                className="absolute inset-0 -z-0 opacity-40"
+                className="pointer-events-none absolute inset-0 -z-0"
                 style={{
                   background:
-                    "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(80,230,160,0.18), transparent 70%)",
+                    "radial-gradient(ellipse 75% 55% at 50% 0%, rgba(20, 210, 120, 0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255, 95, 85, 0.08) 0%, transparent 65%)",
                 }}
+                aria-hidden="true"
               />
-              <div className="relative text-center">
-                <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
-                  Next Party
-                </p>
-                <h3 className="font-serif text-2xl font-semibold text-fg sm:text-3xl">
-                  다음 파티 · KAIST 대전
-                </h3>
-                <p className="mt-2 text-[13px] text-fg-muted">
-                  실험 참여하듯 가볍게. 결과는 현장에서.
-                </p>
-              </div>
-              <div className="relative mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Link href="/apply/female" className="btn-primary group">
-                  <span>여성 신청하기</span>
-                  <span className="transition-transform group-hover:translate-x-0.5">→</span>
-                </Link>
-                <Link href="/apply/male" className="btn-ghost group">
-                  <span>남성 신청하기</span>
-                  <span className="transition-transform group-hover:translate-x-0.5">→</span>
-                </Link>
-              </div>
-              <p className="relative mt-5 text-center text-[12px] text-fg-subtle">
-                심사 있음 · 정원 제한 · 얼리버드가 유리합니다
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px"
+                style={{
+                  background:
+                    "linear-gradient(90deg, transparent, rgb(var(--t-accent) / 0.7), transparent)",
+                }}
+                aria-hidden="true"
+              />
+
+              <p className="relative mb-3 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-pop">
+                1st Party
               </p>
-            </div>
+              <h3 className="relative text-center font-serif text-[24px] font-bold leading-tight text-fg sm:text-[30px]">
+                랩미 1차 파티
+              </h3>
+
+              <dl className="relative mt-7 space-y-3 border-t border-b border-border py-5">
+                <InfoRow label="DATE" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE} (금)`} />
+                <InfoRow label="TIME" value="18:00" />
+                <InfoRow label="VENUE" value="KAIST W8 1층" />
+              </dl>
+
+              <div className="relative mt-6">
+                <button
+                  type="button"
+                  onClick={() => setApplyOpen((v) => !v)}
+                  className="btn-primary"
+                  aria-expanded={applyOpen}
+                >
+                  <span>{applyOpen ? "접기" : "신청하기"}</span>
+                  <span
+                    className={`transition-transform ${applyOpen ? "rotate-180" : ""}`}
+                  >
+                    ↓
+                  </span>
+                </button>
+              </div>
+
+              <AnimatePresence initial={false}>
+                {applyOpen && (
+                  <motion.div
+                    key="apply"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative overflow-hidden"
+                  >
+                    <div className="pt-4 sm:pt-5">
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <Link href="/apply/female" className="btn-primary group">
+                          <span>여성 신청하기</span>
+                          <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                        </Link>
+                        <Link href="/apply/male" className="btn-ghost group">
+                          <span>남성 신청하기</span>
+                          <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                        </Link>
+                      </div>
+                      <p className="mt-4 text-center text-[12px] text-fg-subtle">
+                        알잘딱으로 자리 채워드림 · 정원 제한 · 얼리버드가 유리합니다
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </article>
           </motion.div>
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-baseline gap-4">
+      <dt className="w-14 shrink-0 text-[10px] font-semibold uppercase tracking-[0.22em] text-fg-subtle">
+        {label}
+      </dt>
+      <dd className="flex-1 font-serif text-[15px] font-bold text-fg sm:text-[16px]">
+        {value}
+      </dd>
+    </div>
   );
 }
