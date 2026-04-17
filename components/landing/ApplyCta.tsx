@@ -1,4 +1,7 @@
+'use client';
+
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 type Variant = "full" | "compact" | "final";
 
@@ -38,7 +41,7 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
           </Link>
         </div>
         <p className="relative mt-4 text-center text-[12px] text-fg-subtle">
-          알잘딱으로 자리 채워드림 · 얼리버드 4월 30일까지
+          알잌딱으로 자리 채워드림 · 얼리버드 4월 30일까지
         </p>
       </div>
     </section>
@@ -46,15 +49,21 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
 }
 
 function FinalCta() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = 0.5;
+  }, []);
+
   return (
     <section className="container-page py-12 sm:py-20">
       <div className="relative">
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          ref={(el) => { if (el) el.playbackRate = 0.5; }}
           className="pointer-events-none w-full rounded-[32px]"
           style={{ mixBlendMode: "screen", display: "block" }}
         >
