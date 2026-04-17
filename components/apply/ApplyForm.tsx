@@ -130,7 +130,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
                 type="number"
                 inputMode="numeric"
                 className="input-base pr-12"
-                placeholder="170"
+                placeholder="논문 길이 말고 본인 키"
                 aria-invalid={!!errors.height}
                 {...register("height", { setValueAs: (v) => v === "" || v === undefined ? undefined : Number(v) })}
               />
@@ -180,7 +180,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
             <textarea
               rows={5}
               className="input-base resize-none leading-relaxed"
-              placeholder="예) 연구에 진지하고 유머감각 있는 분, 퇴근 후 같이 맥주 한 잔 할 수 있는 분, 대화가 잘 통하고 가치관이 맞는 분…"
+              placeholder="예) ENFP인데 왜 랩에만 있는 건지 모르겠는 사람, 학식 같이 먹다 보면 좋아질 것 같은 사람…"
               aria-invalid={!!errors.ideal_type}
               {...register("ideal_type")}
             />
@@ -221,8 +221,10 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           {pending ? "제출 중…" : "신청서 제출하기"}
         </button>
 
-        <p className="mt-3 text-center text-[11px] text-fg-subtle">
-          제출 시 개인정보 처리방침에 동의하는 것으로 간주됩니다.
+        <p className="mt-3 text-center text-[11px] leading-relaxed text-fg-subtle">
+          제출한다고 바로 만나는 거 아닙니다. 심사 있어요.
+          <br />
+          논문 심사보다는 빠릅니다.
         </p>
       </div>
     </motion.form>

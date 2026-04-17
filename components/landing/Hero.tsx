@@ -15,15 +15,16 @@ export function Hero() {
         <h1 className="font-display text-display-xl text-fg">
           Lab<span className="text-primary">Meet</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-lg font-serif text-2xl font-bold leading-snug tracking-tight text-fg sm:text-[28px]">
-          논문보다 어려운 게 있다면,
-          <br className="sm:hidden" /> 그건 인연 찾기
+        <p className="mx-auto mt-4 max-w-lg font-serif text-[26px] font-bold leading-snug tracking-tight text-fg sm:text-[30px]">
+          p-value는 나오는데,
+          <br className="sm:hidden" />{" "}
+          <span className="text-pop">썸 value</span>는 왜 안 나올까
         </p>
 
         <p className="mx-auto mt-6 max-w-md text-[15px] leading-relaxed text-fg-muted">
           KAIST 석박사·졸업자 전용 오프라인 파티.
           <br className="hidden sm:block" />
-          학번 대신 연구실, 스펙 대신 대화로.
+          학번 대신 연구 주제, 스펙 대신 케미로.
         </p>
 
         <div className="mx-auto mt-10 flex max-w-xs items-center justify-center gap-3 text-xs text-fg-subtle">

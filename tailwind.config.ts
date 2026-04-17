@@ -27,6 +27,7 @@ const config: Config = {
           DEFAULT: rgbVar("primary"),
           deep: rgbVar("primary-deep"),
         },
+        pop: rgbVar("pop"),
         border: {
           DEFAULT: rgbVar("border"),
           strong: rgbVar("border-strong"),
@@ -43,9 +44,10 @@ const config: Config = {
         "display-md": ["clamp(1.75rem, 4.5vw, 2.5rem)", { lineHeight: "1.15", letterSpacing: "-0.01em" }],
       },
       boxShadow: {
-        glow: "0 0 40px -8px rgba(182, 233, 204, 0.35)",
-        "glow-strong": "0 0 60px -10px rgba(182, 233, 204, 0.55)",
-        card: "0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -20px rgba(0, 0, 0, 0.5)",
+        glow: "0 0 40px -8px rgba(20, 210, 120, 0.25)",
+        "glow-strong": "0 0 60px -10px rgba(20, 210, 120, 0.45)",
+        "glow-pop": "0 0 40px -10px rgba(255, 95, 85, 0.35)",
+        card: "0 1px 0 0 rgba(255, 255, 255, 0.7) inset, 0 20px 40px -24px rgba(20, 210, 120, 0.18)",
       },
       backgroundImage: {
         "mint-gradient": "linear-gradient(135deg, #B6E9CC 0%, #7FD4A4 100%)",

@@ -22,17 +22,18 @@
   --t-border-strong:  195 182 158;
   */
 
-  /* [ 밝은 민트 ] */
-  --t-bg-base:        210 245 230;   /* 메인 배경      */
+  /* [ 밝은 민트 · 코랄 믹스 ] */
+  --t-bg-base:        208 248 232;   /* 메인 배경      */
   --t-bg-card:        255 255 255;   /* 카드 배경      */
-  --t-bg-elevated:    240 252 246;   /* 인풋 배경      */
-  --t-accent:         30 180 110;    /* 포인트 컬러    */
-  --t-accent-deep:    20 150 90;     /* 포인트 딥      */
-  --t-text:           15 40 28;      /* 본문 텍스트    */
-  --t-text-muted:     50 110 78;     /* 보조 텍스트    */
-  --t-text-subtle:    100 150 120;   /* 약한 텍스트    */
-  --t-border:         180 225 205;   /* 기본 선        */
-  --t-border-strong:  140 205 175;   /* 강한 선        */
+  --t-bg-elevated:    238 253 246;   /* 인풋 배경      */
+  --t-accent:         20 210 120;    /* 포인트 컬러    */
+  --t-accent-deep:    10 175 95;     /* 포인트 딥      */
+  --t-accent-pop:     255 95 85;     /* 코랄 보조      */
+  --t-text:           12 38 26;      /* 본문 텍스트    */
+  --t-text-muted:     45 108 74;     /* 보조 텍스트    */
+  --t-text-subtle:    95 148 116;    /* 약한 텍스트    */
+  --t-border:         175 230 205;   /* 기본 선        */
+  --t-border-strong:  135 210 175;   /* 강한 선        */
 
   /* [ 다크 그린 ] — 위 10줄을 아래로 교체
   --t-bg-base:        8 16 12;
@@ -55,6 +56,7 @@
   --bg-elevated:   var(--t-bg-elevated);
   --primary:       var(--t-accent);
   --primary-deep:  var(--t-accent-deep);
+  --pop:           var(--t-accent-pop);
   --text-primary:  var(--t-text);
   --text-secondary: var(--t-text-muted);
   --text-tertiary: var(--t-text-subtle);
@@ -108,12 +110,20 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-bg-base transition-all;
-    box-shadow: 0 10px 30px -10px rgb(var(--t-accent) / 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+    @apply inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-bg-base;
+    box-shadow:
+      0 10px 30px -12px rgb(var(--t-accent) / 0.45),
+      0 6px 18px -10px rgb(var(--t-accent-pop) / 0.28),
+      inset 0 1px 0 rgba(255,255,255,0.35);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.25s ease;
   }
   .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 14px 34px -10px rgb(var(--t-accent) / 0.5), inset 0 1px 0 rgba(255,255,255,0.4);
+    transform: translateY(-2px) scale(1.012);
+    box-shadow:
+      0 16px 38px -12px rgb(var(--t-accent) / 0.55),
+      0 10px 24px -10px rgb(var(--t-accent-pop) / 0.38),
+      inset 0 1px 0 rgba(255,255,255,0.45);
   }
   .btn-primary:disabled {
     opacity: 0.5;

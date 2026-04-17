@@ -7,9 +7,9 @@ const POINTS = [
   },
   {
     emoji: "👻",
-    title: "전 남친·전 여친은 알아서 걸러드림",
+    title: "그 사람 올까봐 걱정? 알아서 걸러드림",
     body:
-      "신청서에 조용히 적어주시면 됩니다. 이름 언급 안 해도 됩니다. 저희가 알아서 처리합니다. 그 사람도 당신이 여기 왔는지 모릅니다.",
+      "신청서에 조용히 적어주시면 됩니다. 이름 언급 안 해도 돼요. 저희가 알아서 처리합니다. 그 사람도 당신이 여기 왔는지 모릅니다.",
   },
   {
     emoji: "🔒",
@@ -33,9 +33,12 @@ export function ReassuranceSection() {
 
       <div className="space-y-3">
         {POINTS.map((p) => (
-          <article key={p.title} className="card flex gap-5">
+          <article
+            key={p.title}
+            className="card flex gap-5 transition-transform duration-200 hover:-translate-y-0.5"
+          >
             <span
-              className="shrink-0 select-none text-[2rem] leading-[1]"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-pop/10 text-[1.75rem] leading-none"
               aria-hidden="true"
             >
               {p.emoji}

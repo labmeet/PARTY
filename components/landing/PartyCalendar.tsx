@@ -133,7 +133,7 @@ export function PartyCalendar() {
                   다음 파티 · KAIST 대전
                 </h3>
                 <p className="mt-2 text-[13px] text-fg-muted">
-                  아래에서 성별을 선택하고 신청해주세요.
+                  실험 참여하듯 가볍게. 결과는 현장에서.
                 </p>
               </div>
               <div className="relative mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -147,7 +147,7 @@ export function PartyCalendar() {
                 </Link>
               </div>
               <p className="relative mt-5 text-center text-[12px] text-fg-subtle">
-                심사 후 개별 초대 · 승인 연락 · 인원 제한
+                심사 있음 · 정원 제한 · 얼리버드가 유리합니다
               </p>
             </div>
           </motion.div>

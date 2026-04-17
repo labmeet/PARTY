@@ -45,7 +45,7 @@ export function MbtiSelector({
                   className={cn(
                     "rounded-xl border py-3 text-[13px] font-medium transition-all",
                     selected
-                      ? "border-primary bg-primary/15 text-primary shadow-glow"
+                      ? "border-primary bg-primary text-bg-card shadow-glow"
                       : "border-border bg-bg-elevated/50 text-fg-muted hover:border-border-strong hover:text-fg"
                   )}
                 >

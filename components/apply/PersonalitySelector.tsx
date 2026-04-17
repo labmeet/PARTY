@@ -31,7 +31,7 @@ export function PersonalitySelector({ value, onChange }: Props) {
               className={cn(
                 "h-9 rounded-full border px-4 text-[13px] font-medium transition-all",
                 selected
-                  ? "border-primary bg-primary/20 text-primary"
+                  ? "border-primary bg-primary text-bg-card shadow-glow"
                   : "border-border-strong bg-bg-elevated/60 text-fg-muted hover:border-primary/50 hover:text-fg"
               )}
             >

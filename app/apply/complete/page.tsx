@@ -28,8 +28,9 @@ export default function CompletePage() {
           신청이 완료되었습니다
         </h1>
         <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-fg-muted">
-          운영팀 내부 검토 후 승인 여부를 입력하신 이메일로
-          안내드리겠습니다. 소중한 시간 내어 신청해주셔서 감사합니다.
+          접수 완료. 이제 실험은 저희가 합니다.
+          <br />
+          결과는 메일로 알려드릴게요.
         </p>
 
         <div className="mt-10">
