@@ -21,7 +21,6 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.72.1",
-    "react-smoke": "1.2.0",
     "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
