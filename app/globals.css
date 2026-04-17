@@ -1,0 +1,121 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* RGB channel values so Tailwind can apply alpha modifiers via rgb(var(--x) / <alpha-value>) */
+  --bg-base: 11 20 16;         /* #0B1410 */
+  --bg-card: 17 31 24;         /* #111F18 */
+  --bg-elevated: 26 46 34;     /* #1A2E22 */
+
+  --primary: 182 233 204;      /* #B6E9CC */
+  --primary-deep: 127 212 164; /* #7FD4A4 */
+
+  --text-primary: 239 248 243; /* #EFF8F3 */
+  --text-secondary: 142 184 160; /* #8EB8A0 */
+  --text-tertiary: 90 122 101; /* #5A7A65 */
+
+  --border: 31 46 37;          /* #1F2E25 */
+  --border-strong: 42 61 48;   /* #2A3D30 */
+
+  --font-pretendard: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+}
+
+html, body {
+  background-color: rgb(var(--bg-base));
+  color: rgb(var(--text-primary));
+  font-family: var(--font-pretendard);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(127, 212, 164, 0.08), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 50% 110%, rgba(182, 233, 204, 0.04), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+@layer base {
+  ::selection {
+    background-color: rgb(var(--primary));
+    color: rgb(var(--bg-base));
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-noto-serif), 'Noto Serif KR', serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply mx-auto w-full max-w-[520px] px-5;
+  }
+
+  .container-page {
+    @apply mx-auto w-full max-w-[640px] px-5;
+  }
+
+  .divider-fade {
+    @apply relative h-px w-full;
+    background: linear-gradient(90deg, transparent, rgb(var(--border-strong)), transparent);
+  }
+
+  .btn-primary {
+    @apply inline-flex h-14 w-full items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-bg-base transition-all;
+    box-shadow: 0 10px 30px -10px rgba(182, 233, 204, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 34px -10px rgba(182, 233, 204, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-ghost {
+    @apply inline-flex h-14 w-full items-center justify-center gap-2 rounded-full border border-border-strong bg-bg-card/60 px-6 font-medium text-fg backdrop-blur transition-all;
+  }
+  .btn-ghost:hover {
+    border-color: rgb(var(--primary));
+    color: rgb(var(--primary));
+  }
+
+  .card {
+    @apply rounded-3xl border border-border bg-bg-card p-6 shadow-card;
+  }
+
+  .pill {
+    @apply inline-flex h-7 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 text-xs font-medium text-primary;
+  }
+
+  .input-base {
+    @apply w-full rounded-2xl border border-border bg-bg-elevated/60 px-5 py-4 text-[15px] text-fg placeholder:text-fg-subtle outline-none transition-all;
+  }
+  .input-base:focus {
+    border-color: rgb(var(--primary));
+    background-color: rgb(var(--bg-elevated));
+    box-shadow: 0 0 0 4px rgba(182, 233, 204, 0.18);
+  }
+  .input-base[aria-invalid="true"] {
+    border-color: #E57373;
+  }
+
+  .label {
+    @apply mb-2 block text-[13px] font-medium tracking-wide text-fg-muted;
+  }
+
+  .caption {
+    @apply mt-1.5 text-[12px] text-fg-subtle;
+  }
+
+  .error-text {
+    @apply mt-1.5 text-[12px] text-[#F0A0A0];
+  }
+}
