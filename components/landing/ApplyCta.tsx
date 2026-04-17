@@ -1,9 +1,54 @@
+import Link from "next/link";
+
+type Variant = "full" | "compact" | "final";
+
+export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
+  if (variant === "final") return <FinalCta />;
+
+  const compact = variant === "compact";
+  return (
+    <section className="container-page py-8 sm:py-12">
+      <div className="relative overflow-hidden rounded-[28px] border border-border bg-bg-card px-6 py-8 shadow-card sm:px-10 sm:py-10">
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(182, 233, 204, 0.10) 0%, transparent 65%)",
+          }}
+          aria-hidden="true"
+        />
+        {!compact && (
+          <div className="relative mb-6 text-center">
+            <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.3em] text-primary">
+              Apply
+            </p>
+            <h3 className="font-serif text-[22px] font-bold leading-tight text-fg sm:text-[26px]">
+              파티 신청하기
+            </h3>
+          </div>
+        )}
+        <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <Link href="/apply/female" className="btn-primary group">
+            <span>여성 신청하기</span>
+            <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          </Link>
+          <Link href="/apply/male" className="btn-primary group">
+            <span>남성 신청하기</span>
+            <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          </Link>
+        </div>
+        <p className="relative mt-4 text-center text-[12px] text-fg-subtle">
+          알잘딱으로 자리 채워드림 · 얼리버드 4월 30일까지
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function FinalCta() {
   return (
     <section className="container-page py-12 sm:py-20">
       <div className="relative">
-        
-        {/* 비디오: 섹션 전체 너비, 페이지 폭에 맞게 */}
         <video
           autoPlay
           loop
@@ -11,12 +56,11 @@ function FinalCta() {
           playsInline
           ref={(el) => { if (el) el.playbackRate = 0.5; }}
           className="pointer-events-none w-full rounded-[32px]"
-          style={{ mixBlendMode: 'screen', display: 'block' }}
+          style={{ mixBlendMode: "screen", display: "block" }}
         >
           <source src="/smoke.webm" type="video/webm" />
         </video>
 
-        {/* 카드: 비디오 하단 절반에 걸치게 absolute */}
         <div className="absolute bottom-0 left-0 right-0 translate-y-1/3 px-4 sm:px-8">
           <h2 className="mb-8 text-center font-serif text-[34px] font-bold leading-[1.2] tracking-tight text-primary sm:mb-10 sm:text-[44px]">
             이제 내 짝을
@@ -73,7 +117,6 @@ function FinalCta() {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
