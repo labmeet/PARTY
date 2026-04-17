@@ -1,5 +1,6 @@
 import { Hero } from "@/components/landing/Hero";
 import { AboutSection } from "@/components/landing/AboutSection";
+import { PartyCalendar } from "@/components/landing/PartyCalendar";
 import { CtaButtons } from "@/components/landing/CtaButtons";
 import { Footer } from "@/components/landing/Footer";
 
@@ -11,6 +12,10 @@ export default function Home() {
         <div className="divider-fade" />
       </div>
       <AboutSection />
+      <div className="container-page">
+        <div className="divider-fade" />
+      </div>
+      <PartyCalendar />
       <div className="container-page">
         <div className="divider-fade" />
       </div>
