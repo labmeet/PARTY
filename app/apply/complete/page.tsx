@@ -28,9 +28,9 @@ export default function CompletePage() {
           신청이 완료되었습니다
         </h1>
         <p className="mx-auto mt-5 max-w-sm text-[14px] leading-relaxed text-fg-muted">
-          접수 완료. 이제 실험은 저희가 합니다.
+          접수 완료. 이제 당신 연애는 저희가 책임집니다.
           <br />
-          결과는 메일로 알려드릴게요.
+          연구만 하세요.
         </p>
 
         <div className="mt-10">
