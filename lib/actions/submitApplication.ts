@@ -31,6 +31,7 @@ export async function submitApplication(
     mbti: parsed.data.mbti.toUpperCase(),
     personality_keywords: parsed.data.personality_keywords,
     ideal_type: parsed.data.ideal_type,
+    deal_breaker: parsed.data.deal_breaker || null,
     email: parsed.data.email.toLowerCase(),
   });
 

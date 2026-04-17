@@ -37,6 +37,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       mbti: "",
       personality_keywords: [],
       ideal_type: "",
+      deal_breaker: "",
       email: "",
     },
   });
@@ -182,6 +183,20 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               placeholder="예) 연구에 진지하고 유머감각 있는 분, 퇴근 후 같이 맥주 한 잔 할 수 있는 분, 대화가 잘 통하고 가치관이 맞는 분…"
               aria-invalid={!!errors.ideal_type}
               {...register("ideal_type")}
+            />
+          </Field>
+
+          <Field
+            label="만나고 싶지 않은 사람 (선택)"
+            error={errors.deal_breaker?.message}
+            caption="500자 이내로 자유롭게 적어주세요."
+          >
+            <textarea
+              rows={4}
+              className="input-base resize-none leading-relaxed"
+              placeholder="예) 흡연자, 너무 내성적인 분, 연락이 불규칙한 분…"
+              aria-invalid={!!errors.deal_breaker}
+              {...register("deal_breaker")}
             />
           </Field>
         </div>

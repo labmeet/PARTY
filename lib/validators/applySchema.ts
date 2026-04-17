@@ -35,6 +35,12 @@ export const applySchema = z.object({
     .trim()
     .min(10, "이상형을 10자 이상 작성해주세요")
     .max(500, "500자 이내로 작성해주세요"),
+  deal_breaker: z
+    .string()
+    .trim()
+    .max(500, "500자 이내로 작성해주세요")
+    .optional()
+    .or(z.literal("")),
   email: z.string().trim().email("올바른 이메일 형식이 아닙니다"),
 });
 

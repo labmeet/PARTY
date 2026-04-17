@@ -97,7 +97,7 @@ body {
   }
 
   .input-base {
-    @apply w-full rounded-2xl border border-border bg-bg-elevated/60 px-5 py-4 text-[15px] text-fg placeholder:text-fg-subtle outline-none transition-all;
+    @apply w-full rounded-2xl border border-border bg-white px-5 py-4 text-[15px] text-fg placeholder:text-fg-subtle outline-none transition-all;
   }
   .input-base:focus {
     border-color: rgb(var(--primary));
