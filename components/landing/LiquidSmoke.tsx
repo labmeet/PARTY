@@ -1,45 +1,32 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { createNoise2D } from "simplex-noise";
 
-// ─── Color palette ────────────────────────────────────────────────────────────
-// Dense core:    #4FA77A  rgb(79  167 122)
-// Primary mint:  #78C8A0  rgb(120 200 160)
-// Light wisp:    #B6E9CC  rgb(182 233 204)
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const MINT_CORE = [79, 167, 122] as const;
-const MINT_MID = [120, 200, 160] as const;
-const MINT_WISP = [182, 233, 204] as const;
-
-function lerpColor(
-  a: readonly [number, number, number],
-  b: readonly [number, number, number],
-  t: number
-): [number, number, number] {
-  return [
-    Math.round(a[0] + (b[0] - a[0]) * t),
-    Math.round(a[1] + (b[1] - a[1]) * t),
-    Math.round(a[2] + (b[2] - a[2]) * t),
-  ];
-}
-
-// Spec §4: density > 0.35 → CORE, else MID. Remove most WISP.
-function pickColor(density: number): [number, number, number] {
-  if (density > 0.35) {
-    return lerpColor(MINT_MID, MINT_CORE, (density - 0.35) / 0.65);
-  }
-  // Small wisp band only at very low density
-  return lerpColor(MINT_WISP, MINT_MID, density / 0.35);
-}
-
-// ─── Smoothstep helper ────────────────────────────────────────────────────────
 function smoothstep(edge0: number, edge1: number, x: number): number {
   const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
   return t * t * (3 - 2 * t);
 }
 
+function lerp(a: number, b: number, t: number): number {
+  return a + (b - a) * t;
+}
+
+// Spec §A: activeCount(p) = floor(lerp(10, 180, smoothstep(0.0, 0.95, p)))
+function activeCount(scrollProgress: number, scale: number): number {
+  return Math.floor(lerp(10, 180, smoothstep(0.0, 0.95, scrollProgress)) * scale);
+}
+
+// Spec §B: S-curve X position
+// x(normY, t) = W * (0.5 + 0.36 * sin(normY * 5.5 + t * 0.12))
+function sCurveX(normY: number, W: number, t: number): number {
+  return W * (0.5 + 0.36 * Math.sin(normY * 5.5 + t * 0.12));
+}
+
 // ─── Particle ─────────────────────────────────────────────────────────────────
+
 interface Particle {
   x: number;
   y: number;
@@ -48,73 +35,66 @@ interface Particle {
   age: number;
   maxAge: number;
   radius: number;
-  baseOpacity: number;
-  density: number; // 0 wisp .. 1 core
+  baseAlpha: number;
+  buoyancy: number; // 0..1 random at spawn
+  alive: boolean;
 }
 
-// Spec §2: 220–280 particles, tune for perf.
-// Mobile branch drops to 140 for performance.
-function getParticleCount(): number {
-  if (typeof window === "undefined") return 240;
-  return window.innerWidth < 768 ? 140 : 240;
-}
-
-// Spec §1 + §2: spawn at the S-curve position for a given normalized y [0..1].
-// totalPageH is document.documentElement.scrollHeight.
-function sCurveX(normY: number, W: number, t: number): number {
-  // x(y) = W * (0.5 + 0.32 * sin(y * PI * 2.2 + t * 0.15))
-  return W * (0.5 + 0.32 * Math.sin(normY * Math.PI * 2.2 + t * 0.15));
-}
-
-function createParticle(
+function spawnParticle(
   W: number,
   H: number,
   scrollProgress: number,
-  totalPageH: number,
   t: number,
+  noise2D: (x: number, y: number) => number,
   aged?: boolean
 ): Particle {
-  const density = 0.2 + Math.random() * 0.8; // bias away from pure wisp
+  const buoyancy = Math.random();
 
-  // Spec §2: longer lives — 15–30s
-  const maxAge = 15 + Math.random() * 15;
+  // Spec §F: radius = 80 + buoyancy*140 + random*60
+  const radius = 80 + buoyancy * 140 + Math.random() * 60;
 
-  const radius = 70 + density * 130 + Math.random() * 90;
+  // Spec §E: maxAge 20–35s
+  const maxAge = 20 + Math.random() * 15;
 
-  // Spawn near the active scroll head with some spread
-  const spawnProgress = Math.max(
-    0,
-    Math.min(1, scrollProgress + (Math.random() - 0.5) * 0.25)
-  );
+  // Spec §F: alpha 0.12–0.25
+  // Smoke-light particles get higher alpha; ash-heavy slightly lower
+  const baseAlpha = buoyancy > 0.65
+    ? 0.16 + Math.random() * 0.09   // smoke: 0.16–0.25
+    : 0.12 + Math.random() * 0.07;  // ash:   0.12–0.19
 
-  const spawnY = spawnProgress * totalPageH;
-  // Map to viewport coordinates: spawnY - scrollY
-  const scrollY = scrollProgress * Math.max(0, totalPageH - H);
-  const viewportY = spawnY - scrollY;
+  // Spec §C: spawn near the active scroll head [0.45*H, 0.9*H] in viewport coords
+  const spawnViewportY = H * (0.45 + Math.random() * 0.45);
 
-  // Clamp inside or near viewport
-  const clampedViewportY = Math.max(-radius, Math.min(H + radius, viewportY));
+  // Derive page-normalised Y for S-curve
+  const maxScroll = Math.max(1, document.documentElement.scrollHeight - H);
+  const scrollY = scrollProgress * maxScroll;
+  const pageY = scrollY + spawnViewportY;
+  const normY = pageY / document.documentElement.scrollHeight;
 
-  const normY = spawnY / totalPageH;
+  // Spec §C: spawn X = sCurveX(currentNormY) ± 60px noise drift
   const curveX = sCurveX(normY, W, t);
-  // Jitter ±15% of viewport width so wisps spread into gutters
-  const jitterX = (Math.random() - 0.5) * W * 0.3;
+  const jitter = (Math.random() - 0.5) * 120; // ±60px
+
+  // Spec §C: initial velocity — ash-like falling start
+  const vy = 0.3 + Math.random() * 0.5;
+  const vx = 0;
 
   return {
-    x: curveX + jitterX,
-    y: clampedViewportY,
-    vx: (Math.random() - 0.5) * 0.5,
-    vy: (Math.random() - 0.5) * 0.3, // no initial direction bias
-    age: aged ? Math.random() * maxAge * 0.6 : 0,
+    x: curveX + jitter,
+    y: spawnViewportY,
+    vx,
+    vy,
+    age: aged ? Math.random() * maxAge * 0.5 : 0,
     maxAge,
     radius,
-    // Spec §4: base opacity 0.07–0.18
-    baseOpacity: 0.07 + density * 0.11,
-    density,
+    baseAlpha,
+    buoyancy,
+    alive: true,
   };
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
+
 export function LiquidSmoke() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef({
@@ -126,32 +106,20 @@ export function LiquidSmoke() {
     noise2D: createNoise2D(),
     animFrame: 0,
     lastTime: 0,
-    totalPageH: 1,
-    PARTICLE_COUNT: 240,
   });
 
-  const init = useCallback((W: number, H: number) => {
-    const s = stateRef.current;
-    s.PARTICLE_COUNT = getParticleCount();
-    s.totalPageH = document.documentElement.scrollHeight;
-    // Seed particles distributed across the full page, pre-aged
-    s.particles = Array.from({ length: s.PARTICLE_COUNT }, (_, i) => {
-      const seedProgress = i / s.PARTICLE_COUNT;
-      return createParticle(W, H, seedProgress, s.totalPageH, 0, true);
-    });
-  }, []);
-
   useEffect(() => {
-    // ── Reduced-motion fallback ────────────────────────────────────────────
-    const prefersReduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+
+    // Spec §G: mobile scale
+    const isMobile = window.innerWidth < 768;
+    const mobileScale = isMobile ? 0.6 : 1.0;
 
     let W = 0;
     let H = 0;
@@ -164,25 +132,19 @@ export function LiquidSmoke() {
       canvas.height = H * dpr;
       canvas.style.width = `${W}px`;
       canvas.style.height = `${H}px`;
-      ctx.scale(dpr, dpr);
-      stateRef.current.totalPageH = document.documentElement.scrollHeight;
-      if (stateRef.current.particles.length === 0) {
-        init(W, H);
-      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener("resize", resize, { passive: true });
 
-    // ── Scroll tracking ────────────────────────────────────────────────────
+    // ── Scroll tracking ──────────────────────────────────────────────────────
     const onScroll = () => {
       const s = stateRef.current;
       const now = performance.now() / 1000;
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const scrollY = window.scrollY;
 
-      s.scrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
-      s.totalPageH = document.documentElement.scrollHeight;
+      s.scrollProgress = scrollY / maxScroll;
 
       const dt = Math.max(0.001, now - s.lastScrollTime);
       s.scrollVelocity = (scrollY - s.lastScrollY) / dt;
@@ -191,152 +153,191 @@ export function LiquidSmoke() {
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // ── Draw one particle ──────────────────────────────────────────────────
+    // ── Draw one particle ────────────────────────────────────────────────────
     const drawParticle = (p: Particle) => {
+      // Life fade: fade in over first 5% of life, hold, fade out over last 15%
       const lifeRatio = p.age / p.maxAge;
-      // Fade in quickly, hold, then fade out over last 20%
-      const alphaFactor =
-        lifeRatio < 0.08
-          ? lifeRatio / 0.08
-          : lifeRatio > 0.8
-          ? 1 - (lifeRatio - 0.8) / 0.2
+      const alphaFade =
+        lifeRatio < 0.05
+          ? lifeRatio / 0.05
+          : lifeRatio > 0.85
+          ? 1 - (lifeRatio - 0.85) / 0.15
           : 1;
 
-      const alpha = p.baseOpacity * alphaFactor;
-      if (alpha < 0.004) return;
+      const alpha = p.baseAlpha * alphaFade;
 
-      const [r, g, b] = pickColor(p.density);
+      // Spec §G: skip below threshold
+      if (alpha < 0.006) return;
 
-      // Spec §4: inner hot-core ring for density > 0.7
-      if (p.density > 0.7) {
-        const innerR = p.radius * 0.35;
-        const coreGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, innerR);
-        const coreAlpha = Math.min(1, alpha * 1.2);
-        coreGrad.addColorStop(0, `rgba(${r},${g},${b},${coreAlpha})`);
-        coreGrad.addColorStop(0.5, `rgba(${r},${g},${b},${coreAlpha * 0.6})`);
-        coreGrad.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx.fillStyle = coreGrad;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, innerR, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Spec §G: skip if outside viewport bounds
+      if (
+        p.x < -100 || p.x > W + 100 ||
+        p.y < -100 || p.y > H + 100
+      ) return;
 
-      // Outer soft volume
+      // Spec §F: rgba(166, 216, 180, alpha) — brighter mint #A6D8B4
+      const r = 166, g = 216, b = 180;
+
+      // Spec §H: NO blend mode — source-over only, set once in loop
+      // Spec §F: outer radial gradient
       const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
-      grad.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
-      grad.addColorStop(0.3, `rgba(${r},${g},${b},${alpha * 0.65})`);
-      grad.addColorStop(0.65, `rgba(${r},${g},${b},${alpha * 0.22})`);
-      grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      grad.addColorStop(0,   `rgba(${r},${g},${b},${alpha})`);
+      grad.addColorStop(0.35, `rgba(${r},${g},${b},${alpha * 0.55})`);
+      grad.addColorStop(0.7,  `rgba(${r},${g},${b},${alpha * 0.18})`);
+      grad.addColorStop(1,    `rgba(${r},${g},${b},0)`);
 
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
       ctx.fill();
-    };
 
-    // ── Animation loop ─────────────────────────────────────────────────────
-    const tick = (timestamp: number) => {
-      const s = stateRef.current;
-
-      s.animFrame = requestAnimationFrame(tick);
-
-      if (document.hidden) return;
-
-      const dt = Math.min(
-        0.05,
-        s.lastTime === 0 ? 0.016 : (timestamp - s.lastTime) / 1000
-      );
-      s.lastTime = timestamp;
-      const t = timestamp / 1000;
-
-      // ── Gravity formula (spec §3) ────────────────────────────────────────
-      // dirDown  = smoothstep(0, 0.05, scrollVelocity/500)
-      // dirRest  = 1 - |scrollVelocity|/800
-      // nearEnd  = smoothstep(0.88, 0.98, scrollProgress)
-      //
-      // g = 0.12 * dirDown + 0.02 * dirRest - 0.35 * nearEnd
-      //
-      // Positive g = downward (vy += g), negative = upward.
-
-      const vel = s.scrollVelocity;
-      const dirDown = smoothstep(0, 0.05, vel / 500);
-      const dirRest = Math.max(0, 1 - Math.abs(vel) / 800);
-      const nearEnd = smoothstep(0.88, 0.98, s.scrollProgress);
-
-      const gravity = 0.12 * dirDown + 0.02 * dirRest - 0.35 * nearEnd;
-
-      // Spec §7: horizontal wind — reduced coefficient since downward gravity dominates
-      const windX =
-        Math.sign(vel) * Math.min(Math.abs(vel) * 0.00015, 0.35);
-
-      // Clear canvas
-      ctx.clearRect(0, 0, W, H);
-
-      // Spec §5: no blend mode — direct alpha fill over black bg
-      ctx.globalCompositeOperation = "source-over";
-
-      for (const particle of s.particles) {
-        particle.age += dt;
-
-        // Spec §2: respawn logic — particles live longer. Respawn when aged out
-        // or escaped far off-screen. Do NOT respawn at bottom; spawn at current
-        // scroll head.
-        const escaped =
-          particle.y < -particle.radius * 3 ||
-          particle.y > H + particle.radius * 3 ||
-          particle.x < -particle.radius * 2 ||
-          particle.x > W + particle.radius * 2;
-
-        if (particle.age > particle.maxAge || escaped) {
-          const fresh = createParticle(
-            W,
-            H,
-            s.scrollProgress,
-            s.totalPageH,
-            t,
-            false
-          );
-          Object.assign(particle, fresh);
-          continue;
-        }
-
-        // Noise-driven curl distortion (spec §7: keep simplex curl)
-        const nx = s.noise2D(
-          particle.x * 0.002,
-          particle.y * 0.002 + t * 0.06
-        );
-        const ny = s.noise2D(
-          particle.x * 0.002 + 100,
-          particle.y * 0.002 + t * 0.06 + 50
-        );
-
-        particle.vx += Math.sin(nx * Math.PI) * 0.22 * dt;
-        particle.vy += Math.cos(ny * Math.PI) * 0.14 * dt;
-
-        // Horizontal wind (reduced)
-        particle.vx += windX * dt * 10;
-
-        // Spec §3: sustained gravity — positive = down, negative = up
-        particle.vy += gravity * dt * 60;
-
-        // Damping
-        particle.vx *= 0.988;
-        particle.vy *= 0.990;
-
-        // Clamp velocity — allow more upward range when near bottom
-        const maxUp = nearEnd > 0.5 ? -4.5 : -2.5;
-        particle.vx = Math.max(-1.8, Math.min(1.8, particle.vx));
-        particle.vy = Math.max(maxUp, Math.min(2.5, particle.vy));
-
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        drawParticle(particle);
+      // Spec §F: inner bright core for buoyant (smoke-light) particles
+      if (p.buoyancy > 0.65) {
+        const coreR = p.radius * 0.3;
+        const coreAlpha = Math.min(1, alpha * 1.4);
+        const coreGrad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, coreR);
+        coreGrad.addColorStop(0, `rgba(${r},${g},${b},${coreAlpha})`);
+        coreGrad.addColorStop(0.6, `rgba(${r},${g},${b},${coreAlpha * 0.4})`);
+        coreGrad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+        ctx.fillStyle = coreGrad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, coreR, 0, Math.PI * 2);
+        ctx.fill();
       }
     };
 
-    // Initialise before first frame
-    init(W, H);
+    // ── Animation loop ───────────────────────────────────────────────────────
+    const tick = (timestamp: number) => {
+      const s = stateRef.current;
+      s.animFrame = requestAnimationFrame(tick);
+
+      // Spec §G: pause when hidden
+      if (document.hidden) return;
+
+      const dt = Math.min(0.05, s.lastTime === 0 ? 0.016 : (timestamp - s.lastTime) / 1000);
+      s.lastTime = timestamp;
+      const t = timestamp / 1000;
+
+      const sp = s.scrollProgress;
+
+      // Spec §A: how many particles should be alive right now
+      const budget = Math.floor(activeCount(sp, mobileScale));
+
+      // Spec §D: scroll-end lift
+      const nearEnd = smoothstep(0.90, 0.99, sp);
+
+      const vel = s.scrollVelocity;
+
+      // ── Update existing particles ──────────────────────────────────────────
+      let aliveCount = 0;
+
+      for (let i = 0; i < s.particles.length; i++) {
+        const p = s.particles[i];
+        if (!p.alive) continue;
+
+        p.age += dt;
+
+        // Death conditions
+        const escaped =
+          p.x < -(p.radius + 200) || p.x > W + p.radius + 200 ||
+          p.y < -(p.radius + 200) || p.y > H + p.radius + 200;
+
+        // Spec §E: near end, don't kill by maxAge — let them float up
+        const ageKill = nearEnd > 0.5 ? false : p.age > p.maxAge;
+
+        if (ageKill || escaped) {
+          p.alive = false;
+          continue;
+        }
+
+        // Spec §A: cull particles over budget (don't update or draw)
+        aliveCount++;
+        if (aliveCount > budget) {
+          // Over budget — mark oldest ones dead (simple: just stop drawing)
+          // We'll skip physics for particles beyond budget index
+          continue;
+        }
+
+        // ── Physics ──────────────────────────────────────────────────────────
+
+        // Spec §D: noise curl (small amplitude 0.1)
+        const noiseScale = 0.0018;
+        const nx = s.noise2D(p.x * noiseScale, p.y * noiseScale + t * 0.05);
+        const ny = s.noise2D(p.x * noiseScale + 47.3, p.y * noiseScale + t * 0.05 + 31.7);
+
+        p.vx += Math.sin(nx * Math.PI * 2) * 0.1 * dt * 60;
+        p.vy += Math.cos(ny * Math.PI * 2) * 0.1 * dt * 60;
+
+        // Spec §D: two-component buoyancy
+        if (p.buoyancy < 0.35) {
+          // Ash-heavy: positive gravity (falls)
+          p.vy += 0.06 * dt * 60;
+          p.vx *= Math.pow(0.985, dt * 60);
+          p.vy *= Math.pow(0.985, dt * 60);
+        } else if (p.buoyancy > 0.65) {
+          // Smoke-light: negative buoyancy (rises)
+          p.vy -= 0.04 * dt * 60;
+          p.vx *= Math.pow(0.988, dt * 60);
+          p.vy *= Math.pow(0.988, dt * 60);
+        } else {
+          // Neutral float — gentle noise-driven drift only
+          p.vx *= Math.pow(0.990, dt * 60);
+          p.vy *= Math.pow(0.990, dt * 60);
+        }
+
+        // Spec §D: scroll wind
+        if (vel > 20) {
+          // Scrolling down — smoke falls behind user
+          p.vy += 0.04 * dt * 60;
+        } else if (vel < -20) {
+          // Scrolling up
+          p.vy -= 0.02 * dt * 60;
+        }
+
+        // Spec §D: near-end sustained gentle lift
+        if (nearEnd > 0) {
+          p.vy -= 0.18 * nearEnd * dt * 60;
+        }
+
+        // Velocity clamp
+        p.vx = Math.max(-2.5, Math.min(2.5, p.vx));
+        p.vy = Math.max(-5.0, Math.min(3.0, p.vy));
+
+        p.x += p.vx;
+        p.y += p.vy;
+      }
+
+      // ── Spawn new particles up to budget ────────────────────────────────────
+      const currentAlive = s.particles.filter(p => p.alive).length;
+      const toSpawn = Math.min(4, Math.max(0, budget - currentAlive));
+
+      for (let i = 0; i < toSpawn; i++) {
+        // Find a dead slot to reuse, or push new
+        const deadIdx = s.particles.findIndex(p => !p.alive);
+        const fresh = spawnParticle(W, H, sp, t, s.noise2D, false);
+        if (deadIdx >= 0) {
+          s.particles[deadIdx] = fresh;
+        } else {
+          s.particles.push(fresh);
+        }
+      }
+
+      // ── Render ───────────────────────────────────────────────────────────────
+      // Spec §F: clear each frame, no trail
+      ctx.clearRect(0, 0, W, H);
+
+      // Spec §H: no blend mode
+      ctx.globalCompositeOperation = "source-over";
+
+      // Draw alive particles within budget
+      let drawn = 0;
+      for (const p of s.particles) {
+        if (!p.alive) continue;
+        drawn++;
+        if (drawn > budget) break;
+        drawParticle(p);
+      }
+    };
 
     const state = stateRef.current;
     state.animFrame = requestAnimationFrame(tick);
@@ -346,26 +347,26 @@ export function LiquidSmoke() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", onScroll);
     };
-  }, [init]);
+  }, []);
 
   return (
     <>
-      {/* Reduced-motion fallback: static gradient, behind everything */}
+      {/* Reduced-motion fallback: barely-visible static mint glow at bottom */}
       <div
         aria-hidden
         className="pointer-events-none fixed inset-0"
         style={{
-          zIndex: -1,
+          zIndex: 0,
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 75%, rgba(79,167,122,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 50% 30% at 50% 100%, rgba(166,216,180,0.06) 0%, transparent 70%)",
         }}
       />
-      {/* Spec §5: canvas at z-index -1, behind <main> at z-10. No blend mode. */}
+      {/* Spec §F: canvas z-index 0 — <main> at z-10 sits above, cards occlude smoke naturally */}
       <canvas
         ref={canvasRef}
         aria-hidden
         className="pointer-events-none fixed inset-0"
-        style={{ zIndex: -1 }}
+        style={{ zIndex: 0 }}
       />
     </>
   );
