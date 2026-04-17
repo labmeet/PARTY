@@ -36,6 +36,21 @@ export function FloatingAssets() {
           />
         </div>
       ))}
+
+      {/* Main beaker — bottom-right, large, tilted */}
+      <div
+        className="absolute bottom-[-60px] right-[-60px] sm:bottom-[-100px] sm:right-[-100px]"
+        style={{ transform: "rotate(20deg)", opacity: 0.92 }}
+      >
+        <Image
+          src="/bicker-transparent.png"
+          alt=""
+          width={520}
+          height={520}
+          className="w-[280px] sm:w-[460px] drop-shadow-[0_30px_50px_rgba(182,233,204,0.18)]"
+          style={{ height: "auto" }}
+        />
+      </div>
     </div>
   );
 }
