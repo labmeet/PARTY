@@ -1,4 +1,14 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+
 export function Footer() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = 0.5;
+  }, []);
+
   return (
     <footer className="container-page pt-12 pb-0 text-center">
       <div className="divider-fade mb-10" aria-hidden="true" />
@@ -14,14 +24,13 @@ export function Footer() {
         © {new Date().getFullYear()} LabMeet. All rights reserved.
       </p>
 
-      {/* 연기 비디오 */}
       <div className="mt-8 w-full overflow-hidden">
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          ref={(el) => { if (el) el.playbackRate = 0.5; }}
           className="w-full object-cover"
           style={{ mixBlendMode: 'screen', display: 'block' }}
         >
