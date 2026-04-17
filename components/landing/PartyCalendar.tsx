@@ -199,7 +199,7 @@ export function PartyCalendar() {
                               <span>여성 신청</span>
                               <span className="transition-transform group-hover:translate-x-0.5">→</span>
                             </Link>
-                            <Link href="/apply/male" className="btn-ghost group">
+                            <Link href="/apply/male" className="btn-primary group">
                               <span>남성 신청</span>
                               <span className="transition-transform group-hover:translate-x-0.5">→</span>
                             </Link>

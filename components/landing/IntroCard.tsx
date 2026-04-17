@@ -17,10 +17,10 @@ export function IntroCard() {
           aria-hidden="true"
         />
         <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.25em] text-pop">
-          Who we are
+          About the project
         </p>
         <h2 className="font-serif text-[22px] font-bold leading-snug text-fg sm:text-[26px]">
-          랩미는 누가 만드나요?
+          랩미 프로젝트란?
         </h2>
         <p className="mt-4 text-[14px] leading-[1.75] text-fg-muted sm:text-[15px]">
           KAIST 내 석박사 재학·졸업생 대상 오프라인 파티와

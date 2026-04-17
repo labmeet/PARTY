@@ -11,14 +11,14 @@ export function QuoteCard() {
           aria-hidden="true"
         />
         <p className="relative mb-5 text-[11px] font-medium uppercase tracking-[0.3em] text-pop">
-          This Friday · Daejeon
+          Private Party · KAIST
         </p>
-        <blockquote className="relative font-serif text-[26px] font-bold leading-[1.35] tracking-tight text-fg sm:text-[34px]">
-          랩실에서 눈만 마주치던
+        <blockquote className="relative font-serif text-[24px] font-bold leading-[1.4] tracking-tight text-fg sm:text-[32px]">
+          건물에서 눈만 마주치던 그 사람,
           <br />
-          그 사람, 이번 금요일
+          <span className="text-primary">5월 29일 랩미에서</span>
           <br />
-          <span className="text-primary">대전에서 만납니다.</span>
+          프라이빗하게 만납니다.
         </blockquote>
         <figcaption className="relative mt-7 flex items-center justify-center gap-3 text-[11px] tracking-[0.25em] text-fg-subtle">
           <span className="h-px w-8 bg-border-strong" aria-hidden="true" />
