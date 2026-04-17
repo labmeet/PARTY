@@ -43,7 +43,7 @@ export function LiquidSmoke() {
         smoke={{
           color: smokeColor,
           density: 20,
-          opacity: 0.15,
+          opacity: 0.30,
           enableRotation: true,
           rotation: [0, 0, 0.06],
           enableTurbulence: true,
