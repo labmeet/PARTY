@@ -24,7 +24,7 @@ export function LiquidSmoke() {
   const opacity = useTransform(
     scrollYProgress,
     [0, 0.35, 0.8, 1],
-    [0.28, 0.5, 0.78, 0.9]
+    [0.1, 0.2, 0.45, 0.6]
   );
 
   if (!mounted) return null;
@@ -42,8 +42,8 @@ export function LiquidSmoke() {
         disableDefaultLights
         smoke={{
           color: smokeColor,
-          density: 55,
-          opacity: 0.32,
+          density: 20,
+          opacity: 0.15,
           enableRotation: true,
           rotation: [0, 0, 0.06],
           enableTurbulence: true,
