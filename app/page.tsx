@@ -27,9 +27,9 @@ export default function Home() {
           <div className="divider-fade" />
         </div>
         <ReassuranceSection />
-        <SmokeVideo />
         <ApplyCta variant="final" />
-        <Footer />
+        <Footer /> 
+        <SmokeVideo />
       </main>
     </>
   );
