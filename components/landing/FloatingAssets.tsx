@@ -1,61 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+
+const hearts = [
+  { top: "6%",  left: "2%",  size: 120, rotate: -15, opacity: 0.30 },
+  { top: "15%", right: "4%", size: 90,  rotate: 10,  opacity: 0.25 },
+  { top: "40%", left: "5%",  size: 140, rotate: -8,  opacity: 0.22 },
+  { top: "52%", right: "2%", size: 120, rotate: 18,  opacity: 0.28 },
+  { top: "70%", left: "1%",  size: 80,  rotate: -20, opacity: 0.20 },
+  { top: "75%", right: "6%", size: 100, rotate: 5,   opacity: 0.25 },
+];
 
 export function FloatingAssets() {
-  const { scrollYProgress } = useScroll();
-
-  const opacity = useTransform(scrollYProgress, [0.2, 0.55, 1], [0, 0.6, 1]);
-  const heartY = useTransform(scrollYProgress, [0, 1], [120, 0]);
-  const heartRotate = useTransform(scrollYProgress, [0, 1], [-6, -14]);
-  const beakerY = useTransform(scrollYProgress, [0, 1], [140, 0]);
-  const beakerRotate = useTransform(scrollYProgress, [0, 1], [8, 22]);
-
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-0 h-[55vh] overflow-visible"
-    >
-      {/* Heart — left */}
-      <motion.div
-        style={{
-          opacity,
-          y: heartY,
-          rotate: heartRotate,
-          mixBlendMode: "screen",
-        }}
-        className="absolute bottom-[-40px] left-[-30px] sm:bottom-[-60px] sm:left-[-10px]"
-      >
-        <Image
-          src="/heart.png"
-          alt=""
-          width={320}
-          height={320}
-          priority={false}
-          className="h-[180px] w-auto drop-shadow-[0_30px_40px_rgba(15,175,100,0.25)] sm:h-[280px]"
-        />
-      </motion.div>
-
-      {/* Beaker — right */}
-      <motion.div
-        style={{
-          opacity,
-          y: beakerY,
-          rotate: beakerRotate,
-          mixBlendMode: "screen",
-        }}
-        className="absolute bottom-[-50px] right-[-40px] sm:bottom-[-70px] sm:right-[-20px]"
-      >
-        <Image
-          src="/bicker.png"
-          alt=""
-          width={360}
-          height={480}
-          priority={false}
-          className="h-[220px] w-auto drop-shadow-[0_30px_40px_rgba(15,175,100,0.22)] sm:h-[340px]"
-        />
-      </motion.div>
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+      {hearts.map((h, i) => (
+        <div
+          key={i}
+          className="absolute"
+          style={{
+            top: h.top,
+            left: "left" in h ? h.left : undefined,
+            right: "right" in h ? (h as { right: string }).right : undefined,
+            opacity: h.opacity,
+            transform: `rotate(${h.rotate}deg)`,
+          }}
+        >
+          <Image
+            src="/heart-transparent.png"
+            alt=""
+            width={h.size}
+            height={h.size}
+            style={{ width: h.size, height: "auto" }}
+          />
+        </div>
+      ))}
     </div>
   );
 }
