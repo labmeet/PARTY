@@ -29,7 +29,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={inter.variable}>
+    <html lang="ko" className={inter.variable} style={{ colorScheme: "light" }}>
       <body className="antialiased">{children}</body>
     </html>
   );
