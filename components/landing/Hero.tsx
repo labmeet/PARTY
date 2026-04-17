@@ -24,7 +24,7 @@ export function Hero() {
         </p>
 
         <p className="mx-auto mt-6 max-w-md text-[17px] leading-relaxed text-fg-muted sm:text-[19px]">
-          대학원생 전용 오프라인 파티.
+          KAIST 대학원생 전용 오프라인 파티.
           <br className="hidden sm:block" />
           학번 대신 연구 주제, 스펙 대신 케미로.
         </p>
