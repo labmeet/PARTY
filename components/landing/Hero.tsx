@@ -21,13 +21,13 @@ export function Hero() {
           저녁은 <span className="text-primary">같이.</span>
         </p>
 
-        <p className="mx-auto mt-6 max-w-md text-[14px] leading-relaxed text-fg-muted sm:text-[15px]">
+        <p className="mx-auto mt-6 max-w-md text-[17px] leading-relaxed text-fg-muted sm:text-[19px]">
           KAIST 석박사·졸업자 전용 오프라인 파티.
           <br className="hidden sm:block" />
           학번 대신 연구 주제, 스펙 대신 케미로.
         </p>
 
-        <div className="mx-auto mt-10 flex max-w-xs items-center justify-center gap-3 text-[11px] text-fg-subtle">
+        <div className="mx-auto mt-10 flex max-w-xs items-center justify-center gap-3 text-[13px] text-fg-subtle">
           <span className="h-px w-8 bg-border-strong" />
           <span className="tracking-[0.3em]">SINCE · KAIST</span>
           <span className="h-px w-8 bg-border-strong" />
