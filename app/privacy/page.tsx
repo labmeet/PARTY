@@ -88,7 +88,7 @@ export default function PrivacyPage() {
 function Block({ no, title, children }: { no: string; title: string; children: React.ReactNode }) {
   return (
     <article className="flex gap-5">
-      <span className="font-display text-xl leading-none text-primary/80">{no}</span>
+      <span className="w-10 shrink-0 select-none font-display text-[2.25rem] leading-[1] tabular-nums text-primary/30">{no}</span>
       <div className="flex-1">
         <h2 className="font-serif text-base font-semibold text-fg">{title}</h2>
         <div className="mt-1.5 text-[13.5px]">{children}</div>

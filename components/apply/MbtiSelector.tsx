@@ -34,7 +34,10 @@ export function MbtiSelector({
       </div>
       <div className="grid grid-cols-4 gap-2">
         {AXES.map((axis, i) => (
-          <div key={i} className="flex flex-col gap-1.5">
+          <div
+            key={i}
+            className="flex flex-col gap-1.5 rounded-2xl p-1 ring-1 ring-transparent transition-colors hover:ring-border-strong"
+          >
             {axis.pair.map((c, j) => {
               const selected = chars[i]?.toUpperCase() === c;
               return (

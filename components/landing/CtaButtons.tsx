@@ -5,11 +5,12 @@ export function CtaButtons() {
     <section className="container-page py-10 sm:py-14">
       <div className="card relative overflow-hidden">
         <div
-          className="absolute inset-0 -z-0 opacity-40"
+          className="absolute inset-0 -z-0"
           style={{
             background:
-              "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(182,233,204,0.18), transparent 70%)",
+              "linear-gradient(180deg, rgba(182,233,204,0.08) 0%, transparent 60%), radial-gradient(ellipse 80% 40% at 50% 0%, rgba(127,212,164,0.14) 0%, transparent 100%)",
           }}
+          aria-hidden="true"
         />
 
         <div className="relative text-center">

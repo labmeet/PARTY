@@ -34,7 +34,7 @@ export function AboutSection() {
       <div className="space-y-3">
         {BULLETS.map((b) => (
           <article key={b.k} className="card flex gap-5">
-            <span className="font-display text-2xl leading-none text-primary/90">
+            <span className="shrink-0 select-none font-display text-[2.75rem] leading-[1] tabular-nums text-primary/40">
               {b.k}
             </span>
             <div className="flex-1">

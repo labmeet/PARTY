@@ -2,8 +2,9 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="container-page border-t border-border py-10 text-center">
-      <p className="font-display text-sm tracking-[0.3em] text-fg-muted">
+    <footer className="container-page py-10 text-center">
+      <div className="divider-fade mb-10" aria-hidden="true" />
+      <p className="font-display text-sm tracking-[0.4em] text-fg-muted/80">
         LAB · MEET
       </p>
       <p className="mx-auto mt-3 max-w-md text-[12px] leading-relaxed text-fg-muted">

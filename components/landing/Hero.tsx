@@ -3,6 +3,14 @@ import { Logo } from "./Logo";
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-20 pb-14 sm:pt-28 sm:pb-20">
+      <div
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 30%, rgba(127,212,164,0.10) 0%, transparent 65%)",
+        }}
+        aria-hidden="true"
+      />
       <div className="container-page animate-fade-up text-center">
         <div className="mb-6 flex justify-center">
           <Logo size={56} />
