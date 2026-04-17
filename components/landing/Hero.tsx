@@ -15,10 +15,10 @@ export function Hero() {
         <h1 className="font-display text-display-xl text-fg">
           Lab<span className="text-primary">Meet</span>
         </h1>
-        <p className="mx-auto mt-4 max-w-md font-serif text-[22px] font-bold leading-[1.4] tracking-tight text-fg sm:text-[28px] sm:leading-snug">
-          p-value는 나오는데,
+        <p className="mx-auto mt-4 max-w-md font-serif text-[26px] font-bold leading-[1.25] tracking-tight text-fg sm:text-[34px]">
+          연구는 혼자.
           <br />
-          <span className="text-pop">썸 value</span>는 왜 안 나올까
+          저녁은 <span className="text-primary">같이.</span>
         </p>
 
         <p className="mx-auto mt-6 max-w-md text-[14px] leading-relaxed text-fg-muted sm:text-[15px]">

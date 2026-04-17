@@ -1,31 +1,35 @@
-export function Logo({ size = 40 }: { size?: number }) {
+export function Logo({ size = 56 }: { size?: number }) {
+  const width = Math.round((size * 56) / 80);
   return (
     <svg
-      width={size}
+      width={width}
       height={size}
-      viewBox="0 0 80 80"
+      viewBox="0 0 56 80"
       fill="none"
       aria-hidden="true"
     >
-      {/* 하트 */}
+      {/* Heart — mint */}
       <path
-        d="M40 22c0 0-2.5-4-7-4c-4 0-7 3-7 7c0 8 14 16 14 16s14-8 14-16c0-4-3-7-7-7c-4.5 0-7 4-7 4z"
-        fill="currentColor"
-        opacity="0.85"
+        d="M28 20 C28 14 22 10 18 10 C13 10 10 13 10 17 C10 24 28 36 28 36 C28 36 46 24 46 17 C46 13 43 10 38 10 C34 10 28 14 28 20 Z"
+        fill="rgb(var(--primary))"
       />
-      {/* 플라스크 목 */}
-      <rect x="33" y="30" width="14" height="12" rx="1" fill="currentColor" opacity="0.85" />
-      {/* 플라스크 몸통 */}
+      {/* Flask body — fg */}
       <path
-        d="M28 74h24c3 0 5-3 3.5-5.5L47 42H33L24.5 68.5C23 71 25 74 28 74z"
-        fill="currentColor"
-        opacity="0.85"
+        d="M20 40 L36 40 L36 48 L43 62 Q45 72 35 72 L21 72 Q11 72 13 62 L20 48 Z"
+        stroke="currentColor"
+        strokeWidth={3.5}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+        fill="none"
       />
-      {/* 플라스크 선 */}
-      <line x1="30" y1="62" x2="50" y2="62" stroke="white" strokeWidth="2.5" opacity="0.4" />
-      {/* 버블 */}
-      <circle cx="36" cy="67" r="2.5" fill="white" opacity="0.35" />
-      <circle cx="44" cy="70" r="1.8" fill="white" opacity="0.25" />
+      {/* Tick marks */}
+      <path
+        d="M32 58 L41 58 M34 64 L41 64"
+        stroke="currentColor"
+        strokeWidth={3.5}
+        strokeLinecap="round"
+        fill="none"
+      />
     </svg>
   );
 }
