@@ -131,7 +131,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
                 className="input-base pr-12"
                 placeholder="170"
                 aria-invalid={!!errors.height}
-                {...register("height")}
+                {...register("height", { setValueAs: (v) => v === "" || v === undefined ? undefined : Number(v) })}
               />
               <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[14px] text-fg-subtle">
                 cm
