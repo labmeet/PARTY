@@ -7,7 +7,6 @@ import { PartyCalendar } from "@/components/landing/PartyCalendar";
 import { ApplyCta } from "@/components/landing/ApplyCta";
 import { Footer } from "@/components/landing/Footer";
 import { FloatingAssets } from "@/components/landing/FloatingAssets";
-import { SmokeVideo } from "@/components/landing/SmokeVideo";
 
 export default function Home() {
   return (
