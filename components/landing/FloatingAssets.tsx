@@ -3,12 +3,14 @@
 import Image from "next/image";
 
 const hearts = [
-  { top: "4%",  left: "3%",  size: 100, rotate: -15, opacity: 0.20 },
-  { top: "6%",  left: "80%", size: 80,  rotate: 12,  opacity: 0.16 },
-  { top: "40%", left: "1%",  size: 90,  rotate: -8,  opacity: 0.18 },
-  { top: "44%", left: "84%", size: 110, rotate: 18,  opacity: 0.20 },
-  { top: "76%", left: "4%",  size: 85,  rotate: 10,  opacity: 0.16 },
-  { top: "80%", left: "82%", size: 95,  rotate: -12, opacity: 0.18 },
+  { top: "2%",  left: "6%",  size: 140, rotate: -18, opacity: 0.22 },
+  { top: "10%", left: "70%", size: 110, rotate: 14,  opacity: 0.18 },
+  { top: "25%", left: "85%", size: 130, rotate: -6,  opacity: 0.20 },
+  { top: "35%", left: "2%",  size: 120, rotate: 20,  opacity: 0.18 },
+  { top: "55%", left: "78%", size: 150, rotate: -14, opacity: 0.22 },
+  { top: "62%", left: "8%",  size: 115, rotate: 8,   opacity: 0.18 },
+  { top: "80%", left: "60%", size: 130, rotate: -20, opacity: 0.20 },
+  { top: "85%", left: "1%",  size: 110, rotate: 16,  opacity: 0.18 },
 ];
 
 export function FloatingAssets() {
