@@ -28,8 +28,8 @@ export default function Home() {
         </div>
         <ReassuranceSection />
         <ApplyCta variant="final" />
-        <Footer /> 
         <SmokeVideo />
+        <Footer /> 
       </main>
     </>
   );
