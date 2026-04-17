@@ -1,20 +1,29 @@
-import { Logo } from "./Logo";
+import Image from "next/image";
+import { FaviconMark } from "./FaviconMark";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-20 pb-14 sm:pt-28 sm:pb-20">
+    <section className="relative overflow-hidden pt-16 pb-14 sm:pt-24 sm:pb-20">
       <div className="container-page animate-fade-up text-center">
-        <div className="mb-6 flex justify-center">
-          <span className="pill">KAIST ONLY</span>
+        <div className="mb-8 flex justify-center">
+          <Image
+            src="/heart-transparent.png"
+            alt=""
+            width={240}
+            height={240}
+            priority
+            className="h-[120px] w-auto sm:h-[140px]"
+            aria-hidden
+          />
         </div>
 
         <h1 className="relative inline-block font-display text-display-xl text-fg">
           Lab<span className="text-primary">Meet</span>
           <span
             aria-hidden
-            className="pointer-events-none absolute -right-7 -top-2 sm:-right-10 sm:-top-3"
+            className="pointer-events-none absolute -right-4 -top-1 sm:-right-6 sm:-top-2"
           >
-            <Logo size={18} />
+            <FaviconMark size={22} />
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-md font-serif text-[26px] font-bold leading-[1.25] tracking-tight text-fg sm:text-[34px]">

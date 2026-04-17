@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const hearts = [
   { top: "2%",  left: "6%",  size: 140, rotate: -18, opacity: 0.22 },
@@ -14,6 +15,11 @@ const hearts = [
 ];
 
 export function FloatingAssets() {
+  const { scrollYProgress } = useScroll();
+  // Beaker: hidden until ~88% scroll, fully visible at end
+  const beakerOpacity = useTransform(scrollYProgress, [0.82, 0.95, 1], [0, 0.85, 1]);
+  const beakerY = useTransform(scrollYProgress, [0.82, 1], [80, 0]);
+
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       {hearts.map((h, i) => (
@@ -37,10 +43,10 @@ export function FloatingAssets() {
         </div>
       ))}
 
-      {/* Main beaker — bottom-right, large, tilted */}
-      <div
+      {/* Main beaker — bottom-right, only visible at end of scroll, original natural tilt */}
+      <motion.div
         className="absolute bottom-[-60px] right-[-60px] sm:bottom-[-100px] sm:right-[-100px]"
-        style={{ transform: "rotate(20deg)", opacity: 0.92 }}
+        style={{ opacity: beakerOpacity, y: beakerY }}
       >
         <Image
           src="/bicker-transparent.png"
@@ -50,7 +56,7 @@ export function FloatingAssets() {
           className="w-[280px] sm:w-[460px] drop-shadow-[0_30px_50px_rgba(182,233,204,0.18)]"
           style={{ height: "auto" }}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

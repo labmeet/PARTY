@@ -104,8 +104,8 @@ export function PartyCalendar() {
       <div className="mt-4 flex items-center justify-center gap-2">
         <span className="h-2 w-2 rounded-full bg-pop animate-pulse" />
         <p className="text-[13px] text-fg-muted">
-          <span className="font-semibold text-fg">{YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE}</span>{" "}
-          금요일에 열립니다
+          <span className="font-semibold text-fg">{YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 18시</span>,{" "}
+          첫 랩미가 열립니다
         </p>
       </div>
 
@@ -168,7 +168,7 @@ export function PartyCalendar() {
                     <InfoRow label="Date" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE}`} hint="금요일" />
                     <InfoRow label="Time" value="18:00" hint="KST" />
                     <InfoRow label="Venue" value="KAIST W8" hint="1층" />
-                    <InfoRow label="Fee" value="₩35,000" hint="현장 결제" />
+                    <InfoRow label="Fee" value="₩35,000" hint="얼리버드 · 4월 30일까지" strike="₩50,000" />
                   </dl>
 
                   <button
@@ -232,17 +232,24 @@ function InfoRow({
   label,
   value,
   hint,
+  strike,
 }: {
   label: string;
   value: string;
   hint?: string;
+  strike?: string;
 }) {
   return (
     <div className="flex items-baseline gap-4 border-b border-border/60 pb-3 last:border-b-0 last:pb-0">
       <dt className="w-12 shrink-0 text-[10px] font-semibold uppercase tracking-[0.2em] text-fg-subtle">
         {label}
       </dt>
-      <dd className="flex flex-1 items-baseline gap-2">
+      <dd className="flex flex-1 flex-wrap items-baseline gap-2">
+        {strike && (
+          <span className="font-serif text-[14px] font-medium text-fg-subtle line-through decoration-[1.5px] sm:text-[15px]">
+            {strike}
+          </span>
+        )}
         <span className="font-serif text-[17px] font-bold text-fg sm:text-[19px]">
           {value}
         </span>
