@@ -27,7 +27,9 @@ export async function submitApplication(
     lab_or_professor: parsed.data.lab_or_professor,
     phone: parsed.data.phone,
     gender: parsed.data.gender,
+    height: parsed.data.height ?? null,
     mbti: parsed.data.mbti.toUpperCase(),
+    personality_keywords: parsed.data.personality_keywords,
     ideal_type: parsed.data.ideal_type,
     email: parsed.data.email.toLowerCase(),
   });

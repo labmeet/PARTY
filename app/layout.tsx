@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Serif_KR, Playfair_Display } from "next/font/google";
+import { Gowun_Batang, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const notoSerif = Noto_Serif_KR({
+const notoSerif = Gowun_Batang({
   subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
+  weight: ["400", "700"],
   variable: "--font-noto-serif",
   display: "swap",
 });
