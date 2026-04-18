@@ -89,8 +89,8 @@ export function PartyCalendar() {
                       {day}
                     </span>
                     {isParty && (
-                      <span className="mt-1.5 text-[9px] font-bold tracking-wider text-primary leading-none sm:text-[10px]">
-                        PARTY
+                      <span className="mt-1.5 text-[8px] font-bold tracking-wider text-primary leading-none sm:text-[9px]">
+                        Launch Party
                       </span>
                     )}
                   </>

@@ -3,7 +3,7 @@ import { readFile } from "fs/promises";
 import path from "path";
 
 export const runtime = "nodejs";
-export const alt = "LabMeet · KAIST 대학원생 전용 오프라인 파티";
+export const alt = "LabMeet · 대학원생 전용 기 안 빨리는 오프라인 파티";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

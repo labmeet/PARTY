@@ -18,9 +18,10 @@ export function IntroCard() {
         </h2>
         <p className="mt-4 text-[14px] leading-[1.75] text-fg-muted sm:text-[15px]">
           KAIST 내 석박사 재학·졸업생 대상{" "}
-          <span className="font-semibold text-fg">오프라인 파티</span>와{" "}
+          <span className="font-semibold text-fg">오프라인 파티 브랜드</span>와{" "}
           <span className="font-semibold text-fg">만남 앱</span>을 지칭해요.
-          만들어 가는 사람들도 전원 카이스트생.
+          만들어 가는 사람들도 전원 카이스트생.{" "}
+          <span className="text-fg-subtle">대전에서 솔로 생활을 하다가 지쳤다고 하네요.</span>
         </p>
       </article>
     </section>

@@ -77,6 +77,9 @@ export function Footer() {
         <p className="mt-6 text-[11px] text-fg-subtle/70">
           © {new Date().getFullYear()} LabMeet. All rights reserved.
         </p>
+        <p className="mt-1.5 text-[11px] text-fg-subtle/70">
+          Designed with <span className="text-primary">♥</span> by LabMeet Inc. in Daejeon
+        </p>
       </div>
     </footer>
   );
