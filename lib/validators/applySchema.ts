@@ -4,9 +4,38 @@ export const genderEnum = z.enum(["female", "male"]);
 export type Gender = z.infer<typeof genderEnum>;
 
 export const PERSONALITY_KEYWORDS = [
-  "활발한", "신중한", "차분한", "유머러스한", "지적인",
-  "감성적인", "독립적인", "다정한", "솔직한", "계획적인",
+  // Extraversion (E)
+  "활발한", "사교적인", "에너지 넘치는",
+  // Agreeableness (A)
+  "다정한", "배려심 많은", "공감 잘 하는", "온화한",
+  // Conscientiousness (C)
+  "계획적인", "성실한", "꼼꼼한",
+  // Openness (O)
+  "호기심 많은", "창의적인", "모험적인", "지적인",
+  // Emotional Stability / N-reversed
+  "차분한", "여유로운", "긍정적인",
+  // Cross-cutting (natural in dating context, fills gaps)
+  "유머러스한", "솔직한", "감성적인", "신중한", "독립적인",
 ] as const;
+
+export const DRINKING_OPTIONS = [
+  { value: "heavy",    label: "말술" },
+  { value: "moderate", label: "적당히 홀짝" },
+  { value: "social",   label: "모임에서만" },
+  { value: "none",     label: "무알콜러" },
+] as const;
+
+export const SMOKING_OPTIONS = [
+  { value: "cigarette", label: "연초러" },
+  { value: "vape",      label: "전담러" },
+  { value: "none",      label: "무" },
+] as const;
+
+export type DrinkingValue = (typeof DRINKING_OPTIONS)[number]["value"];
+export type SmokingValue  = (typeof SMOKING_OPTIONS)[number]["value"];
+
+const drinkingEnum = z.enum(["heavy", "moderate", "social", "none"]);
+const smokingEnum = z.enum(["cigarette", "vape", "none"]);
 
 export const applySchema = z.object({
   name: z.string().trim().min(1, "이름을 입력해주세요").max(50),
@@ -30,6 +59,8 @@ export const applySchema = z.object({
     .array(z.string().min(1))
     .min(1, "성격 키워드를 1개 이상 선택해주세요")
     .max(3, "최대 3개까지 선택할 수 있습니다"),
+  drinking: drinkingEnum.optional(),
+  smoking: smokingEnum.optional(),
   ideal_type: z
     .string()
     .trim()
@@ -39,6 +70,12 @@ export const applySchema = z.object({
     .string()
     .trim()
     .max(500, "500자 이내로 작성해주세요")
+    .optional()
+    .or(z.literal("")),
+  companion: z
+    .string()
+    .trim()
+    .max(200, "200자 이내로 작성해주세요")
     .optional()
     .or(z.literal("")),
   email: z.string().trim().email("올바른 이메일 형식이 아닙니다"),
