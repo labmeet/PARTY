@@ -23,7 +23,7 @@
   */
 
   /* [ 블랙 + 민트 — 토스 감성 ] */
-  --t-bg-base:        10 10 10;      /* 메인 배경      */
+  --t-bg-base:        0 0 0;         /* 메인 배경      */
   --t-bg-card:        18 18 18;      /* 카드 배경      */
   --t-bg-elevated:    24 24 24;      /* 인풋 배경      */
   --t-accent:         182 233 204;   /* 민트 포인트    */
@@ -155,15 +155,63 @@ body {
   }
 
   .input-base {
-    @apply w-full rounded-2xl border border-border bg-white px-5 py-4 text-[15px] text-fg placeholder:text-fg-subtle outline-none transition-all;
+    @apply w-full rounded-2xl border border-border bg-white px-5 py-4 text-[15px] placeholder:text-[#999] outline-none transition-all;
+    color: #0A0A0A;
   }
   .input-base:focus {
     border-color: rgb(var(--primary));
-    background-color: rgb(var(--bg-elevated));
-    box-shadow: 0 0 0 4px rgb(var(--t-accent) / 0.12);
+    background-color: #ffffff;
+    color: #0A0A0A;
+    box-shadow: 0 0 0 4px rgb(var(--t-accent) / 0.14);
+  }
+  /* Completed state: has value + not focused → dark bg, mint text */
+  .input-base:not(:placeholder-shown):not(:focus) {
+    background-color: rgb(var(--t-bg-elevated));
+    color: rgb(var(--primary));
+    border-color: rgb(var(--primary) / 0.35);
   }
   .input-base[aria-invalid="true"] {
     border-color: #E57373;
+  }
+
+  /* Wrapper label for form fields — enables :has() positioning */
+  .field-wrap {
+    @apply block relative;
+  }
+
+  /* Pop a chubby heart at the right edge of the completed input */
+  .field-wrap:has(> input.input-base:not(:placeholder-shown):not(:focus))::after {
+    content: '';
+    position: absolute;
+    top: 48px;
+    right: 14px;
+    width: 28px;
+    height: 28px;
+    background-image: url('/heart-transparent.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    animation: heartPop 0.55s cubic-bezier(0.34, 1.75, 0.5, 1) both;
+  }
+  /* For fields whose input is nested inside a relative div (e.g. the height input with cm suffix) */
+  .field-wrap:has(> div > input.input-base:not(:placeholder-shown):not(:focus))::after {
+    content: '';
+    position: absolute;
+    top: 48px;
+    right: 50px;
+    width: 28px;
+    height: 28px;
+    background-image: url('/heart-transparent.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    animation: heartPop 0.55s cubic-bezier(0.34, 1.75, 0.5, 1) both;
+  }
+
+  @keyframes heartPop {
+    0%   { opacity: 0; transform: scale(0) rotate(-18deg); }
+    60%  { opacity: 1; transform: scale(1.25) rotate(12deg); }
+    100% { opacity: 1; transform: scale(1)    rotate(0deg);  }
   }
 
   .label {

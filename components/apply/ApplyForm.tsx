@@ -252,7 +252,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="block">
+    <label className="field-wrap">
       <span className="label">{label}</span>
       {children}
       {error ? (

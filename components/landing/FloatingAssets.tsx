@@ -41,18 +41,22 @@ export function FloatingAssets() {
         </div>
       ))}
 
-      {/* Main beaker — bottom-right, only visible at end of scroll, original natural tilt */}
+      {/* Main beaker — bottom-right, only visible at end of scroll, sharp edges */}
       <motion.div
-        className="absolute bottom-[-60px] right-[-60px] sm:bottom-[-100px] sm:right-[-100px]"
+        className="absolute bottom-[-20px] right-[-20px] sm:bottom-[-40px] sm:right-[-30px]"
         style={{ opacity: beakerOpacity, y: beakerY }}
       >
         <Image
           src="/bicker-transparent.png"
           alt=""
-          width={520}
-          height={520}
-          className="w-[280px] sm:w-[460px] drop-shadow-[0_30px_50px_rgba(182,233,204,0.18)]"
-          style={{ height: "auto" }}
+          width={560}
+          height={560}
+          className="w-[300px] sm:w-[500px]"
+          style={{
+            height: "auto",
+            filter:
+              "drop-shadow(0 20px 30px rgba(0,0,0,0.6)) drop-shadow(0 0 18px rgba(182,233,204,0.28)) saturate(1.1) contrast(1.05)",
+          }}
         />
       </motion.div>
     </div>
