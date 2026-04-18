@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@react-three/fiber": "8.17.10",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "class-variance-authority": "^0.7.1",
@@ -21,18 +20,14 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.72.1",
-    "react-smoke": "1.2.0",
-    "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.5.0",
     "tailwindcss-animate": "^1.0.7",
-    "three": "0.160.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/three": "^0.160.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "postcss": "^8",

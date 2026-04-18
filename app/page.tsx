@@ -7,12 +7,10 @@ import { PartyCalendar } from "@/components/landing/PartyCalendar";
 import { ApplyCta } from "@/components/landing/ApplyCta";
 import { Footer } from "@/components/landing/Footer";
 import { FloatingAssets } from "@/components/landing/FloatingAssets";
-import { LiquidSmoke } from "@/components/landing/LiquidSmoke";
 
 export default function Home() {
   return (
     <>
-      <LiquidSmoke />
       <FloatingAssets />
       <main className="relative z-10 min-h-screen">
         <Hero />
