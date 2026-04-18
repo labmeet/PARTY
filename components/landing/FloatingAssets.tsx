@@ -4,10 +4,8 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const hearts = [
-  { top: "2%",  left: "6%",  size: 140, rotate: -18, opacity: 0.22 },
-  { top: "10%", left: "70%", size: 110, rotate: 14,  opacity: 0.18 },
-  { top: "25%", left: "85%", size: 130, rotate: -6,  opacity: 0.20 },
-  { top: "35%", left: "2%",  size: 120, rotate: 20,  opacity: 0.18 },
+  { top: "25%", left: "92%", size: 130, rotate: -6,  opacity: 0.12 },
+  { top: "35%", left: "-2%", size: 120, rotate: 20,  opacity: 0.11 },
   { top: "55%", left: "78%", size: 150, rotate: -14, opacity: 0.22 },
   { top: "62%", left: "8%",  size: 115, rotate: 8,   opacity: 0.18 },
   { top: "80%", left: "60%", size: 130, rotate: -20, opacity: 0.20 },
