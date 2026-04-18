@@ -21,9 +21,9 @@ export function Hero() {
           Lab<span className="text-primary">Meet</span>
           <span
             aria-hidden
-            className="pointer-events-none absolute -right-4 -top-1 sm:-right-6 sm:-top-2"
+            className="pointer-events-none absolute -right-7 -top-1 sm:-right-8 sm:-top-2"
           >
-            <FaviconMark size={22} />
+            <FaviconMark size={20} />
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-md font-serif text-[26px] font-bold leading-[1.25] tracking-tight text-fg sm:text-[34px]">
