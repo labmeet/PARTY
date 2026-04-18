@@ -6,7 +6,13 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 
-import { applySchema, type ApplyFormValues, type Gender } from "@/lib/validators/applySchema";
+import {
+  applySchema,
+  type ApplyFormValues,
+  type Gender,
+  DRINKING_OPTIONS,
+  SMOKING_OPTIONS,
+} from "@/lib/validators/applySchema";
 import { submitApplication } from "@/lib/actions/submitApplication";
 import { MbtiSelector } from "./MbtiSelector";
 import { PhoneInput } from "./PhoneInput";
@@ -38,6 +44,9 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       personality_keywords: [],
       ideal_type: "",
       deal_breaker: "",
+      companion: "",
+      drinking: undefined,
+      smoking: undefined,
       email: "",
     },
   });
@@ -99,7 +108,11 @@ export function ApplyForm({ gender }: { gender: Gender }) {
             />
           </Field>
 
-          <Field label="랩 이름 또는 지도교수 성함" error={errors.lab_or_professor?.message}>
+          <Field
+            label="랩 이름 또는 지도교수 성함"
+            error={errors.lab_or_professor?.message}
+            caption="민감하신가요? 저희도 알아요… 근데 같은 랩실 걸러드릴려구요..!"
+          >
             <input
               className="input-base"
               placeholder="예) OO연구실 / 김영희 교수"
@@ -165,6 +178,36 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               <p className="error-text">{errors.personality_keywords.message}</p>
             )}
           </div>
+
+          <div>
+            <span className="label">술 <span className="font-normal text-fg-subtle">(선택)</span></span>
+            <Controller
+              name="drinking"
+              control={control}
+              render={({ field }) => (
+                <ChoiceRow
+                  options={DRINKING_OPTIONS}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </div>
+
+          <div>
+            <span className="label">흡연 <span className="font-normal text-fg-subtle">(선택)</span></span>
+            <Controller
+              name="smoking"
+              control={control}
+              render={({ field }) => (
+                <ChoiceRow
+                  options={SMOKING_OPTIONS}
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </div>
         </div>
       </div>
 
@@ -199,6 +242,19 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               {...register("deal_breaker")}
             />
           </Field>
+
+          <Field
+            label="동반자 (선택)"
+            error={errors.companion?.message}
+            caption="이 경우 같은 랩실원끼리 입장이 허용되어요."
+          >
+            <input
+              className="input-base"
+              placeholder="예) 같이 올 친구 이름 / 소속 랩"
+              aria-invalid={!!errors.companion}
+              {...register("companion")}
+            />
+          </Field>
         </div>
       </div>
 
@@ -228,6 +284,39 @@ export function ApplyForm({ gender }: { gender: Gender }) {
         </p>
       </div>
     </motion.form>
+  );
+}
+
+function ChoiceRow<V extends string>({
+  options,
+  value,
+  onChange,
+}: {
+  options: readonly { readonly value: V; readonly label: string }[];
+  value: V | undefined;
+  onChange: (v: V | undefined) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {options.map((o) => {
+        const selected = value === o.value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(selected ? undefined : o.value)}
+            className={cn(
+              "h-9 rounded-full border px-4 text-[13px] font-medium transition-all",
+              selected
+                ? "border-primary bg-primary text-bg-base shadow-glow"
+                : "border-border-strong bg-bg-elevated/60 text-fg-muted hover:border-primary/50 hover:text-fg"
+            )}
+          >
+            {o.label}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

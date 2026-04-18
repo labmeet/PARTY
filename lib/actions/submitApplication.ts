@@ -20,6 +20,28 @@ export async function submitApplication(
     };
   }
 
+  // Extra form fields that don't have dedicated DB columns yet — append to
+  // ideal_type so admins can see them in Supabase Studio.
+  const DRINK_MAP: Record<string, string> = {
+    heavy: "말술",
+    moderate: "적당히 홀짝",
+    social: "모임에서만",
+    none: "무알콜러",
+  };
+  const SMOKE_MAP: Record<string, string> = {
+    cigarette: "연초러",
+    vape: "전담러",
+    none: "무",
+  };
+  const extras: string[] = [];
+  const companion = parsed.data.companion?.trim();
+  if (companion) extras.push(`[동반자] ${companion}`);
+  if (parsed.data.drinking) extras.push(`[술] ${DRINK_MAP[parsed.data.drinking]}`);
+  if (parsed.data.smoking) extras.push(`[흡연] ${SMOKE_MAP[parsed.data.smoking]}`);
+  const idealWithCompanion = extras.length
+    ? `${parsed.data.ideal_type}\n\n${extras.join("\n")}`
+    : parsed.data.ideal_type;
+
   const supabase = createClient();
   const { error } = await supabase.from("applications").insert({
     name: parsed.data.name,
@@ -30,7 +52,7 @@ export async function submitApplication(
     height: parsed.data.height ?? null,
     mbti: parsed.data.mbti.toUpperCase(),
     personality_keywords: parsed.data.personality_keywords,
-    ideal_type: parsed.data.ideal_type,
+    ideal_type: idealWithCompanion,
     deal_breaker: parsed.data.deal_breaker || null,
     email: parsed.data.email.toLowerCase(),
   });
