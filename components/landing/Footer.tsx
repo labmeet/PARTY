@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FaviconMark } from "./FaviconMark";
 
 const INSTAGRAM_URL = "https://www.instagram.com/labmeet.love/";
-const CONTACT_EMAIL = "labmeetadming@gmail.com";
+const CONTACT_EMAIL = "labmeetadmin@gmail.com";
 
 export function Footer() {
   return (
@@ -77,7 +77,7 @@ export function Footer() {
         <p className="mt-6 text-[11px] text-fg-subtle/70">
           © {new Date().getFullYear()} LabMeet. All rights reserved.
         </p>
-        <p className="mt-1.5 text-[11px] text-fg-subtle/70">
+        <p className="mt-1.5 text-[11px] text-fg">
           Designed with <span className="text-primary">♥</span> by LabMeet Inc. in Daejeon
         </p>
       </div>

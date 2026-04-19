@@ -79,6 +79,9 @@ export const applySchema = z.object({
     .optional()
     .or(z.literal("")),
   email: z.string().trim().email("올바른 이메일 형식이 아닙니다"),
+  agree: z.literal(true, {
+    message: "개인정보 수집·이용 및 환불 규정에 동의해주세요",
+  }),
 });
 
 export type ApplyFormValues = z.input<typeof applySchema>;

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "LabMeet 신청 폼을 통해 수집되는 개인정보의 항목·목적·보관 기간·파기 절차 안내",
 };
 
-const CONTACT_EMAIL = "labmeetadming@gmail.com";
+const CONTACT_EMAIL = "labmeetadmin@gmail.com";
 const UPDATED = "2026년 4월 18일";
 
 export default function PrivacyPage() {

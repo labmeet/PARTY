@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -48,6 +49,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       drinking: undefined,
       smoking: undefined,
       email: "",
+      agree: false as unknown as true,
     },
   });
 
@@ -268,6 +270,37 @@ export function ApplyForm({ gender }: { gender: Gender }) {
             {serverError}
           </div>
         )}
+
+        <div className="mb-5 rounded-2xl border border-border bg-bg-elevated/40 p-4 text-left">
+          <label className="flex cursor-pointer items-start gap-3">
+            <input
+              type="checkbox"
+              className="mt-[3px] h-4 w-4 shrink-0 accent-[#B6E9CC]"
+              aria-invalid={!!errors.agree}
+              {...register("agree")}
+            />
+            <span className="text-[13px] leading-relaxed text-fg-muted">
+              <Link
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-fg underline underline-offset-4 hover:text-primary"
+              >
+                개인정보 수집·이용
+              </Link>
+              {" 및 "}
+              <span className="font-semibold text-fg">환불 규정</span>
+              에 동의합니다.
+              <br />
+              <span className="text-[12px] text-fg-subtle">
+                환불: 행사 7일 전까지 전액 환불 · 이후 불가
+              </span>
+            </span>
+          </label>
+          {errors.agree?.message && (
+            <p className="error-text mt-2">{errors.agree.message}</p>
+          )}
+        </div>
 
         <button
           type="submit"
