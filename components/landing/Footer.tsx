@@ -43,9 +43,9 @@ export function Footer() {
           <span className="text-primary">Meet</span>
         </p>
         <p className="mx-auto mt-4 max-w-xs px-4 text-[13px] leading-relaxed text-fg-muted sm:max-w-md sm:text-[14px]">
-          LabMeet는 KAIST 구성원이 직접 만들었습니다.
+          LabMeet는 KAIST 구성원들이 직접 만든 네트워킹 파티입니다.
           <br />
-          만든 사람도 아직 싱글입니다.
+          바쁜 연구와 반복되는 일상 속에서도, 좋은 사람을 자연스럽게 만날 기회는 필요하다고 믿었습니다.
         </p>
 
         {/* Links — centered on all widths */}

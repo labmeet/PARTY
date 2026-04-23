@@ -17,11 +17,13 @@ export function IntroCard() {
           랩미가 뭔가요?
         </h2>
         <p className="mt-4 text-[14px] leading-[1.75] text-fg-muted sm:text-[15px]">
-          KAIST 내 석박사 재학·졸업생 대상 오프라인 파티 브랜드와 만남 앱을 지향해요.
+          랩미는 KAIST 내 석박사 재학·졸업생을 위한 네트워킹 파티입니다.
           <br />
-          만들어 가는 사람들도 전원 카이스트생.
+          만드는 사람들도 모두 KAIST 구성원입니다.
           <br />
-          대전에서 솔로 생활을 하다가 지쳤다고 하네요.
+          바쁜 연구와 반복되는 일상 속에서도,
+          <br />
+          좋은 사람을 편하게 만날 수 있는 자리가 필요하다고 생각했습니다.
         </p>
       </article>
     </section>

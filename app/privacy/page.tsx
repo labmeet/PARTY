@@ -39,7 +39,7 @@ export default function PrivacyPage() {
 
           <Block no="02" title="수집·이용 목적">
             <ul className="mt-2 list-disc space-y-1 pl-5">
-              <li>오프라인 파티 참가 자격 심사 및 허수 방지</li>
+              <li>네트워킹 파티 참가 자격 심사 및 허수 방지</li>
               <li>승인/거절 결과 및 일정 안내 이메일 발송</li>
               <li>성별 균형 및 매칭 선호도 정렬을 위한 내부 운영</li>
               <li>

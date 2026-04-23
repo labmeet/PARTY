@@ -21,8 +21,8 @@ export function Hero() {
           <span>
             Lab<span className="text-primary">Meet</span>
           </span>
-          <span aria-hidden className="translate-y-[4px] sm:translate-y-[6px]">
-            <FaviconMark size={42} />
+          <span aria-hidden className="translate-y-[5px] sm:translate-y-[7px]">
+            <FaviconMark size={59} />
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-md font-serif text-[26px] font-bold leading-[1.25] tracking-tight text-fg sm:text-[34px]">
@@ -32,9 +32,11 @@ export function Hero() {
         </p>
 
         <p className="mx-auto mt-6 max-w-md text-[17px] leading-relaxed text-fg-muted sm:text-[19px]">
-          KAIST 대학원생 전용 오프라인 파티.
+          KAIST 대학원생들이 편하게 연결될 수 있는 네트워킹 파티.
           <br className="hidden sm:block" />
-          학번 대신 연구 주제, 스펙 대신 케미로.
+          바쁜 일상 속에서도,
+          <br className="hidden sm:block" />
+          좋은 인연이 시작될 수 있는 자리를 만들고자 합니다.
         </p>
       </div>
     </section>

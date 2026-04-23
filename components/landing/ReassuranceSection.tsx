@@ -27,14 +27,14 @@ export function ReassuranceSection() {
           Safe Points
         </p>
         <h2 className="font-serif text-[22px] font-bold leading-[1.35] text-fg sm:text-[28px]">
-          걱정되는 거? 저희도 대학원생입니다.
+          걱정되는 마음,
           <br />
-          알고 있습니다.
+          충분히 이해합니다.
         </h2>
         <p className="mx-auto mt-4 max-w-sm text-[14px] leading-relaxed text-fg-muted">
-          이번 금요일,
-          <br className="sm:hidden" />
-          {" "}둘만 만나는 자리 만들어드립니다.
+          저희도 같은 일상을 살아가는 KAIST 구성원입니다.
+          <br />
+          편안하게 만날 수 있는 자리를 준비했습니다.
         </p>
       </div>
 
