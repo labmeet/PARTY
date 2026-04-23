@@ -330,8 +330,11 @@ export function ApplyForm({ gender }: { gender: Gender }) {
             description="최소 2장 이상 선택해야 신청서 제출이 가능합니다."
             files={photoFiles}
             onChange={(files) => {
-              setPhotoFiles(files);
-              if (files.length >= 2) setPhotoError(null);
+              setPhotoFiles((prev) => {
+                const next = [...prev, ...files];
+                if (next.length >= 2) setPhotoError(null);
+                return next;
+              });
             }}
             onRemove={(target) => {
               const next = photoFiles.filter((_, index) => index !== target);
@@ -581,7 +584,10 @@ function UploadField({
           multiple={multiple}
           className="sr-only"
           onChange={(event) => {
-            onChange(Array.from(event.target.files ?? []));
+            const nextFiles = Array.from(event.target.files ?? []);
+            if (nextFiles.length > 0) {
+              onChange(nextFiles);
+            }
             event.currentTarget.value = "";
           }}
         />
