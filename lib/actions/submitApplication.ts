@@ -46,9 +46,15 @@ export async function submitApplication(
     none: "비흡연",
   };
 
+  const SOLO_MAP: Record<string, string> = {
+    yes: "예",
+    no: "아니오",
+  };
+
   const extras: string[] = [];
   const companion = parsed.data.companion?.trim();
   if (companion) extras.push(`[동반인] ${companion}`);
+  extras.push(`[솔로 여부] ${SOLO_MAP[parsed.data.solo]}`);
   if (parsed.data.drinking) extras.push(`[음주] ${DRINK_MAP[parsed.data.drinking]}`);
   if (parsed.data.smoking) extras.push(`[흡연] ${SMOKE_MAP[parsed.data.smoking]}`);
 

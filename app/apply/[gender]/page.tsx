@@ -26,15 +26,13 @@ export default function ApplyPage({
           <span aria-hidden>←</span> 돌아가기
         </Link>
 
-        <header className="mt-6 mb-8 text-center">
+        <header className="mb-8 mt-6 text-center">
           <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
             Application Form
           </p>
-          <h1 className="font-serif text-display-md text-fg">
-            이상형 신청서
-          </h1>
+          <h1 className="font-serif text-display-md text-fg">자기 소개서</h1>
           <p className="mt-2 text-[13px] text-fg-muted">
-            빠짐없이 작성해주시면 승인 후 이메일로 안내드립니다.
+            편하게 작성해주시면 확인 후 이메일로 안내드리겠습니다.
           </p>
         </header>
 

@@ -13,6 +13,7 @@ import {
   type Gender,
   DRINKING_OPTIONS,
   SMOKING_OPTIONS,
+  SOLO_OPTIONS,
 } from "@/lib/validators/applySchema";
 import { submitApplication } from "@/lib/actions/submitApplication";
 import { createClient as createSupabaseClient } from "@/lib/supabase/client";
@@ -48,6 +49,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       height: undefined,
       mbti: "",
       personality_keywords: [],
+      solo: "yes",
       ideal_type: "",
       deal_breaker: "",
       companion: "",
@@ -241,6 +243,21 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           </div>
 
           <div>
+            <span className="label">현재 솔로이신가요?</span>
+            <Controller
+              name="solo"
+              control={control}
+              render={({ field }) => (
+                <ChoiceRow
+                  options={SOLO_OPTIONS}
+                  value={field.value}
+                  onChange={(value) => value && field.onChange(value)}
+                />
+              )}
+            />
+          </div>
+
+          <div>
             <span className="label">
               음주 <span className="font-normal text-fg-subtle">(선택)</span>
             </span>
@@ -280,14 +297,14 @@ export function ApplyForm({ gender }: { gender: Gender }) {
         <SectionHeader label="About You" />
         <div className="space-y-5">
           <Field
-            label="이상형 (자유 서술)"
+            label="자기 소개 (자유 서술)"
             error={errors.ideal_type?.message}
             caption="10자 이상 500자 이내로 편하게 적어주세요."
           >
             <textarea
               rows={5}
               className="input-base resize-none leading-relaxed"
-              placeholder="예: 함께 있으면 편하고 대화가 잘 통하는 사람, 식사를 같이 하다 보면 더 좋아질 것 같은 사람"
+              placeholder="예: 어떤 일상을 보내는지, 어떤 대화를 좋아하는지, 어떤 사람인지 편하게 소개해주세요."
               aria-invalid={!!errors.ideal_type}
               {...register("ideal_type")}
             />
@@ -327,7 +344,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
         <div className="space-y-4">
           <UploadField
             title="본인 사진을 올려주세요 (최소 2장) *"
-            description="최소 2장 이상 선택해야 신청서 제출이 가능합니다."
+            description="최소 2장 이상 선택해야 자기 소개서 제출이 가능합니다."
             files={photoFiles}
             onChange={(files) => {
               setPhotoFiles((prev) => {
@@ -380,7 +397,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
 
           <div className="px-5 py-5 sm:px-6">
             <p className="text-[14px] leading-[1.8] text-fg-muted sm:text-[14.5px]">
-              참가비 입금완료 후 신청서 제출해주세요.
+              참가비 입금완료 후 자기 소개서 제출해주세요.
             </p>
 
             <div className="mt-4 rounded-[20px] border border-white/8 bg-black/10 px-4 py-4">
@@ -452,7 +469,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           disabled={pending}
           className={cn("btn-primary", pending && "animate-pulse")}
         >
-          {pending ? "제출 중..." : "신청서 제출하기"}
+          {pending ? "제출 중..." : "자기 소개서 제출하기"}
         </button>
 
         <p className="mt-3 text-center text-[11px] leading-relaxed text-fg-subtle">

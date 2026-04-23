@@ -31,11 +31,18 @@ export const SMOKING_OPTIONS = [
   { value: "none",      label: "무" },
 ] as const;
 
+export const SOLO_OPTIONS = [
+  { value: "yes", label: "예" },
+  { value: "no", label: "아니오" },
+] as const;
+
 export type DrinkingValue = (typeof DRINKING_OPTIONS)[number]["value"];
 export type SmokingValue  = (typeof SMOKING_OPTIONS)[number]["value"];
+export type SoloValue = (typeof SOLO_OPTIONS)[number]["value"];
 
 const drinkingEnum = z.enum(["heavy", "moderate", "social", "none"]);
 const smokingEnum = z.enum(["cigarette", "vape", "none"]);
+const soloEnum = z.enum(["yes", "no"]);
 
 export const applySchema = z.object({
   name: z.string().trim().min(1, "이름을 입력해주세요").max(50),
@@ -59,12 +66,13 @@ export const applySchema = z.object({
     .array(z.string().min(1))
     .min(1, "성격 키워드를 1개 이상 선택해주세요")
     .max(3, "최대 3개까지 선택할 수 있습니다"),
+  solo: soloEnum,
   drinking: drinkingEnum.optional(),
   smoking: smokingEnum.optional(),
   ideal_type: z
     .string()
     .trim()
-    .min(10, "이상형을 10자 이상 작성해주세요")
+    .min(10, "자기 소개를 10자 이상 작성해주세요")
     .max(500, "500자 이내로 작성해주세요"),
   deal_breaker: z
     .string()

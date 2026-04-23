@@ -32,8 +32,8 @@ export default function PrivacyPage() {
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li>이름, 이메일, 전화번호</li>
               <li>소속 학과, 소속 연구실 또는 지도교수</li>
-              <li>성별, 키(선택), MBTI, 성격 키워드</li>
-              <li>이상형(주관식), 만나고 싶지 않은 사람(선택)</li>
+              <li>성별, 키(선택), MBTI, 성격 키워드, 솔로 여부</li>
+              <li>자기 소개(주관식), 만나고 싶지 않은 사람(선택)</li>
             </ul>
           </Block>
 

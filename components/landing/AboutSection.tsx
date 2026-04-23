@@ -49,7 +49,7 @@ export function AboutSection() {
           About LabMeet
         </p>
         <h2 className="font-serif text-[26px] font-bold leading-tight text-fg sm:text-[34px]">
-          편하게 이야기하고
+          카이스트 대학원생들끼리
           <br />
           자연스럽게 가까워지는 자리입니다
         </h2>

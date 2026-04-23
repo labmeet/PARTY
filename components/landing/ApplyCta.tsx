@@ -23,7 +23,7 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
               Apply
             </p>
             <h3 className="font-serif text-[22px] font-bold leading-tight text-fg sm:text-[26px]">
-              파티 신청하기
+              네트워킹 파티 신청하기
             </h3>
           </div>
         )}
@@ -54,9 +54,9 @@ function FinalCta() {
   return (
     <section className="container-page py-12 sm:py-20">
       <h2 className="mb-8 text-center font-serif text-[34px] font-bold leading-[1.2] tracking-tight text-primary sm:mb-10 sm:text-[44px]">
-        이제는 인연을
+        좋은 인연이
         <br />
-        찾아볼까요?
+        시작될 수 있기를 바랍니다
       </h2>
 
       <div className="relative overflow-hidden rounded-[32px] border border-primary/25 bg-gradient-to-b from-bg-card to-bg-base px-7 py-12 shadow-[0_40px_80px_-30px_rgba(182,233,204,0.25)] sm:px-12 sm:py-14">

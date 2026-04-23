@@ -17,10 +17,10 @@ export function CtaButtons() {
             Application
           </p>
           <h3 className="font-serif text-2xl font-semibold text-fg sm:text-3xl">
-            지금, 이상형을 만날 시간
+            네트워킹 파티 신청하기
           </h3>
           <p className="mt-2 text-[13px] text-fg-muted">
-            아래에서 성별을 선택하고 신청서를 작성해주세요.
+            아래에서 성별을 선택하고 자기 소개서를 작성해주세요.
           </p>
         </div>
 
