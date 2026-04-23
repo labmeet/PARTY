@@ -11,10 +11,10 @@ export function QuoteCard() {
           aria-hidden="true"
         />
         <p className="relative mb-5 text-[11px] font-medium uppercase tracking-[0.3em] text-pop">
-          Private Party · KAIST
+          PRIVATE PARTY · KAIST
         </p>
         <blockquote className="relative font-serif text-[24px] font-bold leading-[1.4] tracking-tight text-fg sm:text-[32px]">
-          건물에서 눈만 마주치던 그 사람,
+          카이스트 최초 네트워킹 파티
           <br />
           <span className="text-primary">5월 29일 랩미에서</span>
           <br />
@@ -22,7 +22,7 @@ export function QuoteCard() {
         </blockquote>
         <figcaption className="relative mt-7 flex items-center justify-center gap-3 text-[11px] tracking-[0.25em] text-fg-subtle">
           <span className="h-px w-8 bg-border-strong" aria-hidden="true" />
-          <span className="font-display uppercase">LabMeet · 2026.05.29</span>
+          <span className="font-display uppercase">LABMEET · 2026.05.29</span>
           <span className="h-px w-8 bg-border-strong" aria-hidden="true" />
         </figcaption>
       </figure>

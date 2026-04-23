@@ -66,10 +66,8 @@ export function PartyCalendar() {
                   if (infoOpen) setApplyOpen(false);
                 }}
                 disabled={!isParty}
-                aria-label={
-                  isParty ? `${YEAR}년 ${MONTH}월 ${day}일 파티 정보` : undefined
-                }
-                className={`relative flex min-h-[56px] flex-col items-center justify-start pt-2.5 border-b border-r border-border transition-all sm:min-h-[72px]
+                aria-label={isParty ? `${YEAR}년 ${MONTH}월 ${day}일 파티 정보` : undefined}
+                className={`relative flex min-h-[56px] flex-col items-center justify-start border-b border-r border-border pt-2.5 transition-all sm:min-h-[72px]
                   ${isParty ? "cursor-pointer bg-primary/10 hover:bg-primary/20" : "cursor-default"}
                   ${idx % 7 === 6 ? "border-r-0" : ""}
                   ${Math.floor(idx / 7) === 5 ? "border-b-0" : ""}
@@ -79,17 +77,21 @@ export function PartyCalendar() {
                   <>
                     <span
                       className={`text-[12px] font-medium leading-none sm:text-[15px]
-                        ${isParty
-                          ? "flex h-7 w-7 items-center justify-center rounded-full bg-primary font-bold text-bg-card shadow-glow"
-                          : isSun ? "text-[#E57373]"
-                          : isSat ? "text-[#6BA6C7]"
-                          : "text-fg"}
+                        ${
+                          isParty
+                            ? "flex h-7 w-7 items-center justify-center rounded-full bg-primary font-bold text-bg-card shadow-glow"
+                            : isSun
+                              ? "text-[#E57373]"
+                              : isSat
+                                ? "text-[#6BA6C7]"
+                                : "text-fg"
+                        }
                       `}
                     >
                       {day}
                     </span>
                     {isParty && (
-                      <span className="mt-1.5 text-[8px] font-bold tracking-wider text-primary leading-none sm:text-[9px]">
+                      <span className="mt-1.5 text-[8px] font-bold leading-none tracking-wider text-primary sm:text-[9px]">
                         Launch Party
                       </span>
                     )}
@@ -102,10 +104,12 @@ export function PartyCalendar() {
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-pop animate-pulse" />
+        <span className="h-2 w-2 animate-pulse rounded-full bg-pop" />
         <p className="text-[13px] text-fg-muted">
-          <span className="font-semibold text-fg">{YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 18시</span>,{" "}
-          첫 랩미가 열립니다
+          <span className="font-semibold text-fg">
+            {YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 18:00
+          </span>
+          , 첫 파티가 열립니다
         </p>
       </div>
 
@@ -138,7 +142,6 @@ export function PartyCalendar() {
               />
 
               <div className="relative grid grid-cols-1 gap-0 sm:grid-cols-[1.1fr_1fr]">
-                {/* Left · Title block */}
                 <div className="relative flex flex-col justify-between border-b border-border px-7 py-10 sm:border-b-0 sm:border-r sm:px-11 sm:py-14">
                   <div>
                     <p className="mb-4 inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.3em] text-pop">
@@ -146,14 +149,14 @@ export function PartyCalendar() {
                       1st Party
                     </p>
                     <h3 className="font-serif text-[30px] font-bold leading-[1.1] tracking-tight text-fg sm:text-[44px]">
-                      랩미
+                      카이스트
                       <br />
-                      1차 파티
+                      첫 네트워킹 파티
                     </h3>
                     <p className="mt-5 max-w-[22ch] text-[13px] leading-relaxed text-fg-muted sm:text-[14px]">
-                      랩실에서 눈만 마주치던 그 사람,
+                      카이스트 최초 네트워킹 파티,
                       <br />
-                      대전 W8에서 만납니다.
+                      5월 29일 랩미에서 만납니다.
                     </p>
                   </div>
                   <div className="mt-8 flex items-center gap-3 text-[10px] tracking-[0.3em] text-fg-subtle">
@@ -162,13 +165,17 @@ export function PartyCalendar() {
                   </div>
                 </div>
 
-                {/* Right · Ticket stub */}
                 <div className="relative px-7 py-9 sm:px-10 sm:py-12">
                   <dl className="space-y-4">
                     <InfoRow label="Date" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE}`} hint="금요일" />
                     <InfoRow label="Time" value="18:00" hint="KST" />
-                    <InfoRow label="Venue" value="KAIST W8" hint="1층" />
-                    <InfoRow label="Fee" value="₩35,000" hint="얼리버드 · 4월 30일까지" strike="₩50,000" />
+                    <InfoRow label="Venue" value="LABMEET" hint="5월 29일" />
+                    <InfoRow
+                      label="Fee"
+                      value="35,000원"
+                      hint="얼리버드 1차 ~5/9 · 2차 ~5/23"
+                      strike="50,000원"
+                    />
                   </dl>
 
                   <button
@@ -179,7 +186,7 @@ export function PartyCalendar() {
                   >
                     <span>{applyOpen ? "접기" : "신청하기"}</span>
                     <span className={`transition-transform ${applyOpen ? "rotate-180" : ""}`}>
-                      ↓
+                      ⌄
                     </span>
                   </button>
 
@@ -205,7 +212,7 @@ export function PartyCalendar() {
                             </Link>
                           </div>
                           <p className="mt-4 text-center text-[12px] text-fg-subtle">
-                            알잘딱으로 자리 채워드림 · 정원 제한 · 얼리버드가 유리합니다
+                            얼리버드 1차는 5월 9일까지, 얼리버드 2차는 5월 23일까지 적용됩니다
                           </p>
                         </div>
                       </motion.div>
@@ -214,7 +221,6 @@ export function PartyCalendar() {
                 </div>
               </div>
 
-              {/* Perforation dots between columns (desktop only) */}
               <div
                 className="pointer-events-none absolute left-1/2 top-1/2 hidden h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-bg-base sm:block"
                 aria-hidden="true"
@@ -253,11 +259,7 @@ function InfoRow({
         <span className="font-serif text-[17px] font-bold text-fg sm:text-[19px]">
           {value}
         </span>
-        {hint && (
-          <span className="text-[11px] tracking-wide text-fg-subtle">
-            {hint}
-          </span>
-        )}
+        {hint && <span className="text-[11px] tracking-wide text-fg-subtle">{hint}</span>}
       </dd>
     </div>
   );

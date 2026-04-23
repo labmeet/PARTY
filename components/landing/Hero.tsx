@@ -17,13 +17,12 @@ export function Hero() {
           />
         </div>
 
-        <h1 className="relative inline-block font-display text-display-xl text-fg">
-          Lab<span className="text-primary">Meet</span>
-          <span
-            aria-hidden
-            className="pointer-events-none absolute -right-7 -top-1 sm:-right-8 sm:-top-2"
-          >
-            <FaviconMark size={20} />
+        <h1 className="inline-flex items-center gap-2 sm:gap-3 font-display text-display-xl text-fg">
+          <span>
+            Lab<span className="text-primary">Meet</span>
+          </span>
+          <span aria-hidden className="translate-y-[4px] sm:translate-y-[6px]">
+            <FaviconMark size={42} />
           </span>
         </h1>
         <p className="mx-auto mt-4 max-w-md font-serif text-[26px] font-bold leading-[1.25] tracking-tight text-fg sm:text-[34px]">

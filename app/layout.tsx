@@ -10,11 +10,12 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "LabMeet · 랩미",
-  description: "대학원생 전용 기 안 빨리는 오프라인 파티",
+  metadataBase: new URL("https://labmeet.vercel.app"),
+  title: "LabMeet",
+  description: "KAIST-based offline social party",
   openGraph: {
-    title: "LabMeet · 랩미",
-    description: "대학원생 전용 기 안 빨리는 오프라인 파티",
+    title: "LabMeet",
+    description: "KAIST-based offline social party",
     type: "website",
   },
 };

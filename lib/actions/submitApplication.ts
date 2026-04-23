@@ -7,8 +7,14 @@ export type SubmitResult =
   | { ok: true }
   | { ok: false; error: string; field?: keyof ApplyFormValues };
 
+type UploadedPaths = {
+  photoPaths: string[];
+  verificationPath: string;
+};
+
 export async function submitApplication(
-  input: ApplyFormValues
+  input: ApplyFormValues,
+  uploads?: UploadedPaths,
 ): Promise<SubmitResult> {
   const parsed = applySchema.safeParse(input);
   if (!parsed.success) {
@@ -20,25 +26,33 @@ export async function submitApplication(
     };
   }
 
-  // Extra form fields that don't have dedicated DB columns yet — append to
-  // ideal_type so admins can see them in Supabase Studio.
+  if (!uploads || uploads.photoPaths.length < 2 || !uploads.verificationPath) {
+    return {
+      ok: false,
+      error: "사진과 본인 확인 서류 업로드를 완료해주세요.",
+    };
+  }
+
   const DRINK_MAP: Record<string, string> = {
-    heavy: "말술",
-    moderate: "적당히 홀짝",
+    heavy: "많이 마심",
+    moderate: "적당히 마심",
     social: "모임에서만",
-    none: "무알콜러",
+    none: "무알코올",
   };
+
   const SMOKE_MAP: Record<string, string> = {
-    cigarette: "연초러",
-    vape: "전담러",
-    none: "무",
+    cigarette: "연초",
+    vape: "전자담배",
+    none: "비흡연",
   };
+
   const extras: string[] = [];
   const companion = parsed.data.companion?.trim();
-  if (companion) extras.push(`[동반자] ${companion}`);
-  if (parsed.data.drinking) extras.push(`[술] ${DRINK_MAP[parsed.data.drinking]}`);
+  if (companion) extras.push(`[동반인] ${companion}`);
+  if (parsed.data.drinking) extras.push(`[음주] ${DRINK_MAP[parsed.data.drinking]}`);
   if (parsed.data.smoking) extras.push(`[흡연] ${SMOKE_MAP[parsed.data.smoking]}`);
-  const idealWithCompanion = extras.length
+
+  const idealWithExtras = extras.length
     ? `${parsed.data.ideal_type}\n\n${extras.join("\n")}`
     : parsed.data.ideal_type;
 
@@ -52,9 +66,11 @@ export async function submitApplication(
     height: parsed.data.height ?? null,
     mbti: parsed.data.mbti.toUpperCase(),
     personality_keywords: parsed.data.personality_keywords,
-    ideal_type: idealWithCompanion,
+    ideal_type: idealWithExtras,
     deal_breaker: parsed.data.deal_breaker || null,
     email: parsed.data.email.toLowerCase(),
+    photo_paths: uploads.photoPaths,
+    verification_path: uploads.verificationPath,
   });
 
   if (error) {
@@ -70,7 +86,7 @@ export async function submitApplication(
     if (error.message?.includes("fetch")) {
       return {
         ok: false,
-        error: "서버 연결 오류. 잠시 후 다시 시도해주세요.",
+        error: "서버 연결 오류입니다. 잠시 후 다시 시도해주세요.",
       };
     }
     return {

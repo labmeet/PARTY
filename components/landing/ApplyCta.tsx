@@ -37,9 +37,14 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </Link>
         </div>
-        <p className="relative mt-4 text-center text-[12px] text-fg-subtle">
-          알잘딱으로 자리 채워드림 · 얼리버드 4월 30일까지
-        </p>
+        <div className="relative mt-4 text-center text-[12px] text-fg-subtle">
+          <p>
+            참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
+            <span className="font-semibold text-fg">35,000원</span>
+          </p>
+          <p>얼리버드 1차: ~5/9 15,000원 할인</p>
+          <p>얼리버드 2차: ~5/23 5,000원 할인</p>
+        </div>
       </div>
     </section>
   );
@@ -49,7 +54,7 @@ function FinalCta() {
   return (
     <section className="container-page py-12 sm:py-20">
       <h2 className="mb-8 text-center font-serif text-[34px] font-bold leading-[1.2] tracking-tight text-primary sm:mb-10 sm:text-[44px]">
-        이제 내 짝을
+        이제는 인연을
         <br />
         찾아볼까요?
       </h2>
@@ -78,7 +83,7 @@ function FinalCta() {
             <span className="text-[12px] tracking-[0.12em] text-fg sm:text-[13px]">
               <span className="font-bold">5월 29일</span>
               <span className="mx-2 text-fg-subtle">·</span>
-              <span>KAIST W8</span>
+              <span>LABMEET</span>
             </span>
           </div>
 
@@ -95,10 +100,13 @@ function FinalCta() {
 
           <div className="mt-6 flex flex-col items-center gap-1 text-[12px] text-fg-subtle">
             <span>
-              <span className="text-fg-subtle/70 line-through decoration-[1.5px] mr-1.5">₩50,000</span>
-              <span className="font-semibold text-fg">₩35,000</span>
+              <span className="mr-1.5 text-fg-subtle/70 line-through decoration-[1.5px]">
+                50,000원
+              </span>
+              <span className="font-semibold text-fg">35,000원</span>
             </span>
-            <span>얼리버드 · 4월 30일까지만</span>
+            <span>얼리버드 1차: ~5/9 15,000원 할인</span>
+            <span>얼리버드 2차: ~5/23 5,000원 할인</span>
           </div>
         </div>
       </div>
