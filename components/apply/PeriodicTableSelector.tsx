@@ -188,8 +188,8 @@ export function PeriodicTableSelector({
         </span>
       </p>
 
-      <div className="rounded-2xl border border-border bg-bg-elevated/40 p-3 sm:p-4">
-        <div className="mb-3 flex min-h-[60px] items-center justify-between gap-3 rounded-xl border border-border/60 bg-bg-base/50 px-4 py-3">
+      <div className="rounded-2xl border border-border bg-bg-elevated/40 px-2 py-3 sm:p-4">
+        <div className="mx-auto mb-3 flex min-h-[60px] items-center justify-between gap-3 rounded-xl border border-border/60 bg-bg-base/50 px-4 py-3">
           {display ? (
             <div className="flex items-baseline gap-3">
               <span className="text-[10px] tabular-nums text-fg-subtle">{display[0]}</span>
@@ -214,7 +214,7 @@ export function PeriodicTableSelector({
 
         <div className="w-full">
           <div
-            className="grid gap-[2px] sm:gap-[3px]"
+            className="grid gap-[1px] sm:gap-[3px]"
             style={{ gridTemplateColumns: "repeat(18, minmax(0, 1fr))" }}
           >
             {ELEMENTS.map((el) => (
@@ -231,7 +231,7 @@ export function PeriodicTableSelector({
           </div>
 
           <div
-            className="mt-[2px] grid gap-[2px] sm:mt-[3px] sm:gap-[3px]"
+            className="mt-[1px] grid gap-[1px] sm:mt-[3px] sm:gap-[3px]"
             style={{ gridTemplateColumns: "repeat(18, minmax(0, 1fr))" }}
           >
             {[...LANTHANIDES, ...ACTINIDES].map((el) => (
@@ -286,7 +286,7 @@ function ElementCell({
           "z-10 scale-[1.08] border-primary bg-primary/35 ring-2 ring-primary shadow-[0_0_18px_rgba(182,233,204,0.55)]",
       )}
     >
-      <span className="font-display text-[8px] font-bold leading-none sm:text-[11px] md:text-[13px]">
+      <span className="font-display text-[10px] font-bold leading-none sm:text-[12px] md:text-[13px]">
         {sym}
       </span>
     </button>
