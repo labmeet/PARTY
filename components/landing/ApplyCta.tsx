@@ -1,5 +1,9 @@
 import Link from "next/link";
 
+const FEMALE_TAKEN = 11;
+const MALE_TAKEN = 14;
+const PER_GENDER_CAP = 16;
+
 type Variant = "full" | "compact" | "final";
 
 export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
@@ -27,6 +31,10 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
             </h3>
           </div>
         )}
+        <div className="relative mb-4 grid grid-cols-2 gap-3">
+          <SeatPill label="여성" taken={FEMALE_TAKEN} cap={PER_GENDER_CAP} />
+          <SeatPill label="남성" taken={MALE_TAKEN} cap={PER_GENDER_CAP} />
+        </div>
         <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Link href="/apply/female" className="btn-primary group">
             <span>여성 신청하기</span>
@@ -42,8 +50,8 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
             참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
             <span className="font-semibold text-fg">35,000원</span>
           </p>
-          <p>얼리버드 1차: ~5/9 15,000원 할인</p>
-          <p>얼리버드 2차: ~5/23 5,000원 할인</p>
+          <p>정원 32명 · 와인 · 치즈 플레이트 · 스낵 제공</p>
+          <p>얼리버드 1차 ~5/9 · 2차 ~5/23</p>
         </div>
       </div>
     </section>
@@ -54,9 +62,9 @@ function FinalCta() {
   return (
     <section className="container-page py-12 sm:py-20">
       <h2 className="mb-8 text-center font-serif text-[34px] font-bold leading-[1.2] tracking-tight text-primary sm:mb-10 sm:text-[44px]">
-        좋은 인연이
+        이제 한 번
         <br />
-        시작될 수 있기를 바랍니다
+        놀러 가볼까요?
       </h2>
 
       <div className="relative overflow-hidden rounded-[32px] border border-primary/25 bg-gradient-to-b from-bg-card to-bg-base px-7 py-12 shadow-[0_40px_80px_-30px_rgba(182,233,204,0.25)] sm:px-12 sm:py-14">
@@ -87,6 +95,11 @@ function FinalCta() {
             </span>
           </div>
 
+          <div className="mx-auto mb-5 grid max-w-md grid-cols-2 gap-3">
+            <SeatPill label="여성" taken={FEMALE_TAKEN} cap={PER_GENDER_CAP} />
+            <SeatPill label="남성" taken={MALE_TAKEN} cap={PER_GENDER_CAP} />
+          </div>
+
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Link href="/apply/female" className="btn-primary group">
               <span>여성 신청하기</span>
@@ -105,11 +118,45 @@ function FinalCta() {
               </span>
               <span className="font-semibold text-fg">35,000원</span>
             </span>
-            <span>얼리버드 1차: ~5/9 15,000원 할인</span>
-            <span>얼리버드 2차: ~5/23 5,000원 할인</span>
+            <span>정원 32명 · 와인 · 치즈 플레이트 · 스낵 제공</span>
+            <span>얼리버드 1차 ~5/9 · 2차 ~5/23</span>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function SeatPill({ label, taken, cap }: { label: string; taken: number; cap: number }) {
+  const remaining = Math.max(cap - taken, 0);
+  const pct = Math.min((taken / cap) * 100, 100);
+  const tight = remaining <= 3;
+  return (
+    <div className="rounded-2xl border border-border bg-bg-elevated/40 px-4 py-3 text-left">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-fg-subtle">
+          {label}
+        </span>
+        <span className="font-display text-[13px] tabular-nums text-fg">
+          <span className={tight ? "font-bold text-pop" : "font-bold text-primary"}>
+            {taken}
+          </span>
+          <span className="mx-0.5 text-fg-subtle">/</span>
+          <span className="text-fg-subtle">{cap}</span>
+        </span>
+      </div>
+      <div className="mt-2 h-1 overflow-hidden rounded-full bg-border/60">
+        <div
+          className={`h-full rounded-full ${tight ? "bg-pop" : "bg-primary"}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <p className="mt-2 text-[11px] tabular-nums text-fg-subtle">
+        남은 좌석{" "}
+        <span className={`font-semibold ${tight ? "text-pop" : "text-fg"}`}>
+          {remaining}석
+        </span>
+      </p>
+    </div>
   );
 }

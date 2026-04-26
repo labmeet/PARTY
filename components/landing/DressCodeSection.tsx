@@ -22,19 +22,16 @@ export function DressCodeSection() {
           </div>
 
           <div className="mt-6 rounded-[26px] border border-border-strong bg-bg-elevated/40 px-5 py-6 sm:px-7 sm:py-7">
-            <div className="flex items-center justify-center gap-2">
-              <span className="inline-flex h-8 items-center rounded-full border border-white/10 bg-white px-4 text-[12px] font-semibold tracking-[0.18em] text-black">
-                BLACK
-              </span>
-              <span className="inline-flex h-8 items-center rounded-full border border-white/15 bg-black px-4 text-[12px] font-semibold tracking-[0.18em] text-white">
-                WHITE
+            <div className="flex items-center justify-center">
+              <span className="inline-flex h-9 items-center rounded-full border border-primary/30 bg-primary/15 px-5 text-[12px] font-semibold tracking-[0.18em] text-primary">
+                BUSINESS CASUAL
               </span>
             </div>
 
             <p className="mt-5 text-center text-[14px] leading-[1.8] text-fg-muted sm:text-[14.5px]">
-              드레스코드는 블랙&화이트예요.
+              드레스코드는 비즈니스 캐주얼이에요.
               <br />
-              파티인 만큼 단정하고 깔끔한 분위기로 참석해 주세요.
+              너무 격식 차리지 않으면서도 단정하게, 첫 인상에 신경 써 주세요.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">

@@ -62,6 +62,11 @@ export const applySchema = z.object({
     .string()
     .trim()
     .regex(/^[EIei][NSns][TFtf][JPjp]$/, "MBTI 4글자를 선택해주세요"),
+  nickname_element: z
+    .string()
+    .trim()
+    .min(1, "닉네임용 원소를 선택해주세요")
+    .max(3, "원소 기호는 최대 3글자입니다"),
   personality_keywords: z
     .array(z.string().min(1))
     .min(1, "성격 키워드를 1개 이상 선택해주세요")

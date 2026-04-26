@@ -2,7 +2,6 @@ import { Hero } from "@/components/landing/Hero";
 import { IntroCard } from "@/components/landing/IntroCard";
 import { AboutSection, HospitalityShowcaseSection } from "@/components/landing/AboutSection";
 import { DressCodeSection } from "@/components/landing/DressCodeSection";
-import { EntryNoticeSection } from "@/components/landing/EntryNoticeSection";
 import { ProgramSection } from "@/components/landing/ProgramSection";
 import { ReassuranceSection } from "@/components/landing/ReassuranceSection";
 import { QuoteCard } from "@/components/landing/QuoteCard";
@@ -33,9 +32,8 @@ export default function Home() {
           <div className="divider-fade" />
         </div>
         <ReassuranceSection />
-        <ApplyCta variant="final" />
         <FaqSection />
-        <EntryNoticeSection />
+        <ApplyCta variant="final" />
         <Footer />
       </main>
     </>

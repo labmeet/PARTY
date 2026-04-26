@@ -26,7 +26,7 @@ export async function submitApplication(
     };
   }
 
-  if (!uploads || uploads.photoPaths.length < 2 || !uploads.verificationPath) {
+  if (!uploads || uploads.photoPaths.length < 1 || !uploads.verificationPath) {
     return {
       ok: false,
       error: "사진과 본인 확인 서류 업로드를 완료해주세요.",
@@ -52,6 +52,7 @@ export async function submitApplication(
   };
 
   const extras: string[] = [];
+  extras.push(`[닉네임 원소] ${parsed.data.nickname_element}`);
   const companion = parsed.data.companion?.trim();
   if (companion) extras.push(`[동반인] ${companion}`);
   extras.push(`[솔로 여부] ${SOLO_MAP[parsed.data.solo]}`);

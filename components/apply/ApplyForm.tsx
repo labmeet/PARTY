@@ -21,6 +21,7 @@ import { MbtiSelector } from "./MbtiSelector";
 import { PhoneInput } from "./PhoneInput";
 import { GenderBadge } from "./GenderBadge";
 import { PersonalitySelector } from "./PersonalitySelector";
+import { PeriodicTableSelector } from "./PeriodicTableSelector";
 import { cn } from "@/lib/utils";
 
 export function ApplyForm({ gender }: { gender: Gender }) {
@@ -48,6 +49,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       phone: "",
       height: undefined,
       mbti: "",
+      nickname_element: "",
       personality_keywords: [],
       solo: "yes",
       ideal_type: "",
@@ -64,10 +66,10 @@ export function ApplyForm({ gender }: { gender: Gender }) {
     setServerError(null);
 
     const nextPhotoError =
-      photoFiles.length < 2 ? "본인 사진은 최소 2장 이상 올려주세요." : null;
+      photoFiles.length < 1 ? "본인 사진을 1장 이상 올려주세요." : null;
     const nextVerificationError =
       verificationFiles.length < 1
-        ? "학생증/재학증명서/졸업증명서 중 하나를 올려주세요."
+        ? "카이스트 포털 로그인 화면 캡처를 올려주세요."
         : null;
 
     setPhotoError(nextPhotoError);
@@ -220,6 +222,19 @@ export function ApplyForm({ gender }: { gender: Gender }) {
 
           <div>
             <Controller
+              name="nickname_element"
+              control={control}
+              render={({ field }) => (
+                <PeriodicTableSelector value={field.value} onChange={field.onChange} />
+              )}
+            />
+            {errors.nickname_element?.message && (
+              <p className="error-text">{errors.nickname_element.message}</p>
+            )}
+          </div>
+
+          <div>
+            <Controller
               name="mbti"
               control={control}
               render={({ field }) => (
@@ -343,21 +358,21 @@ export function ApplyForm({ gender }: { gender: Gender }) {
         <SectionHeader label="Upload" />
         <div className="space-y-4">
           <UploadField
-            title="본인 사진을 올려주세요 (최소 2장) *"
-            description="최소 2장 이상 선택해야 자기 소개서 제출이 가능합니다."
+            title="본인 사진을 올려주세요 (최소 1장) *"
+            description="최소 1장 이상 선택해야 자기 소개서 제출이 가능합니다."
             files={photoFiles}
             onChange={(files) => {
               setPhotoFiles((prev) => {
                 const next = [...prev, ...files];
-                if (next.length >= 2) setPhotoError(null);
+                if (next.length >= 1) setPhotoError(null);
                 return next;
               });
             }}
             onRemove={(target) => {
               const next = photoFiles.filter((_, index) => index !== target);
               setPhotoFiles(next);
-              if (next.length < 2) {
-                setPhotoError("본인 사진은 최소 2장 이상 올려주세요.");
+              if (next.length < 1) {
+                setPhotoError("본인 사진을 1장 이상 올려주세요.");
               }
             }}
             error={photoError}
@@ -366,8 +381,8 @@ export function ApplyForm({ gender }: { gender: Gender }) {
           />
 
           <UploadField
-            title="학생증/재학증명서/졸업증명서 중 하나를 올려주세요. *"
-            description="본인 확인용이며, 매칭 상대에게 공개되지 않습니다."
+            title="카이스트 포털 로그인 화면 캡처를 올려주세요. *"
+            description="기재하신 이름과 동일해야 본인 인증이 가능합니다. 본인 확인용으로만 사용되며 매칭 상대에게 공개되지 않습니다."
             files={verificationFiles}
             onChange={(files) => {
               setVerificationFiles(files);
@@ -377,7 +392,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               const next = verificationFiles.filter((_, index) => index !== target);
               setVerificationFiles(next);
               if (next.length < 1) {
-                setVerificationError("학생증/재학증명서/졸업증명서 중 하나를 올려주세요.");
+                setVerificationError("카이스트 포털 로그인 화면 캡처를 올려주세요.");
               }
             }}
             error={verificationError}

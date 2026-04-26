@@ -33,7 +33,16 @@ export default function CompletePage() {
           연구만 하세요.
         </p>
 
-        <div className="mt-10">
+        <div className="mx-auto mt-8 max-w-md rounded-2xl border border-primary/25 bg-primary/10 px-5 py-4 text-left">
+          <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-primary">
+            Entry Notice
+          </p>
+          <p className="text-[13px] leading-[1.7] text-fg">
+            행사 시작 15분 전부터 신분증(주민등록증·운전면허증·여권 중 1개) 확인 후 입장이며, 미지참 시 입장이 제한됩니다.
+          </p>
+        </div>
+
+        <div className="mt-8">
           <Link href="/" className="btn-ghost max-w-xs mx-auto">
             랜딩으로 돌아가기
           </Link>

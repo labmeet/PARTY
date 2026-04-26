@@ -109,7 +109,7 @@ export function PartyCalendar() {
           <span className="font-semibold text-fg">
             {YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 18:00
           </span>
-          , 첫 파티가 열립니다
+, 첫 랩미가 열립니다
         </p>
       </div>
 
@@ -149,14 +149,19 @@ export function PartyCalendar() {
                       1st Party
                     </p>
                     <h3 className="font-serif text-[30px] font-bold leading-[1.1] tracking-tight text-fg sm:text-[44px]">
-                      카이스트
+                      랩미
                       <br />
-                      첫 네트워킹 파티
+                      런칭 파티
                     </h3>
                     <p className="mt-5 max-w-[22ch] text-[13px] leading-relaxed text-fg-muted sm:text-[14px]">
-                      카이스트 최초 네트워킹 파티,
+                      5월 29일,
                       <br />
-                      5월 29일 랩미에서 만납니다.
+                      첫 랩미가 열립니다.
+                    </p>
+                    <p className="mt-4 max-w-[28ch] text-[12px] font-medium leading-relaxed text-fg sm:text-[13px]">
+                      와인 · 치즈 플레이트 · 스낵 제공
+                      <br />
+                      정원 32명 (남 16 · 여 16)
                     </p>
                   </div>
                   <div className="mt-8 flex items-center gap-3 text-[10px] tracking-[0.3em] text-fg-subtle">
@@ -201,7 +206,8 @@ export function PartyCalendar() {
                         className="overflow-hidden"
                       >
                         <div className="pt-4">
-                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <SeatStatus />
+                          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
                             <Link href="/apply/female" className="btn-primary group">
                               <span>여성 신청</span>
                               <span className="transition-transform group-hover:translate-x-0.5">→</span>
@@ -231,6 +237,53 @@ export function PartyCalendar() {
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+const FEMALE_TAKEN = 11;
+const MALE_TAKEN = 14;
+const PER_GENDER_CAP = 16;
+
+function SeatStatus() {
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <SeatPill label="여성" taken={FEMALE_TAKEN} cap={PER_GENDER_CAP} />
+      <SeatPill label="남성" taken={MALE_TAKEN} cap={PER_GENDER_CAP} />
+    </div>
+  );
+}
+
+function SeatPill({ label, taken, cap }: { label: string; taken: number; cap: number }) {
+  const remaining = Math.max(cap - taken, 0);
+  const pct = Math.min((taken / cap) * 100, 100);
+  const tight = remaining <= 3;
+  return (
+    <div className="rounded-2xl border border-border bg-bg-elevated/40 px-4 py-3">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-fg-subtle">
+          {label}
+        </span>
+        <span className="font-display text-[13px] tabular-nums text-fg">
+          <span className={tight ? "font-bold text-pop" : "font-bold text-primary"}>
+            {taken}
+          </span>
+          <span className="mx-0.5 text-fg-subtle">/</span>
+          <span className="text-fg-subtle">{cap}</span>
+        </span>
+      </div>
+      <div className="mt-2 h-1 overflow-hidden rounded-full bg-border/60">
+        <div
+          className={`h-full rounded-full ${tight ? "bg-pop" : "bg-primary"}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      <p className="mt-2 text-[11px] tabular-nums text-fg-subtle">
+        남은 좌석{" "}
+        <span className={`font-semibold ${tight ? "text-pop" : "text-fg"}`}>
+          {remaining}석
+        </span>
+      </p>
+    </div>
   );
 }
 
