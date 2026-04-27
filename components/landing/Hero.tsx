@@ -33,12 +33,10 @@ export function Hero() {
 
         <p className="mx-auto mt-6 max-w-md text-[17px] leading-relaxed text-fg-muted sm:text-[19px]">
           KAIST 대학원생들이 편하게 연결될 수 있는 자리.
-          <br className="hidden sm:block" />
+          <br />
           랩실과 집만 반복하고 계신가요?
-          <br className="hidden sm:block" />
-          좋아하는 것을 쫓다 인연을 만들 시간이 없는
-          <br className="hidden sm:block" />
-          분들을 위해.
+          <br />
+          좋아하는 것을 쫓다 인연을 만들 시간이 없는 분들을 위해.
         </p>
       </div>
     </section>

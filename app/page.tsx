@@ -1,6 +1,6 @@
 import { Hero } from "@/components/landing/Hero";
 import { IntroCard } from "@/components/landing/IntroCard";
-import { AboutSection, HospitalityShowcaseSection } from "@/components/landing/AboutSection";
+import { AboutSection } from "@/components/landing/AboutSection";
 import { DressCodeSection } from "@/components/landing/DressCodeSection";
 import { ProgramSection } from "@/components/landing/ProgramSection";
 import { ReassuranceSection } from "@/components/landing/ReassuranceSection";
@@ -27,7 +27,6 @@ export default function Home() {
         <AboutSection />
         <DressCodeSection />
         <ProgramSection />
-        <HospitalityShowcaseSection />
         <div className="container-page">
           <div className="divider-fade" />
         </div>
