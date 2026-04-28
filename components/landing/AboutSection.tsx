@@ -25,7 +25,7 @@ const BULLETS: {
     title: "어떻게 해요?",
     body: (
       <>
-        폼을 작성하고 신청해주시면, 저희가 알잘딱으로 자리 채워서 재미있게, <strong className="font-semibold text-fg">기 안 빨리게</strong> 자리를 만들어드려요. 대신 누가 올지는 알려드릴 수 없어요. 현장에서 직접 확인해주세요.
+        폼을 작성하고 신청해주시면, 저희가 알잘딱으로 자리 채워서 재미있게, <strong className="font-semibold text-fg">기 안 빨리게</strong> 자리를 만들어드려요.<br />대신 누가 올지는 알려드릴 수 없어요.<br />현장에서 직접 확인해주세요.
       </>
     ),
   },

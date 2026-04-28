@@ -22,7 +22,7 @@ export function IntroCard() {
           <span className="font-semibold text-primary">와 네트워킹 앱</span>을 지칭해요.
           <br />
           <span className="font-semibold text-fg">내향인 버전</span>,{" "}
-          <span className="font-semibold text-fg">외향인 버전</span>으로 두 가지 방식이 개최되고, 첫 파티는{" "}
+          <span className="font-semibold text-fg">외향인 버전</span>으로 두 가지 방식이 개최되고,<br className="sm:hidden" /> 첫 파티는{" "}
           <span className="font-semibold text-primary">내향인 버전</span>이에요.
           <br />
           만들어가는 사람들도 전원 카이스트생. 대전에서의 솔로생활에 지쳤다고 하네요.

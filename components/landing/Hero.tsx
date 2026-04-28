@@ -36,7 +36,7 @@ export function Hero() {
           <br />
           랩실과 집만 반복하고 계신가요?
           <br />
-          좋아하는 것을 쫓다 인연을 만들 시간이 없는 분들을 위해.
+          좋아하는 것을 쫓다<br className="sm:hidden" /> 인연을 만들 시간이 없는 분들을 위해.
         </p>
       </div>
     </section>

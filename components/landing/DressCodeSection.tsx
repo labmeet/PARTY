@@ -31,7 +31,7 @@ export function DressCodeSection() {
             <p className="mt-5 text-center text-[14px] leading-[1.8] text-fg-muted sm:text-[14.5px]">
               드레스코드는 비즈니스 캐주얼이에요.
               <br />
-              너무 격식 차리지 않으면서도 단정하게, 첫 인상에 신경 써 주세요.
+              너무 격식 차리지 않으면서도 단정하게,<br className="sm:hidden" /> 첫 인상에 신경 써 주세요.
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">

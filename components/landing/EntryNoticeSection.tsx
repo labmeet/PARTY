@@ -30,7 +30,7 @@ export function EntryNoticeSection() {
 
           <div className="mt-6 rounded-[28px] border border-[#b88a4d]/75 px-5 py-7 sm:px-8 sm:py-8">
             <p className="text-[14px] leading-[1.85] text-[#f2e7d7] sm:text-[14.5px]">
-              행사 시작 15분 전부터 신분증 확인 후 입장을 도와드립니다.
+              행사 시작 15분 전부터<br className="sm:hidden" /> 신분증 확인 후 입장을 도와드립니다.
               <br />
               (주민등록증, 운전면허증, 여권 지참 필수)
             </p>
