@@ -422,7 +422,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
                 <span className="font-semibold text-fg">35,000원</span>
               </div>
               <p className="mt-3 font-serif text-[18px] font-bold tracking-[0.02em] text-fg sm:text-[20px]">
-                우리은행 1002-463-896789 ㄱㅁㅈ
+                토스뱅크 1002-5364-8003 ㄱㄴㅇ
               </p>
             </div>
 
