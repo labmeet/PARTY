@@ -131,7 +131,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
             />
           </Field>
 
-          <Field label="키 (선택)" error={errors.height?.message}>
+          <Field label="키" error={errors.height?.message}>
             <div className="relative">
               <input
                 type="number"

@@ -153,7 +153,7 @@ const ACTINIDES: readonly El[] = [
 
 const ALL: readonly El[] = [...ELEMENTS, ...LANTHANIDES, ...ACTINIDES];
 
-const DISABLED: ReadonlySet<string> = new Set(["Mn"]);
+const DISABLED: ReadonlySet<string> = new Set(["Mn", "Os"]);
 
 const CAT_BG: Record<Cat, string> = {
   alkali: "bg-[#5C3535]/60 hover:bg-[#5C3535]",
@@ -182,12 +182,10 @@ export function PeriodicTableSelector({
   return (
     <div>
       <span className="label">닉네임을 선택해주세요</span>
-      <p className="caption mb-3">
+      <p className="caption mb-3 text-fg">
         랩미 파티에서 여러분은 선택하신 원소로 닉네임을 갖게 됩니다! 원하시는 원소를 골라주세요.
         <br />
-        <span className="text-fg-subtle">
-          (인기 많은 원소일 경우 저희가 다른 예쁜 원소로 배정해드립니다)
-        </span>
+        (인기 많은 원소일 경우 저희가 다른 예쁜 원소로 배정해드립니다)
       </p>
 
       <div className="rounded-2xl border border-border bg-bg-elevated/40 px-2 py-3 sm:p-4">

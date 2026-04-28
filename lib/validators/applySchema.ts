@@ -57,7 +57,11 @@ export const applySchema = z.object({
     .trim()
     .regex(/^01\d-?\d{3,4}-?\d{4}$/, "올바른 전화번호 형식이 아닙니다 (예: 010-1234-5678)"),
   gender: genderEnum,
-  height: z.number().int().min(140, "140cm 이상 입력해주세요").max(220, "220cm 이하로 입력해주세요").optional(),
+  height: z
+    .number({ message: "키를 입력해주세요" })
+    .int("정수로 입력해주세요")
+    .min(140, "140cm 이상 입력해주세요")
+    .max(220, "220cm 이하로 입력해주세요"),
   mbti: z
     .string()
     .trim()

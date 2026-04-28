@@ -107,7 +107,7 @@ export function PartyCalendar() {
         <span className="h-2 w-2 animate-pulse rounded-full bg-pop" />
         <p className="text-[13px] text-fg-muted">
           <span className="font-semibold text-fg">
-            {YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 18:00
+            {YEAR}.{String(MONTH).padStart(2, "0")}.{PARTY_DATE} 20:00
           </span>
 , 첫 랩미가 열립니다
         </p>
@@ -173,7 +173,7 @@ export function PartyCalendar() {
                 <div className="relative px-7 py-9 sm:px-10 sm:py-12">
                   <dl className="space-y-4">
                     <InfoRow label="Date" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE}`} hint="금요일" />
-                    <InfoRow label="Time" value="18:00" hint="KST" />
+                    <InfoRow label="Time" value="20:00" hint="KST" />
                     <InfoRow label="Venue" value="LABMEET" hint="5월 29일" />
                     <InfoRow
                       label="Fee"

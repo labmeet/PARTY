@@ -10,7 +10,7 @@ const STEPS = [
   {
     step: "Step 2",
     title: "로테이션 프리토킹",
-    description: "하이볼과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다.",
+    description: "와인과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다.",
     visual: "highball",
   },
   {
@@ -66,15 +66,6 @@ export function ProgramSection() {
             ))}
           </div>
 
-          <div className="mt-7 rounded-[24px] border border-border bg-bg-base/45 px-5 py-5 text-center">
-            <p className="text-[14px] leading-[1.8] text-fg-muted sm:text-[14.5px]">
-              하이볼&치즈를 제공해드리는 스페셜 다이닝을 즐기고,
-              <br />
-              시간별로 테이블 로테이션을 진행하여 다양한 사람들과
-              <br className="hidden sm:block" />
-              편하게 대화할 수 있는 환경을 만들어 드립니다.
-            </p>
-          </div>
         </article>
       </div>
     </section>
@@ -87,7 +78,7 @@ function ProgramVisual({ visual }: { visual: (typeof STEPS)[number]["visual"] })
       <div className="relative mt-4 aspect-[1.28] overflow-hidden rounded-[20px] border border-border">
         <Image
           src="/highball.jpg"
-          alt="하이볼과 프리토킹 이미지"
+          alt="와인과 프리토킹 이미지"
           fill
           sizes="(max-width: 640px) 90vw, 280px"
           className="object-cover"
