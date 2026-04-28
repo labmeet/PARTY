@@ -286,12 +286,12 @@ export function ApplyForm({
           <Field
             label="만나고 싶지 않은 사람 (선택)"
             error={errors.deal_breaker?.message}
-            caption="특정 실명은 적지 말아주세요. 500자 이내."
+            caption="실명도 괜찮아요. 500자 이내."
           >
             <textarea
               rows={4}
               className="input-base resize-none leading-relaxed"
-              placeholder="예: 흡연자, 너무 이성적인 분, 연락이 불규칙한 분"
+              placeholder="예: 흡연자, 너무 이성적인 분, 연락이 불규칙한 분, 전남친/전여친"
               aria-invalid={!!errors.deal_breaker}
               {...register("deal_breaker")}
             />

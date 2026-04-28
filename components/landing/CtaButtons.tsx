@@ -36,7 +36,7 @@ export function CtaButtons() {
         </div>
 
         <p className="relative mt-5 text-center text-[12px] text-fg-subtle">
-          제출된 정보는 승인 절차에만 사용되며, 승인 시 이메일로 안내드립니다.
+          제출된 정보는 승인 절차에만 사용되며, 승인 시 문자로 안내드립니다.
         </p>
       </div>
     </section>

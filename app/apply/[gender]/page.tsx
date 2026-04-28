@@ -35,7 +35,7 @@ export default async function ApplyPage({
           </p>
           <h1 className="font-serif text-display-md text-fg">자기 소개서</h1>
           <p className="mt-2 text-[13px] text-fg-muted">
-            편하게 작성해주시면 확인 후 이메일로 안내드리겠습니다.
+            편하게 작성해주시면 확인 후 문자로 안내드리겠습니다.
           </p>
         </header>
 
