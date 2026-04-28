@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
@@ -16,7 +16,6 @@ import {
   SOLO_OPTIONS,
 } from "@/lib/validators/applySchema";
 import { submitApplication } from "@/lib/actions/submitApplication";
-import { createClient as createSupabaseClient } from "@/lib/supabase/client";
 import { MbtiSelector } from "./MbtiSelector";
 import { PhoneInput } from "./PhoneInput";
 import { GenderBadge } from "./GenderBadge";
@@ -28,10 +27,6 @@ export function ApplyForm({ gender }: { gender: Gender }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
-  const [photoFiles, setPhotoFiles] = useState<File[]>([]);
-  const [verificationFiles, setVerificationFiles] = useState<File[]>([]);
-  const [photoError, setPhotoError] = useState<string | null>(null);
-  const [verificationError, setVerificationError] = useState<string | null>(null);
 
   const {
     register,
@@ -65,61 +60,12 @@ export function ApplyForm({ gender }: { gender: Gender }) {
   const onSubmit = handleSubmit((values) => {
     setServerError(null);
 
-    const nextPhotoError =
-      photoFiles.length < 1 ? "본인 사진을 1장 이상 올려주세요." : null;
-    const nextVerificationError =
-      verificationFiles.length < 1
-        ? "카이스트 포털 로그인 화면 캡처를 올려주세요."
-        : null;
-
-    setPhotoError(nextPhotoError);
-    setVerificationError(nextVerificationError);
-
-    if (nextPhotoError || nextVerificationError) {
-      return;
-    }
-
     startTransition(async () => {
-      const supabase = createSupabaseClient();
-      const uploadId = crypto.randomUUID();
-
-      const uploadedPhotos = await uploadFilesToBucket({
-        supabase,
-        bucket: "application-photos",
-        folder: uploadId,
-        files: photoFiles,
-      });
-
-      if (!uploadedPhotos.ok) {
-        setServerError(uploadedPhotos.error);
-        return;
-      }
-
-      const uploadedVerification = await uploadFilesToBucket({
-        supabase,
-        bucket: "application-verification",
-        folder: uploadId,
-        files: verificationFiles,
-      });
-
-      if (!uploadedVerification.ok) {
-        await supabase.storage.from("application-photos").remove(uploadedPhotos.paths);
-        setServerError(uploadedVerification.error);
-        return;
-      }
-
-      const result = await submitApplication(values, {
-        photoPaths: uploadedPhotos.paths,
-        verificationPath: uploadedVerification.paths[0],
-      });
+      const result = await submitApplication(values);
 
       if (result.ok) {
         router.push("/apply/complete");
       } else {
-        await supabase.storage.from("application-photos").remove(uploadedPhotos.paths);
-        await supabase.storage
-          .from("application-verification")
-          .remove(uploadedVerification.paths);
         setServerError(result.error);
       }
     });
@@ -355,52 +301,8 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       </div>
 
       <div>
-        <SectionHeader label="Upload" />
-        <div className="space-y-4">
-          <UploadField
-            title="본인 사진을 올려주세요 (최소 1장) *"
-            description="최소 1장 이상 선택해야 자기 소개서 제출이 가능합니다."
-            files={photoFiles}
-            onChange={(files) => {
-              setPhotoFiles((prev) => {
-                const next = [...prev, ...files];
-                if (next.length >= 1) setPhotoError(null);
-                return next;
-              });
-            }}
-            onRemove={(target) => {
-              const next = photoFiles.filter((_, index) => index !== target);
-              setPhotoFiles(next);
-              if (next.length < 1) {
-                setPhotoError("본인 사진을 1장 이상 올려주세요.");
-              }
-            }}
-            error={photoError}
-            accept="image/*"
-            multiple
-          />
-
-          <UploadField
-            title="카이스트 포털 로그인 화면 캡처를 올려주세요. *"
-            description="기재하신 이름과 동일해야 본인 인증이 가능합니다. 본인 확인용으로만 사용되며 매칭 상대에게 공개되지 않습니다."
-            files={verificationFiles}
-            onChange={(files) => {
-              setVerificationFiles(files);
-              if (files.length >= 1) setVerificationError(null);
-            }}
-            onRemove={(target) => {
-              const next = verificationFiles.filter((_, index) => index !== target);
-              setVerificationFiles(next);
-              if (next.length < 1) {
-                setVerificationError("카이스트 포털 로그인 화면 캡처를 올려주세요.");
-              }
-            }}
-            error={verificationError}
-            accept=".jpg,.jpeg,.png,.pdf,.heic,.heif"
-          />
-        </div>
-
-        <div className="mt-6 overflow-hidden rounded-[28px] border border-primary/20 bg-[linear-gradient(135deg,rgba(182,233,204,0.16),rgba(182,233,204,0.06))]">
+        <SectionHeader label="Payment" />
+        <div className="overflow-hidden rounded-[28px] border border-primary/20 bg-[linear-gradient(135deg,rgba(182,233,204,0.16),rgba(182,233,204,0.06))]">
           <div className="border-b border-primary/15 px-5 py-4 sm:px-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
               Payment Info
@@ -526,133 +428,6 @@ function ChoiceRow<V extends string>({
           </button>
         );
       })}
-    </div>
-  );
-}
-
-async function uploadFilesToBucket({
-  supabase,
-  bucket,
-  folder,
-  files,
-}: {
-  supabase: ReturnType<typeof createSupabaseClient>;
-  bucket: "application-photos" | "application-verification";
-  folder: string;
-  files: File[];
-}) {
-  const paths: string[] = [];
-
-  for (let index = 0; index < files.length; index += 1) {
-    const file = files[index];
-    const fileName = `${index + 1}-${sanitizeFileName(file.name)}`;
-    const filePath = `${folder}/${fileName}`;
-
-    const { error } = await supabase.storage.from(bucket).upload(filePath, file, {
-      cacheControl: "3600",
-      upsert: false,
-    });
-
-    if (error) {
-      if (paths.length > 0) {
-        await supabase.storage.from(bucket).remove(paths);
-      }
-      return {
-        ok: false as const,
-        error: "파일 업로드 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
-      };
-    }
-
-    paths.push(filePath);
-  }
-
-  return { ok: true as const, paths };
-}
-
-function sanitizeFileName(fileName: string) {
-  return fileName
-    .normalize("NFKD")
-    .replace(/[^\w.-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .toLowerCase();
-}
-
-function UploadField({
-  title,
-  description,
-  files,
-  onChange,
-  onRemove,
-  error,
-  accept,
-  multiple = false,
-}: {
-  title: string;
-  description?: string;
-  files: File[];
-  onChange: (files: File[]) => void;
-  onRemove: (index: number) => void;
-  error?: string | null;
-  accept?: string;
-  multiple?: boolean;
-}) {
-  const inputId = useId();
-
-  return (
-    <div className="rounded-[24px] border border-border bg-bg-card p-5 shadow-card sm:p-6">
-      <p className="text-[16px] font-semibold leading-[1.5] text-fg">{title}</p>
-      {description && (
-        <p className="mt-2 text-[14px] leading-[1.75] text-fg-muted sm:text-[14.5px]">
-          {description}
-        </p>
-      )}
-
-      <div className="mt-5">
-        <input
-          id={inputId}
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          className="sr-only"
-          onChange={(event) => {
-            const nextFiles = Array.from(event.target.files ?? []);
-            if (nextFiles.length > 0) {
-              onChange(nextFiles);
-            }
-            event.currentTarget.value = "";
-          }}
-        />
-        <label
-          htmlFor={inputId}
-          className="inline-flex h-11 cursor-pointer items-center justify-center rounded-xl border border-border-strong bg-bg-elevated/50 px-5 text-[14px] font-medium text-fg-muted transition-colors hover:border-primary/40 hover:text-fg"
-        >
-          파일 추가
-        </label>
-      </div>
-
-      {files.length > 0 && (
-        <div className="mt-4 space-y-2">
-          {files.map((file, index) => (
-            <div
-              key={`${file.name}-${file.lastModified}-${index}`}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-bg-elevated/35 px-4 py-3"
-            >
-              <span className="min-w-0 truncate text-[13px] text-fg-muted">{file.name}</span>
-              <button
-                type="button"
-                onClick={() => onRemove(index)}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border-strong text-[14px] text-fg-muted transition-colors hover:border-primary/40 hover:text-fg"
-                aria-label={`${file.name} 삭제`}
-              >
-                X
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {error && <p className="error-text mt-3">{error}</p>}
     </div>
   );
 }

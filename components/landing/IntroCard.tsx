@@ -10,20 +10,16 @@ export function IntroCard() {
           }}
           aria-hidden="true"
         />
-        <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.25em] text-pop">
+        <p className="mb-3 text-center text-[11px] font-medium uppercase tracking-[0.25em] text-pop sm:text-left">
           ABOUT
         </p>
-        <h2 className="font-serif text-[22px] font-bold leading-snug text-fg sm:text-[26px]">
+        <h2 className="text-center font-serif text-[22px] font-bold leading-snug text-fg sm:text-left sm:text-[26px]">
           랩미가 뭔가요?
         </h2>
-        <p className="mt-4 text-[14px] leading-[1.75] text-fg-muted sm:text-[15px]">
-          랩미는 KAIST 내 석박사 재학·졸업생을 위한 네트워킹 파티입니다.
+        <p className="mt-4 text-center text-[14px] leading-[1.75] text-fg-muted sm:text-left sm:text-[15px]">
+          KAIST 내 석박사 재학·졸업생 대상 오프라인 파티와 네트워킹 앱을 지칭해요.
           <br />
-          만드는 사람들도 모두 KAIST 구성원입니다.
-          <br />
-          바쁜 연구와 반복되는 일상 속에서도,
-          <br />
-          좋은 사람을 편하게 만날 수 있는 자리가 필요하다고 생각했습니다.
+          만들어가는 사람들도 전원 카이스트생.
         </p>
       </article>
     </section>

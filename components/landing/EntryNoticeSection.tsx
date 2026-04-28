@@ -32,21 +32,12 @@ export function EntryNoticeSection() {
             <p className="text-[14px] leading-[1.85] text-[#f2e7d7] sm:text-[14.5px]">
               행사 시작 15분 전부터 신분증 확인 후 입장을 도와드립니다.
               <br />
-              주민등록증, 운전면허증, 여권 지참 필수
+              (주민등록증, 운전면허증, 여권 지참 필수)
             </p>
             <p className="mt-5 font-serif text-[18px] font-bold text-[#d6a15d] sm:text-[19px]">
               신분증 미지참 시 참여가 제한됩니다.
             </p>
           </div>
-        </div>
-
-        <div className="border-t border-[#b88a4d]/25 bg-[#0d0d0d] px-6 py-6 text-center sm:px-8">
-          <p className="font-serif text-[18px] font-bold text-[#f2e7d7] sm:text-[19px]">
-            드레스코드 : 블랙&화이트
-          </p>
-          <p className="mt-2 text-[14px] leading-[1.75] text-[#d7c7b2] sm:text-[14.5px]">
-            파티에 부적합한 복장 착용 시 입장 제한될 수 있습니다.
-          </p>
         </div>
       </article>
     </section>

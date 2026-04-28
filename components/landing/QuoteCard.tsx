@@ -14,7 +14,7 @@ export function QuoteCard() {
           PRIVATE PARTY · KAIST
         </p>
         <blockquote className="relative font-serif text-[24px] font-bold leading-[1.4] tracking-tight text-fg sm:text-[32px]">
-          같은 건물에서 눈만 마주치던 그 사람
+          건물에서 눈만 마주치던 그&nbsp;사람,
           <br />
           <span className="text-primary">5월 29일 랩미에서</span>
           <br />

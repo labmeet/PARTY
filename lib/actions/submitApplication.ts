@@ -7,14 +7,8 @@ export type SubmitResult =
   | { ok: true }
   | { ok: false; error: string; field?: keyof ApplyFormValues };
 
-type UploadedPaths = {
-  photoPaths: string[];
-  verificationPath: string;
-};
-
 export async function submitApplication(
   input: ApplyFormValues,
-  uploads?: UploadedPaths,
 ): Promise<SubmitResult> {
   const parsed = applySchema.safeParse(input);
   if (!parsed.success) {
@@ -23,13 +17,6 @@ export async function submitApplication(
       ok: false,
       error: issue.message,
       field: issue.path[0] as keyof ApplyFormValues | undefined,
-    };
-  }
-
-  if (!uploads || uploads.photoPaths.length < 1 || !uploads.verificationPath) {
-    return {
-      ok: false,
-      error: "사진과 본인 확인 서류 업로드를 완료해주세요.",
     };
   }
 
@@ -76,8 +63,6 @@ export async function submitApplication(
     ideal_type: idealWithExtras,
     deal_breaker: parsed.data.deal_breaker || null,
     email: parsed.data.email.toLowerCase(),
-    photo_paths: uploads.photoPaths,
-    verification_path: uploads.verificationPath,
   });
 
   if (error) {

@@ -153,6 +153,8 @@ const ACTINIDES: readonly El[] = [
 
 const ALL: readonly El[] = [...ELEMENTS, ...LANTHANIDES, ...ACTINIDES];
 
+const DISABLED: ReadonlySet<string> = new Set(["Mn"]);
+
 const CAT_BG: Record<Cat, string> = {
   alkali: "bg-[#5C3535]/60 hover:bg-[#5C3535]",
   alkaline: "bg-[#4A2A33]/60 hover:bg-[#4A2A33]",
@@ -222,6 +224,7 @@ export function PeriodicTableSelector({
                 key={el[0]}
                 el={el}
                 isSelected={value === el[1]}
+                isDisabled={DISABLED.has(el[1])}
                 onSelect={onChange}
                 onHover={setHovered}
                 row={el[3]}
@@ -239,6 +242,7 @@ export function PeriodicTableSelector({
                 key={el[0]}
                 el={el}
                 isSelected={value === el[1]}
+                isDisabled={DISABLED.has(el[1])}
                 onSelect={onChange}
                 onHover={setHovered}
                 row={el[3] === 8 ? 1 : 2}
@@ -255,6 +259,7 @@ export function PeriodicTableSelector({
 function ElementCell({
   el,
   isSelected,
+  isDisabled,
   onSelect,
   onHover,
   row,
@@ -262,6 +267,7 @@ function ElementCell({
 }: {
   el: El;
   isSelected: boolean;
+  isDisabled: boolean;
   onSelect: (sym: string | undefined) => void;
   onHover: (el: El | null) => void;
   row: number;
@@ -271,12 +277,16 @@ function ElementCell({
   return (
     <button
       type="button"
-      onClick={() => onSelect(isSelected ? undefined : sym)}
-      onMouseEnter={() => onHover(el)}
+      onClick={() => {
+        if (isDisabled) return;
+        onSelect(isSelected ? undefined : sym);
+      }}
+      onMouseEnter={() => !isDisabled && onHover(el)}
       onMouseLeave={() => onHover(null)}
-      onFocus={() => onHover(el)}
+      onFocus={() => !isDisabled && onHover(el)}
       onBlur={() => onHover(null)}
-      aria-label={`${sym} ${name}`}
+      disabled={isDisabled}
+      aria-label={isDisabled ? `${sym} ${name} (선택 불가)` : `${sym} ${name}`}
       aria-pressed={isSelected}
       style={{ gridRow: row, gridColumn: col }}
       className={cn(
@@ -284,6 +294,7 @@ function ElementCell({
         CAT_BG[cat],
         isSelected &&
           "z-10 scale-[1.08] border-primary bg-primary/35 ring-2 ring-primary shadow-[0_0_18px_rgba(182,233,204,0.55)]",
+        isDisabled && "cursor-not-allowed opacity-25 grayscale hover:bg-inherit",
       )}
     >
       <span className="font-display text-[10px] font-bold leading-none sm:text-[12px] md:text-[13px]">
