@@ -286,7 +286,7 @@ export function ApplyForm({
           <Field
             label="만나고 싶지 않은 사람 (선택)"
             error={errors.deal_breaker?.message}
-            caption="실명도 괜찮아요. 500자 이내."
+            caption="실명 포함 가능하며, 매칭 조정 외 용도로 사용되지 않습니다. 500자 이내."
           >
             <textarea
               rows={4}
