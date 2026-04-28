@@ -9,14 +9,26 @@ const inter = Inter({
   display: "swap",
 });
 
+const SITE_DESCRIPTION = "카이스트 대학원생 전용 기 안 빨리는 소셜 파티, 랩미";
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://labmeet.vercel.app");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://labmeet.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: "LabMeet",
-  description: "카이스트 대학원생 전용 기 안 빨리는 소셜 파티, 랩미",
+  description: SITE_DESCRIPTION,
   openGraph: {
     title: "LabMeet",
-    description: "카이스트 대학원생 전용 기 안 빨리는 소셜 파티, 랩미",
+    description: SITE_DESCRIPTION,
     type: "website",
+    locale: "ko_KR",
+    siteName: "LabMeet",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LabMeet",
+    description: SITE_DESCRIPTION,
   },
 };
 
