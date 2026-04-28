@@ -153,7 +153,7 @@ const ACTINIDES: readonly El[] = [
 
 const ALL: readonly El[] = [...ELEMENTS, ...LANTHANIDES, ...ACTINIDES];
 
-const DISABLED: ReadonlySet<string> = new Set(["Mn", "Os", "Xe", "Ga"]);
+const DISABLED: ReadonlySet<string> = new Set(["Mn", "Os", "Xe", "Ga", "He"]);
 
 const CAT_BG: Record<Cat, string> = {
   alkali: "bg-[#5C3535]/60 hover:bg-[#5C3535]",

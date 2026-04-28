@@ -57,6 +57,7 @@ export async function submitApplication(
     lab_or_professor: parsed.data.lab_or_professor,
     phone: parsed.data.phone,
     gender: parsed.data.gender,
+    age: parsed.data.age,
     height: parsed.data.height ?? null,
     mbti: parsed.data.mbti.toUpperCase(),
     personality_keywords: parsed.data.personality_keywords,

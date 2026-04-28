@@ -42,6 +42,7 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       department: "",
       lab_or_professor: "",
       phone: "",
+      age: undefined,
       height: undefined,
       mbti: "",
       nickname_element: "",
@@ -129,6 +130,24 @@ export function ApplyForm({ gender }: { gender: Gender }) {
                 />
               )}
             />
+          </Field>
+
+          <Field label="나이" error={errors.age?.message}>
+            <div className="relative">
+              <input
+                type="number"
+                inputMode="numeric"
+                className="input-base pr-12"
+                placeholder="만 나이로 입력해주세요"
+                aria-invalid={!!errors.age}
+                {...register("age", {
+                  setValueAs: (v) => (v === "" || v === undefined ? undefined : Number(v)),
+                })}
+              />
+              <span className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[14px] text-fg-subtle">
+                세
+              </span>
+            </div>
           </Field>
 
           <Field label="키" error={errors.height?.message}>
