@@ -9,24 +9,20 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_DESCRIPTION = "카이스트 대학원생 전용 기 안 빨리는 소셜 파티";
-const SITE_URL = "https://labmeet.love";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-  title: "LabMeet",
-  description: SITE_DESCRIPTION,
+  metadataBase: new URL("https://labmeet.love"),
+  title: "LabMeet · 랩미",
+  description: "대학원생 전용 기 안 빨리는 오프라인 파티",
+
   openGraph: {
-    title: "LabMeet",
-    description: SITE_DESCRIPTION,
+    title: "LabMeet · 랩미",
+    description: "대학원생 전용 기 안 빨리는 오프라인 파티",
     type: "website",
-    locale: "ko_KR",
-    siteName: "LabMeet",
   },
   twitter: {
     card: "summary_large_image",
-    title: "LabMeet",
-    description: SITE_DESCRIPTION,
+    title: "LabMeet · 랩미",
+    description: "대학원생 전용 기 안 빨리는 오프라인 파티",
   },
 };
 
