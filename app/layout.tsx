@@ -9,10 +9,8 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_DESCRIPTION = "카이스트 대학원생 전용 기 안 빨리는 소셜 파티, 랩미";
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://labmeet.vercel.app");
+const SITE_DESCRIPTION = "카이스트 대학원생 전용 기 안 빨리는 소셜 파티";
+const SITE_URL = "https://labmeet.love";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
