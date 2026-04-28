@@ -52,7 +52,6 @@ export function ApplyForm({ gender }: { gender: Gender }) {
       companion: "",
       drinking: undefined,
       smoking: undefined,
-      email: "",
       agree: false as unknown as true,
     },
   });
@@ -91,22 +90,6 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               placeholder="이름을 입력해주세요"
               aria-invalid={!!errors.name}
               {...register("name")}
-            />
-          </Field>
-
-          <Field
-            label="이메일"
-            error={errors.email?.message}
-            caption="매칭 결과는 이메일로 안내드립니다."
-          >
-            <input
-              type="email"
-              inputMode="email"
-              autoComplete="email"
-              className="input-base"
-              placeholder="you@kaist.ac.kr"
-              aria-invalid={!!errors.email}
-              {...register("email")}
             />
           </Field>
 

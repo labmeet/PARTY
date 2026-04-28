@@ -62,14 +62,13 @@ export async function submitApplication(
     personality_keywords: parsed.data.personality_keywords,
     ideal_type: idealWithExtras,
     deal_breaker: parsed.data.deal_breaker || null,
-    email: parsed.data.email.toLowerCase(),
   });
 
   if (error) {
     if (error.code === "23505") {
       return {
         ok: false,
-        error: "이미 신청된 이메일 또는 전화번호입니다.",
+        error: "이미 신청된 전화번호입니다.",
       };
     }
     if (error.code === "23514") {
