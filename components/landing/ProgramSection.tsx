@@ -41,9 +41,6 @@ export function ProgramSection() {
                 프로그램 소개
               </h2>
             </div>
-            <p className="hidden font-serif text-[42px] italic leading-none text-white/20 sm:block">
-              Program
-            </p>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
