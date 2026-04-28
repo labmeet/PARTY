@@ -2,12 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ApplyForm } from "@/components/apply/ApplyForm";
 import { genderEnum } from "@/lib/validators/applySchema";
+import { createClient } from "@/lib/supabase/server";
 
-export function generateStaticParams() {
-  return [{ gender: "female" }, { gender: "male" }];
-}
+export const dynamic = "force-dynamic";
 
-export default function ApplyPage({
+export default async function ApplyPage({
   params,
 }: {
   params: { gender: string };
@@ -15,6 +14,10 @@ export default function ApplyPage({
   const parsed = genderEnum.safeParse(params.gender);
   if (!parsed.success) notFound();
   const gender = parsed.data;
+
+  const supabase = createClient();
+  const { data: takenData } = await supabase.rpc("taken_elements");
+  const takenElements = Array.isArray(takenData) ? (takenData as string[]) : [];
 
   return (
     <main className="min-h-screen pb-20">
@@ -36,7 +39,7 @@ export default function ApplyPage({
           </p>
         </header>
 
-        <ApplyForm gender={gender} />
+        <ApplyForm gender={gender} takenElements={takenElements} />
       </div>
     </main>
   );

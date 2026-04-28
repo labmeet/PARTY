@@ -23,7 +23,13 @@ import { PersonalitySelector } from "./PersonalitySelector";
 import { PeriodicTableSelector } from "./PeriodicTableSelector";
 import { cn } from "@/lib/utils";
 
-export function ApplyForm({ gender }: { gender: Gender }) {
+export function ApplyForm({
+  gender,
+  takenElements = [],
+}: {
+  gender: Gender;
+  takenElements?: string[];
+}) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -173,7 +179,11 @@ export function ApplyForm({ gender }: { gender: Gender }) {
               name="nickname_element"
               control={control}
               render={({ field }) => (
-                <PeriodicTableSelector value={field.value} onChange={field.onChange} />
+                <PeriodicTableSelector
+                  value={field.value}
+                  onChange={field.onChange}
+                  takenElements={takenElements}
+                />
               )}
             />
             {errors.nickname_element?.message && (

@@ -153,7 +153,7 @@ const ACTINIDES: readonly El[] = [
 
 const ALL: readonly El[] = [...ELEMENTS, ...LANTHANIDES, ...ACTINIDES];
 
-const DISABLED: ReadonlySet<string> = new Set(["Mn", "Os", "Xe", "Ga", "He"]);
+const STATIC_DISABLED: ReadonlySet<string> = new Set(["Mn", "Os", "Xe", "Ga", "He"]);
 
 const CAT_BG: Record<Cat, string> = {
   alkali: "bg-[#5C3535]/60 hover:bg-[#5C3535]",
@@ -171,13 +171,16 @@ const CAT_BG: Record<Cat, string> = {
 export function PeriodicTableSelector({
   value,
   onChange,
+  takenElements = [],
 }: {
   value: string | undefined;
   onChange: (symbol: string | undefined) => void;
+  takenElements?: string[];
 }) {
   const [hovered, setHovered] = useState<El | null>(null);
   const selected = ALL.find(([, s]) => s === value) ?? null;
   const display = hovered ?? selected;
+  const disabled = new Set<string>([...Array.from(STATIC_DISABLED), ...takenElements]);
 
   return (
     <div>
@@ -222,7 +225,7 @@ export function PeriodicTableSelector({
                 key={el[0]}
                 el={el}
                 isSelected={value === el[1]}
-                isDisabled={DISABLED.has(el[1])}
+                isDisabled={disabled.has(el[1])}
                 onSelect={onChange}
                 onHover={setHovered}
                 row={el[3]}
@@ -240,7 +243,7 @@ export function PeriodicTableSelector({
                 key={el[0]}
                 el={el}
                 isSelected={value === el[1]}
-                isDisabled={DISABLED.has(el[1])}
+                isDisabled={disabled.has(el[1])}
                 onSelect={onChange}
                 onHover={setHovered}
                 row={el[3] === 8 ? 1 : 2}
