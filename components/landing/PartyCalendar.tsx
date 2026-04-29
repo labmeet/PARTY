@@ -240,7 +240,7 @@ export function PartyCalendar() {
   );
 }
 
-const FEMALE_TAKEN = 11;
+const FEMALE_TAKEN = 12;
 const MALE_TAKEN = 14;
 const PER_GENDER_CAP = 16;
 
