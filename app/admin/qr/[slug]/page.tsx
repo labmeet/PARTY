@@ -14,10 +14,8 @@ export const dynamic = "force-dynamic";
 type QrPost = {
   id: string;
   slug: string;
-  kind: "private" | "public";
   prompt: string;
   body: string | null;
-  target_element: string | null;
   active: boolean;
   created_at: string;
 };
@@ -49,9 +47,7 @@ export default async function AdminQrDetailPage({
   const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select(
-      "id, slug, kind, prompt, body, target_element, active, created_at"
-    )
+    .select("id, slug, prompt, body, active, created_at")
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
@@ -81,11 +77,8 @@ export default async function AdminQrDetailPage({
         </Link>
 
         <header className="text-center space-y-2">
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
-            {post.kind === "public" ? "공공 포스팅" : "개인 메시지"}
-            {post.kind === "private" && post.target_element && (
-              <span className="ml-2 text-fg-muted">→ {post.target_element}</span>
-            )}
+          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-pop">
+            공공 포스팅
             {!post.active && (
               <span className="ml-2 text-fg-subtle">· 비활성</span>
             )}
@@ -125,10 +118,7 @@ export default async function AdminQrDetailPage({
                 name="next"
                 value={post.active ? "false" : "true"}
               />
-              <button
-                className="btn-ghost text-[12px]"
-                type="submit"
-              >
+              <button className="btn-ghost text-[12px]" type="submit">
                 {post.active ? "비활성화" : "다시 활성화"}
               </button>
             </form>
@@ -141,14 +131,12 @@ export default async function AdminQrDetailPage({
                 삭제
               </button>
             </form>
-            {post.kind === "public" && (
-              <Link
-                href={`/admin/board/${post.slug}`}
-                className="btn-primary text-[12px]"
-              >
-                스크린 보기
-              </Link>
-            )}
+            <Link
+              href={`/admin/board/${post.slug}`}
+              className="btn-primary text-[12px]"
+            >
+              스크린 보기
+            </Link>
           </div>
         </div>
 

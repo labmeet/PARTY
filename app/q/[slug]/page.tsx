@@ -6,10 +6,8 @@ export const dynamic = "force-dynamic";
 type QrPost = {
   id: string;
   slug: string;
-  kind: "private" | "public";
   prompt: string;
   body: string | null;
-  target_element: string | null;
   active: boolean;
 };
 
@@ -23,9 +21,7 @@ export default async function PublicQrPage({
   const supabase = createClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select(
-      "id, slug, kind, prompt, body, target_element, active"
-    )
+    .select("id, slug, prompt, body, active")
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
@@ -48,11 +44,8 @@ export default async function PublicQrPage({
     <main className="min-h-screen bg-bg-base px-4 py-12 sm:py-16">
       <div className="container-page max-w-md space-y-6">
         <header className="text-center space-y-2">
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
-            {post.kind === "public" ? "공공 포스팅" : "개인 메시지"}
-            {post.kind === "private" && post.target_element && (
-              <span className="ml-2 text-fg-muted">→ {post.target_element}</span>
-            )}
+          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-pop">
+            공공 포스팅
           </p>
           <h1 className="font-serif text-[26px] font-bold text-fg sm:text-[30px]">
             {post.prompt}
@@ -62,6 +55,9 @@ export default async function PublicQrPage({
               {post.body}
             </p>
           )}
+          <p className="mt-2 text-[12px] text-fg-muted">
+            스크린에 함께 띄워질 메시지를 남겨주세요
+          </p>
         </header>
 
         <form action={submitQrMessageAction} className="card space-y-4">

@@ -34,31 +34,7 @@ function trimOrNull(v: FormDataEntryValue | null): string | null {
   return s.length === 0 ? null : s;
 }
 
-export async function createPrivateQrAction(formData: FormData) {
-  if (!isAuthed()) redirect("/admin/login");
-  const target = trimOrNull(formData.get("target_element"));
-  const prompt = trimOrNull(formData.get("prompt"));
-  const body = trimOrNull(formData.get("body"));
-
-  if (!target) redirect("/admin?error=target");
-  if (!prompt) redirect("/admin?error=prompt");
-
-  const slug = newSlug();
-  const supabase = createAdminClient();
-  const { error } = await supabase.from("qr_posts").insert({
-    slug,
-    kind: "private",
-    target_element: target,
-    prompt,
-    body,
-  });
-  if (error) redirect(`/admin?error=db`);
-
-  revalidatePath("/admin");
-  redirect(`/admin/qr/${slug}`);
-}
-
-export async function createPublicQrAction(formData: FormData) {
+export async function createQrPostAction(formData: FormData) {
   if (!isAuthed()) redirect("/admin/login");
   const prompt = trimOrNull(formData.get("prompt"));
   const body = trimOrNull(formData.get("body"));
@@ -69,8 +45,6 @@ export async function createPublicQrAction(formData: FormData) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("qr_posts").insert({
     slug,
-    kind: "public",
-    target_element: null,
     prompt,
     body,
   });
@@ -125,4 +99,26 @@ export async function submitQrMessageAction(formData: FormData) {
   if (error) redirect(`/q/${slug}?error=3`);
 
   redirect(`/q/${slug}/thanks`);
+}
+
+export async function submitPrivateMessageAction(formData: FormData) {
+  const target = String(formData.get("target_element") ?? "").trim();
+  const body = String(formData.get("body") ?? "").trim();
+  const authorRaw = String(formData.get("author_label") ?? "").trim();
+  const author = authorRaw.length > 0 ? authorRaw.slice(0, 40) : null;
+
+  if (!target) redirect("/m");
+  if (!body || body.length > 500) {
+    redirect(`/m/${encodeURIComponent(target)}?error=1`);
+  }
+
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("private_messages").insert({
+    target_element: target,
+    body,
+    author_label: author,
+  });
+  if (error) redirect(`/m/${encodeURIComponent(target)}?error=2`);
+
+  redirect(`/m/${encodeURIComponent(target)}/thanks`);
 }
