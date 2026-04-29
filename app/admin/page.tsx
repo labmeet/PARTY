@@ -7,6 +7,7 @@ import {
   createPublicQrAction,
   logoutAction,
 } from "@/lib/admin/actions";
+import { SubmitButton } from "@/app/admin/components/SubmitButton";
 
 export const dynamic = "force-dynamic";
 
@@ -148,9 +149,7 @@ export default async function AdminDashboardPage({
                 className="input-base resize-none"
               />
             </label>
-            <button type="submit" className="btn-primary w-full">
-              개인 QR 생성
-            </button>
+            <SubmitButton pendingText="생성 중...">개인 QR 생성</SubmitButton>
           </form>
         </section>
 
@@ -195,9 +194,7 @@ export default async function AdminDashboardPage({
                 className="input-base resize-none"
               />
             </label>
-            <button type="submit" className="btn-primary w-full">
-              공공 QR 생성
-            </button>
+            <SubmitButton pendingText="생성 중...">공공 QR 생성</SubmitButton>
           </form>
         </section>
       </div>

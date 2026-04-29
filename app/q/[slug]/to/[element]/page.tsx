@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { submitQrMessageAction } from "@/lib/admin/actions";
+import { SubmitButton } from "@/app/admin/components/SubmitButton";
 
 export const dynamic = "force-dynamic";
 
@@ -93,9 +94,7 @@ export default async function PrivateMessageFormPage({
               메시지를 다시 확인해주세요
             </p>
           )}
-          <button type="submit" className="btn-primary w-full">
-            보내기
-          </button>
+          <SubmitButton pendingText="보내는 중...">보내기</SubmitButton>
         </form>
       </div>
     </main>

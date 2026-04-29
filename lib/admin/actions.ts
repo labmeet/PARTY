@@ -41,8 +41,25 @@ async function createQrPost(kind: "private" | "public", formData: FormData) {
 
   if (!prompt) redirect("/admin?error=prompt");
 
-  const slug = newSlug();
   const supabase = createAdminClient();
+
+  // Dedupe: if same kind+prompt+body QR was created in the last 10s, return that one instead of duplicating
+  const tenSecondsAgo = new Date(Date.now() - 10000).toISOString();
+  const dedupe = supabase
+    .from("qr_posts")
+    .select("slug")
+    .eq("kind", kind)
+    .eq("prompt", prompt)
+    .gte("created_at", tenSecondsAgo)
+    .limit(1);
+  if (body !== null) dedupe.eq("body", body);
+  else dedupe.is("body", null);
+  const { data: existing } = await dedupe;
+  if (existing && existing.length > 0 && existing[0]?.slug) {
+    redirect(`/admin/qr/${existing[0].slug}`);
+  }
+
+  const slug = newSlug();
   const { error } = await supabase.from("qr_posts").insert({
     slug,
     kind,
@@ -108,6 +125,23 @@ export async function submitQrMessageAction(formData: FormData) {
   if (!post || !post.active) redirect(`/q/${slug}?error=2`);
 
   if (post.kind === "private" && !target) redirect(`/q/${slug}?error=3`);
+
+  // Dedupe: if an identical message landed in the last 5s, skip a duplicate insert
+  const fiveSecondsAgo = new Date(Date.now() - 5000).toISOString();
+  const dedupeQuery = supabase
+    .from("qr_messages")
+    .select("id")
+    .eq("post_id", post.id)
+    .eq("body", body)
+    .gte("created_at", fiveSecondsAgo)
+    .limit(1);
+  if (post.kind === "private" && target) {
+    dedupeQuery.eq("target_element", target);
+  }
+  const { data: dupes } = await dedupeQuery;
+  if (dupes && dupes.length > 0) {
+    redirect(`/q/${slug}/thanks`);
+  }
 
   const { error } = await supabase.from("qr_messages").insert({
     post_id: post.id,

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { isAuthed } from "@/lib/admin/auth";
 import { loginAction } from "@/lib/admin/actions";
+import { SubmitButton } from "@/app/admin/components/SubmitButton";
 
 export const dynamic = "force-dynamic";
 
@@ -36,9 +37,7 @@ export default function AdminLoginPage({
         {searchParams.error && (
           <p className="text-[12px] text-pop">비밀번호가 틀립니다</p>
         )}
-        <button type="submit" className="btn-primary w-full">
-          로그인
-        </button>
+        <SubmitButton pendingText="로그인 중...">로그인</SubmitButton>
       </form>
     </main>
   );
