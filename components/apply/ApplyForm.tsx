@@ -112,7 +112,7 @@ export function ApplyForm({
           <Field
             label="랩 이름 또는 지도교수 성함"
             error={errors.lab_or_professor?.message}
-            caption="민감하시면 대략적으로 적어주셔도 괜찮아요. 같은 소속은 최대한 조정해드릴게요."
+            caption="민감하시다구요? 같은 랩실 분들은 빼드리려구요..!"
           >
             <input
               className="input-base"

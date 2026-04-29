@@ -32,7 +32,7 @@ export function Hero() {
         </p>
 
         <p className="mx-auto mt-6 max-w-md text-[17px] leading-relaxed text-fg-muted sm:text-[19px]">
-          KAIST 대학원생들이 편하게 연결될 수 있는 자리.
+          대학원생들이 편하게 연결될 수 있는 자리.
           <br />
           랩실과 집만 반복하고 계신가요?
           <br />

@@ -174,7 +174,7 @@ export function PartyCalendar() {
                   <dl className="space-y-4">
                     <InfoRow label="Date" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE}`} hint="금요일" />
                     <InfoRow label="Time" value="20:00" hint="KST" />
-                    <InfoRow label="Venue" value="LABMEET" hint="5월 29일" />
+                    <InfoRow label="Venue" value="W8 1층" />
                     <InfoRow
                       label="Fee"
                       value="35,000원"
