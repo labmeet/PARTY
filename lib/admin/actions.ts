@@ -34,7 +34,7 @@ function trimOrNull(v: FormDataEntryValue | null): string | null {
   return s.length === 0 ? null : s;
 }
 
-export async function createQrPostAction(formData: FormData) {
+async function createQrPost(kind: "private" | "public", formData: FormData) {
   if (!isAuthed()) redirect("/admin/login");
   const prompt = trimOrNull(formData.get("prompt"));
   const body = trimOrNull(formData.get("body"));
@@ -45,13 +45,23 @@ export async function createQrPostAction(formData: FormData) {
   const supabase = createAdminClient();
   const { error } = await supabase.from("qr_posts").insert({
     slug,
+    kind,
     prompt,
     body,
   });
-  if (error) redirect(`/admin?error=db`);
+  if (error) redirect("/admin?error=db");
 
   revalidatePath("/admin");
+  revalidatePath(`/admin/inbox/${kind}`);
   redirect(`/admin/qr/${slug}`);
+}
+
+export async function createPrivateQrAction(formData: FormData) {
+  await createQrPost("private", formData);
+}
+
+export async function createPublicQrAction(formData: FormData) {
+  await createQrPost("public", formData);
 }
 
 export async function toggleQrActiveAction(formData: FormData) {
@@ -79,46 +89,33 @@ export async function submitQrMessageAction(formData: FormData) {
   const body = String(formData.get("body") ?? "").trim();
   const authorRaw = String(formData.get("author_label") ?? "").trim();
   const author = authorRaw.length > 0 ? authorRaw.slice(0, 40) : null;
+  const target = String(formData.get("target_element") ?? "").trim() || null;
 
   if (!slug) redirect("/");
-  if (!body || body.length > 500) redirect(`/q/${slug}?error=1`);
+  if (!body || body.length > 500) {
+    const back = target
+      ? `/q/${slug}/to/${encodeURIComponent(target)}`
+      : `/q/${slug}`;
+    redirect(`${back}?error=1`);
+  }
 
   const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select("id, active")
+    .select("id, kind, active")
     .eq("slug", slug)
-    .maybeSingle();
+    .maybeSingle<{ id: string; kind: "private" | "public"; active: boolean }>();
   if (!post || !post.active) redirect(`/q/${slug}?error=2`);
+
+  if (post.kind === "private" && !target) redirect(`/q/${slug}?error=3`);
 
   const { error } = await supabase.from("qr_messages").insert({
     post_id: post.id,
     body,
     author_label: author,
+    target_element: post.kind === "private" ? target : null,
   });
-  if (error) redirect(`/q/${slug}?error=3`);
+  if (error) redirect(`/q/${slug}?error=4`);
 
   redirect(`/q/${slug}/thanks`);
-}
-
-export async function submitPrivateMessageAction(formData: FormData) {
-  const target = String(formData.get("target_element") ?? "").trim();
-  const body = String(formData.get("body") ?? "").trim();
-  const authorRaw = String(formData.get("author_label") ?? "").trim();
-  const author = authorRaw.length > 0 ? authorRaw.slice(0, 40) : null;
-
-  if (!target) redirect("/m");
-  if (!body || body.length > 500) {
-    redirect(`/m/${encodeURIComponent(target)}?error=1`);
-  }
-
-  const supabase = createAdminClient();
-  const { error } = await supabase.from("private_messages").insert({
-    target_element: target,
-    body,
-    author_label: author,
-  });
-  if (error) redirect(`/m/${encodeURIComponent(target)}?error=2`);
-
-  redirect(`/m/${encodeURIComponent(target)}/thanks`);
 }

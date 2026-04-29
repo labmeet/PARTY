@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 type QrPost = {
   id: string;
   slug: string;
+  kind: "private" | "public";
   prompt: string;
   body: string | null;
 };
@@ -29,11 +30,11 @@ export default async function AdminBoardPage({
   const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select("id, slug, prompt, body")
+    .select("id, slug, kind, prompt, body")
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
-  if (!post) redirect("/admin");
+  if (!post || post.kind !== "public") redirect(`/admin/qr/${params.slug}`);
 
   const { data: msgData } = await supabase
     .from("qr_messages")
