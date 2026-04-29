@@ -15,8 +15,9 @@ type QrPost = {
   id: string;
   slug: string;
   kind: "private" | "public";
+  prompt: string;
+  body: string | null;
   target_element: string | null;
-  topic: string | null;
   active: boolean;
   created_at: string;
 };
@@ -48,7 +49,9 @@ export default async function AdminQrDetailPage({
   const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select("id, slug, kind, target_element, topic, active, created_at")
+    .select(
+      "id, slug, kind, prompt, body, target_element, active, created_at"
+    )
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
@@ -80,15 +83,21 @@ export default async function AdminQrDetailPage({
         <header className="text-center space-y-2">
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
             {post.kind === "public" ? "공공 포스팅" : "개인 메시지"}
+            {post.kind === "private" && post.target_element && (
+              <span className="ml-2 text-fg-muted">→ {post.target_element}</span>
+            )}
             {!post.active && (
               <span className="ml-2 text-fg-subtle">· 비활성</span>
             )}
           </p>
           <h1 className="font-serif text-[26px] font-bold text-fg sm:text-[30px]">
-            {post.kind === "public"
-              ? post.topic
-              : `→ ${post.target_element}`}
+            {post.prompt}
           </h1>
+          {post.body && (
+            <p className="text-[13px] text-fg-muted leading-relaxed mx-auto max-w-md">
+              {post.body}
+            </p>
+          )}
         </header>
 
         <div className="card flex flex-col items-center gap-4">
@@ -108,7 +117,7 @@ export default async function AdminQrDetailPage({
               스캔하면 메시지 작성 페이지로 이동합니다
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             <form action={toggleQrActiveAction}>
               <input type="hidden" name="slug" value={post.slug} />
               <input

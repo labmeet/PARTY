@@ -7,8 +7,9 @@ type QrPost = {
   id: string;
   slug: string;
   kind: "private" | "public";
+  prompt: string;
+  body: string | null;
   target_element: string | null;
-  topic: string | null;
   active: boolean;
 };
 
@@ -22,7 +23,9 @@ export default async function PublicQrPage({
   const supabase = createClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select("id, slug, kind, target_element, topic, active")
+    .select(
+      "id, slug, kind, prompt, body, target_element, active"
+    )
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
@@ -44,20 +47,21 @@ export default async function PublicQrPage({
   return (
     <main className="min-h-screen bg-bg-base px-4 py-12 sm:py-16">
       <div className="container-page max-w-md space-y-6">
-        <header className="text-center">
+        <header className="text-center space-y-2">
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">
             {post.kind === "public" ? "공공 포스팅" : "개인 메시지"}
+            {post.kind === "private" && post.target_element && (
+              <span className="ml-2 text-fg-muted">→ {post.target_element}</span>
+            )}
           </p>
-          <h1 className="font-serif text-[26px] font-bold text-fg mt-3 sm:text-[30px]">
-            {post.kind === "public"
-              ? post.topic
-              : `${post.target_element}에게 한마디`}
+          <h1 className="font-serif text-[26px] font-bold text-fg sm:text-[30px]">
+            {post.prompt}
           </h1>
-          <p className="mt-2 text-[12px] text-fg-muted">
-            {post.kind === "public"
-              ? "스크린에 함께 띄워질 메시지를 남겨주세요"
-              : "받는 분에게만 전달되는 메시지예요"}
-          </p>
+          {post.body && (
+            <p className="text-[13px] text-fg-muted leading-relaxed mx-auto">
+              {post.body}
+            </p>
+          )}
         </header>
 
         <form action={submitQrMessageAction} className="card space-y-4">

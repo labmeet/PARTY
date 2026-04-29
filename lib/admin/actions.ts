@@ -29,26 +29,50 @@ function newSlug(): string {
   return randomUUID().replace(/-/g, "").slice(0, 8);
 }
 
-export async function createQrPostAction(formData: FormData) {
+function trimOrNull(v: FormDataEntryValue | null): string | null {
+  const s = String(v ?? "").trim();
+  return s.length === 0 ? null : s;
+}
+
+export async function createPrivateQrAction(formData: FormData) {
   if (!isAuthed()) redirect("/admin/login");
+  const target = trimOrNull(formData.get("target_element"));
+  const prompt = trimOrNull(formData.get("prompt"));
+  const body = trimOrNull(formData.get("body"));
 
-  const kind = String(formData.get("kind") ?? "");
-  const target = String(formData.get("target_element") ?? "").trim();
-  const topic = String(formData.get("topic") ?? "").trim();
-
-  if (kind !== "private" && kind !== "public") {
-    redirect("/admin?error=kind");
-  }
-  if (kind === "private" && !target) redirect("/admin?error=target");
-  if (kind === "public" && !topic) redirect("/admin?error=topic");
+  if (!target) redirect("/admin?error=target");
+  if (!prompt) redirect("/admin?error=prompt");
 
   const slug = newSlug();
   const supabase = createAdminClient();
   const { error } = await supabase.from("qr_posts").insert({
     slug,
-    kind,
-    target_element: kind === "private" ? target : null,
-    topic: kind === "public" ? topic : null,
+    kind: "private",
+    target_element: target,
+    prompt,
+    body,
+  });
+  if (error) redirect(`/admin?error=db`);
+
+  revalidatePath("/admin");
+  redirect(`/admin/qr/${slug}`);
+}
+
+export async function createPublicQrAction(formData: FormData) {
+  if (!isAuthed()) redirect("/admin/login");
+  const prompt = trimOrNull(formData.get("prompt"));
+  const body = trimOrNull(formData.get("body"));
+
+  if (!prompt) redirect("/admin?error=prompt");
+
+  const slug = newSlug();
+  const supabase = createAdminClient();
+  const { error } = await supabase.from("qr_posts").insert({
+    slug,
+    kind: "public",
+    target_element: null,
+    prompt,
+    body,
   });
   if (error) redirect(`/admin?error=db`);
 

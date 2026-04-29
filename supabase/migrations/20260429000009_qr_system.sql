@@ -5,13 +5,14 @@ create table if not exists qr_posts (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
   kind text not null check (kind in ('private', 'public')),
+  prompt text not null check (length(trim(prompt)) between 1 and 200),
+  body text check (body is null or length(body) <= 500),
   target_element text,
-  topic text,
   active boolean not null default true,
   created_at timestamptz not null default now(),
   constraint chk_kind_payload check (
-    (kind = 'private' and target_element is not null and topic is null)
-    or (kind = 'public' and topic is not null and target_element is null)
+    (kind = 'private' and target_element is not null)
+    or (kind = 'public' and target_element is null)
   )
 );
 

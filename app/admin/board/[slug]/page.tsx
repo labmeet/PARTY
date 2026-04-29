@@ -9,7 +9,8 @@ type QrPost = {
   id: string;
   slug: string;
   kind: "private" | "public";
-  topic: string | null;
+  prompt: string;
+  body: string | null;
 };
 
 type QrMessage = {
@@ -29,7 +30,7 @@ export default async function AdminBoardPage({
   const supabase = createAdminClient();
   const { data: post } = await supabase
     .from("qr_posts")
-    .select("id, slug, kind, topic")
+    .select("id, slug, kind, prompt, body")
     .eq("slug", params.slug)
     .maybeSingle<QrPost>();
 
@@ -52,8 +53,13 @@ export default async function AdminBoardPage({
             Live Board · LabMeet
           </p>
           <h1 className="font-serif text-[36px] sm:text-[56px] font-bold text-fg mt-3 leading-tight">
-            {post.topic}
+            {post.prompt}
           </h1>
+          {post.body && (
+            <p className="mt-3 text-[16px] sm:text-[20px] text-fg-muted">
+              {post.body}
+            </p>
+          )}
         </header>
 
         {messages.length === 0 ? (
