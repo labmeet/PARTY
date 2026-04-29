@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const FEMALE_TAKEN = 11;
+const FEMALE_TAKEN = 12;
 const MALE_TAKEN = 14;
 const PER_GENDER_CAP = 16;
 
@@ -46,7 +46,8 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
           </Link>
         </div>
         <div className="relative mt-4 text-center text-[12px] text-fg-subtle">
-          <p>
+          <p className="font-semibold text-fg">KAIST W8 1층 · 20시</p>
+          <p className="mt-1">
             참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
             <span className="font-semibold text-fg">35,000원</span>
           </p>
@@ -112,6 +113,7 @@ function FinalCta() {
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-1 text-[12px] text-fg-subtle">
+            <span className="font-semibold text-fg">KAIST W8 1층 · 20시</span>
             <span>
               <span className="mr-1.5 text-fg-subtle/70 line-through decoration-[1.5px]">
                 50,000원
