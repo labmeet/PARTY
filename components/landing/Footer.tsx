@@ -10,7 +10,7 @@ export function Footer() {
       {/* ── Top-edge fade — masks the hard seam where smoke webp meets page bg ── */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-40 bg-gradient-to-b from-black via-black/70 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-72 bg-gradient-to-b from-black via-black/85 to-transparent sm:h-80"
       />
 
       {/* ── Layer 0: Smoke webp, top-faded via CSS mask to eliminate hard seam ── */}
@@ -27,12 +27,12 @@ export function Footer() {
         className="pointer-events-none absolute bottom-0 left-0 z-0 h-full w-full object-cover object-bottom"
         style={{
           mixBlendMode: "screen",
-          opacity: 0.6,
+          opacity: 0.5,
           filter: "blur(0.3px) saturate(1.05)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 20%, #000 55%, #000 100%)",
+            "linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0,0,0,0.25) 38%, rgba(0,0,0,0.7) 60%, #000 80%, #000 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.4) 20%, #000 55%, #000 100%)",
+            "linear-gradient(to bottom, transparent 0%, transparent 18%, rgba(0,0,0,0.25) 38%, rgba(0,0,0,0.7) 60%, #000 80%, #000 100%)",
         }}
       />
 
@@ -43,9 +43,7 @@ export function Footer() {
           <span className="text-primary">Meet</span>
         </p>
         <p className="mx-auto mt-4 max-w-xs px-4 text-[13px] leading-relaxed text-fg-muted sm:max-w-md sm:text-[14px]">
-          LabMeet는 KAIST 구성원들이 직접 만든 네트워킹 파티입니다.
-          <br />
-          바쁜 연구와 반복되는 일상 속에서도, 좋은 사람을 자연스럽게 만날 기회는 필요하다고 믿었습니다.
+          LabMeet는 KAIST 구성원들이 직접 만들어갑니다.
         </p>
 
         {/* Links — centered on all widths */}
