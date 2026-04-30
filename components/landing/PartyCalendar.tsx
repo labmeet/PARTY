@@ -241,7 +241,7 @@ export function PartyCalendar() {
 }
 
 const FEMALE_TAKEN = 12;
-const MALE_TAKEN = 14;
+const MALE_TAKEN = 15;
 const PER_GENDER_CAP = 16;
 
 function SeatStatus() {
