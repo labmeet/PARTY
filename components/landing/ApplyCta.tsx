@@ -147,10 +147,10 @@ function SeatPill({ label, taken, cap }: { label: string; taken: number; cap: nu
           <span className="text-fg-subtle">{cap}</span>
         </span>
       </div>
-      <div className="mt-2 h-1 overflow-hidden rounded-full bg-border/60">
+      <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-border-strong">
         <div
-          className={`h-full rounded-full ${tight ? "bg-pop" : "bg-primary"}`}
-          style={{ width: `${pct}%` }}
+          className={`h-full ${tight ? "bg-pop" : "bg-primary"}`}
+          style={{ width: `${pct}%`, transition: "width 0.4s ease-out" }}
         />
       </div>
       <p className="mt-2 text-[11px] tabular-nums text-fg-subtle">
