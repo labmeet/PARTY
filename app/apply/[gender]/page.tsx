@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ApplyForm } from "@/components/apply/ApplyForm";
 import { genderEnum } from "@/lib/validators/applySchema";
 import { createClient } from "@/lib/supabase/server";
@@ -14,6 +14,7 @@ export default async function ApplyPage({
   const parsed = genderEnum.safeParse(params.gender);
   if (!parsed.success) notFound();
   const gender = parsed.data;
+  if (gender === "male") redirect("/?closed=male");
 
   const supabase = createClient();
   const { data: takenData } = await supabase.rpc("taken_elements");

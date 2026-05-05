@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const FEMALE_TAKEN = 12;
-const MALE_TAKEN = 15;
+const MALE_TAKEN = 16;
 const PER_GENDER_CAP = 16;
 
 type Variant = "full" | "compact" | "final";
@@ -40,10 +40,14 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
             <span>여성 신청하기</span>
             <span className="transition-transform group-hover:translate-x-0.5">→</span>
           </Link>
-          <Link href="/apply/male" className="btn-primary group">
-            <span>남성 신청하기</span>
-            <span className="transition-transform group-hover:translate-x-0.5">→</span>
-          </Link>
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="btn-primary cursor-not-allowed opacity-50"
+          >
+            <span>남성 마감</span>
+          </button>
         </div>
         <div className="relative mt-4 text-center text-[12px] text-fg-subtle">
           <p className="font-semibold text-fg">KAIST W8 1층 · 20시</p>
@@ -106,10 +110,14 @@ function FinalCta() {
               <span>여성 신청하기</span>
               <span className="transition-transform group-hover:translate-x-0.5">→</span>
             </Link>
-            <Link href="/apply/male" className="btn-primary group">
-              <span>남성 신청하기</span>
-              <span className="transition-transform group-hover:translate-x-0.5">→</span>
-            </Link>
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="btn-primary cursor-not-allowed opacity-50"
+            >
+              <span>남성 마감</span>
+            </button>
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-1 text-[12px] text-fg-subtle">
