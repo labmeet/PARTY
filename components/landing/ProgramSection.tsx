@@ -10,7 +10,7 @@ const STEPS = [
   {
     step: "Step 2",
     title: "로테이션 프리토킹",
-    description: "와인과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다.",
+    description: "논알콜 샴페인과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다. (주류법에 따라 논알콜 샴페인이 제공됩니다.)",
     visual: "highball",
   },
   {
