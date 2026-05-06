@@ -159,7 +159,7 @@ export function PartyCalendar() {
                       첫 랩미가 열립니다.
                     </p>
                     <p className="mt-4 max-w-[28ch] text-[12px] font-medium leading-relaxed text-fg sm:text-[13px]">
-                      와인 · 치즈 플레이트 · 스낵 제공
+                      논알콜 샴페인 · 치즈 플레이트 · 스낵 제공
                       <br />
                       정원 32명 (남 16 · 여 16)
                     </p>

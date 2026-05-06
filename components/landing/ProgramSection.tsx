@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-const STEPS = [
+const STEPS: {
+  step: string;
+  title: string;
+  description: string;
+  visual: "profile" | "highball" | "qr" | "cheese";
+  note?: string;
+}[] = [
   {
     step: "Step 1",
     title: "소개 작성",
@@ -10,8 +16,9 @@ const STEPS = [
   {
     step: "Step 2",
     title: "로테이션 프리토킹",
-    description: "논알콜 샴페인과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다. (주류법에 따라 논알콜 샴페인이 제공됩니다.)",
+    description: "논알콜 샴페인과 치즈 플레이트를 즐기며, 15분씩 자리를 바꿔 이야기합니다.",
     visual: "highball",
+    note: "주류법에 따라 논알콜 샴페인이 제공됩니다.",
   },
   {
     step: "Step 3",
@@ -25,7 +32,7 @@ const STEPS = [
     description: "마무리 인사 후 자유롭게 남아 대화하거나 애프터 신청으로 이어집니다.",
     visual: "cheese",
   },
-] as const;
+];
 
 export function ProgramSection() {
   return (
@@ -47,7 +54,7 @@ export function ProgramSection() {
             {STEPS.map((item) => (
               <article
                 key={item.step}
-                className="rounded-[24px] border border-border bg-bg-elevated/40 p-4"
+                className="flex flex-col rounded-[24px] border border-border bg-bg-elevated/40 p-4"
               >
                 <div className="inline-flex rounded-full border border-border-strong px-3 py-1 text-[11px] italic text-fg-muted">
                   {item.step}
@@ -55,10 +62,15 @@ export function ProgramSection() {
                 <h3 className="mt-3 font-serif text-[18px] font-bold text-fg sm:text-[19px]">
                   {item.title}
                 </h3>
-                <p className="mt-2 min-h-[66px] text-[14px] leading-[1.75] text-fg-muted sm:text-[14.5px]">
+                <p className="mt-2 h-[72px] text-[14px] leading-[1.75] text-fg-muted sm:text-[14.5px]">
                   {item.description}
                 </p>
                 <ProgramVisual visual={item.visual} />
+                {item.note && (
+                  <p className="mt-2 text-[11px] leading-[1.6] text-fg-subtle">
+                    * {item.note}
+                  </p>
+                )}
               </article>
             ))}
           </div>

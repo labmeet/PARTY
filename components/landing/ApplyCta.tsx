@@ -55,7 +55,7 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
             참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
             <span className="font-semibold text-fg">35,000원</span>
           </p>
-          <p>정원 32명 · 와인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</p>
+          <p>정원 32명 · 논알콜 샴페인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</p>
           <p>얼리버드 1차 ~5/9 · 2차 ~5/23</p>
         </div>
       </div>
@@ -128,7 +128,7 @@ function FinalCta() {
               </span>
               <span className="font-semibold text-fg">35,000원</span>
             </span>
-            <span>정원 32명 · 와인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</span>
+            <span>정원 32명 · 논알콜 샴페인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</span>
             <span>얼리버드 1차 ~5/9 · 2차 ~5/23</span>
           </div>
         </div>
