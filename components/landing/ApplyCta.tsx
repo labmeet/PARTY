@@ -50,7 +50,7 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
           </button>
         </div>
         <div className="relative mt-4 text-center text-[12px] text-fg-subtle">
-          <p className="font-semibold text-fg">스타팅포인트 · 20시</p>
+          <p className="font-semibold text-fg">스타팅포인트(어은동) · 20시</p>
           <p className="mt-1">
             참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
             <span className="font-semibold text-fg">35,000원</span>
@@ -121,7 +121,7 @@ function FinalCta() {
           </div>
 
           <div className="mt-6 flex flex-col items-center gap-1 text-[12px] text-fg-subtle">
-            <span className="font-semibold text-fg">스타팅포인트 · 20시</span>
+            <span className="font-semibold text-fg">스타팅포인트(어은동) · 20시</span>
             <span>
               <span className="mr-1.5 text-fg-subtle/70 line-through decoration-[1.5px]">
                 50,000원
