@@ -17,7 +17,7 @@ export function VenueSection() {
               <span className="mt-0.5 text-primary">📍</span>
               <div>
                 <span className="font-semibold text-fg">스타팅포인트</span>
-                <span className="ml-2 text-fg-subtle">잇마이타이 옆</span>
+                <span className="ml-2 text-fg-subtle">어은동 잇마이타이 옆</span>
               </div>
             </div>
             <div className="flex items-start gap-3">
