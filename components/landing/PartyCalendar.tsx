@@ -174,7 +174,7 @@ export function PartyCalendar() {
                   <dl className="space-y-4">
                     <InfoRow label="Date" value={`${YEAR}.${String(MONTH).padStart(2, "0")}.${PARTY_DATE}`} hint="금요일" />
                     <InfoRow label="Time" value="20:00" hint="KST" />
-                    <InfoRow label="Venue" value="W8 1층" />
+                    <InfoRow label="Venue" value="스타팅포인트" />
                     <InfoRow
                       label="Fee"
                       value="35,000원"
@@ -244,7 +244,7 @@ export function PartyCalendar() {
   );
 }
 
-const FEMALE_TAKEN = 12;
+const FEMALE_TAKEN = 14;
 const MALE_TAKEN = 16;
 const PER_GENDER_CAP = 16;
 
