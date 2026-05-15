@@ -177,7 +177,7 @@ export function PartyCalendar() {
                     <InfoRow label="Venue" value="스타팅포인트" />
                     <InfoRow
                       label="Fee"
-                      value="35,000원"
+                      value="40,000원"
                       hint="얼리버드 1차 ~5/9 · 2차 ~5/23"
                       strike="50,000원"
                     />
@@ -244,7 +244,7 @@ export function PartyCalendar() {
   );
 }
 
-const FEMALE_TAKEN = 14;
+const FEMALE_TAKEN = 15;
 const MALE_TAKEN = 16;
 const PER_GENDER_CAP = 16;
 

@@ -333,7 +333,7 @@ export function ApplyForm({
               <div className="flex items-center gap-2 text-[14px]">
                 <span className="text-fg-muted">참가비</span>
                 <span className="line-through decoration-[1.5px] text-fg-subtle">50,000원</span>
-                <span className="font-semibold text-fg">35,000원</span>
+                <span className="font-semibold text-fg">40,000원</span>
               </div>
               <p className="mt-3 font-serif text-[18px] font-bold tracking-[0.02em] text-fg sm:text-[20px]">
                 토스뱅크 1002-5364-8003 ㄱㄴㅇ

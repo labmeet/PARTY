@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const FEMALE_TAKEN = 14;
+const FEMALE_TAKEN = 15;
 const MALE_TAKEN = 16;
 const PER_GENDER_CAP = 16;
 
@@ -53,7 +53,7 @@ export function ApplyCta({ variant = "full" }: { variant?: Variant }) {
           <p className="font-semibold text-fg">스타팅포인트(어은동) · 20시</p>
           <p className="mt-1">
             참가비 <span className="mx-1 line-through decoration-[1.5px]">50,000원</span>
-            <span className="font-semibold text-fg">35,000원</span>
+            <span className="font-semibold text-fg">40,000원</span>
           </p>
           <p>정원 32명 · 논알콜 샴페인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</p>
           <p>얼리버드 1차 ~5/9 · 2차 ~5/23</p>
@@ -126,7 +126,7 @@ function FinalCta() {
               <span className="mr-1.5 text-fg-subtle/70 line-through decoration-[1.5px]">
                 50,000원
               </span>
-              <span className="font-semibold text-fg">35,000원</span>
+              <span className="font-semibold text-fg">40,000원</span>
             </span>
             <span>정원 32명 · 논알콜 샴페인 ·<br className="sm:hidden" /> 치즈 플레이트 · 스낵 제공</span>
             <span>얼리버드 1차 ~5/9 · 2차 ~5/23</span>
